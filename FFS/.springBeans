@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beansProjectDescription>
+	<version>1</version>
+	<pluginVersion><![CDATA[2.6.0.201103160035-RELEASE]]></pluginVersion>
+	<configSuffixes>
+		<configSuffix><![CDATA[xml]]></configSuffix>
+	</configSuffixes>
+	<enableImports><![CDATA[true]]></enableImports>
+	<configs>
+		<config>src/main/resources/com/esl/ESL-batch.xml</config>
+		<config>src/main/resources/com/esl/ESL-data.xml</config>
+		<config>src/main/resources/com/esl/ESL-datasource.xml</config>
+		<config>src/main/resources/com/esl/ESL-web.xml</config>
+		<config>src/main/resources/com/esl/service/xml/MailTemplates.xml</config>
+		<config>src/main/resources/com/esl/model/xml/PhoneticSymbolsBean.xml</config>
+	</configs>
+	<configSets>
+	</configSets>
+</beansProjectDescription>
