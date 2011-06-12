@@ -20,53 +20,54 @@
 		<esl:dictationNav current="FIND" />
 		<h:messages tooltip="true" errorClass="error" infoClass="innerHeading" globalOnly="true" />
 		<h:form style="padding:0px; margin:0px;">
-	        <rich:dataTable value="#{searchDictationController.results}" var="d" width="100%" rows="15" reRender="ds">
+	        <rich:dataTable id="resultTable" value="#{searchDictationController.results}" var="dic" width="100%" rows="15">
 	        	<rich:column>
-	                <h:commandLink action="#{dictationEditController.launchEdit}">
-						<f:setPropertyActionListener target="#{dictationEditController.editDictation}" value="#{d}" />
-						<img src="#{request.contextPath}/images/graphic/edit.gif" border="0" alt="#{dictationMsg.edit}" />
+	                <h:commandLink action="#{dicictationEditController.launchEdit}">
+						<f:setPropertyActionListener target="#{dicictationEditController.editDictation}" value="#{dic}" />
+						<img src="#{request.contextPath}/images/graphic/edit.gif" border="0" alt="#{dicictationMsg.edit}" />
 					</h:commandLink>
-					<h:commandLink action="#{dictationManageController.launchDictation}">
-						<f:setPropertyActionListener target="#{dictationManageController.selectedDictation}" value="#{d}" />
-						<img src="#{request.contextPath}/images/graphic/view.gif" border="0" alt="#{dictationMsg.view}"/>
+					<h:commandLink action="#{dicictationManageController.launchDictation}">
+						<f:setPropertyActionListener target="#{dicictationManageController.selectedDictation}" value="#{dic}" />
+						<img src="#{request.contextPath}/images/graphic/view.gif" border="0" alt="#{dicictationMsg.view}"/>
 					</h:commandLink>
-					<h:commandLink onclick="return submitRequest();" action="#{dictationPracticeController.authDictation}">
-						<f:setPropertyActionListener target="#{dictationPracticeController.dictation}" value="#{d}" />
-						<img src="#{request.contextPath}/images/graphic/practice.gif" border="0" alt="#{dictationMsg.practice}"/>
+					<h:commandLink onclick="return submitRequest();" action="#{dicictationPracticeController.authDictation}">
+						<f:setPropertyActionListener target="#{dicictationPracticeController.dictation}" value="#{dic}" />
+						<img src="#{request.contextPath}/images/graphic/practice.gif" border="0" alt="#{dicictationMsg.practice}"/>
 					</h:commandLink>
 	            </rich:column>		           
-	            <rich:column sortBy="#{d.id}"><f:facet name="header">#{dictationMsg.id}</f:facet>
-	                <h:outputText value="#{d.id}"/>
+	            <rich:column sortBy="#{dic.id}"><f:facet name="header">#{dicictationMsg.id}</f:facet>
+	                <h:outputText value="#{dic.id}"/>
 	            </rich:column>
-	            <rich:column sortBy="#{d.title}"><f:facet name="header">#{dictationMsg.title}</f:facet>
-	                <h:outputText value="#{d.shortTitle}"/>
+	            <rich:column sortBy="#{dic.title}"><f:facet name="header">#{dicictationMsg.title}</f:facet>
+	                <h:outputText value="#{dic.shortTitle}"/>
 	            </rich:column>
-	            <rich:column sortBy="#{d.suitableAge}"><f:facet name="header">#{dictationMsg.forAge}</f:facet>
-	                <h:outputText value="#{d.suitableAge}"/>
+	            <rich:column sortBy="#{dic.suitableAge}"><f:facet name="header">#{dicictationMsg.forAge}</f:facet>
+	                <h:outputText value="#{dic.suitableAge}"/>
 	            </rich:column>
-	            <rich:column sortBy="#{d.vocabsSize}"><f:facet name="header">#{dictationMsg.words}</f:facet>
-	                <h:outputText value="#{d.vocabsSize}"/>
+	            <rich:column sortBy="#{dic.vocabsSize}"><f:facet name="header">#{dicictationMsg.words}</f:facet>
+	                <h:outputText value="#{dic.vocabsSize}"/>
 	            </rich:column>
-	            <rich:column sortBy="#{d.rating}"><f:facet name="header">#{dictationMsg.rating}</f:facet>
+	            <rich:column sortBy="#{dic.rating}"><f:facet name="header">#{dicictationMsg.rating}</f:facet>
 	            	<div id="star">
-	            		<ul class="star" title="#{d.rating}">
-	            			<li class="curr" style="width: #{d.rating/5*84}px;"></li>
+	            		<ul class="star" title="#{dic.rating}">
+	            			<li class="curr" style="width: #{dic.rating/5*84}px;"></li>
 	            		</ul>
 	            	</div>		                
 	            </rich:column>
-	            <rich:column sortBy="#{d.totalAttempt}"><f:facet name="header">#{dictationMsg.attempts}</f:facet>
-	                <h:outputText value="#{d.totalAttempt}"/>
+	            <rich:column sortBy="#{dic.totalAttempt}"><f:facet name="header">#{dicictationMsg.attempts}</f:facet>
+	                <h:outputText value="#{dic.totalAttempt}"/>
 	            </rich:column>
-	            <rich:column sortBy="#{d.publicAccess}"><f:facet name="header">#{dictationMsg.publicStr}</f:facet>
-	                <h:graphicImage rendered="#{d.publicAccess}" value="#{context.requestPath}/images/graphic/right.gif" />		                		                
+	            <rich:column sortBy="#{dic.publicAccess}"><f:facet name="header">#{dicictationMsg.publicStr}</f:facet>
+	                <h:graphicImage rendered="#{dic.publicAccess}" value="#{context.requestPath}/images/graphic/right.gif" />		                		                
 	            </rich:column>
-	            <rich:column><f:facet name="header" width="10px">#{dictationMsg.lastModifyDate}</f:facet>
-	                <h:outputText value="#{d.lastModifyDate}"><f:convertDateTime pattern="dd/MM" /></h:outputText>
+	            <rich:column><f:facet name="header" width="10px">#{dicictationMsg.lastModifyDate}</f:facet>
+	                <h:outputText value="#{dic.lastModifyDate}"><f:convertDateTime pattern="dd/MM" /></h:outputText>
 	            </rich:column>		            
-	            <f:facet name="footer">
-	                <rich:dataScroller id="ds"></rich:dataScroller>
-	            </f:facet>
+<!-- 	            <f:facet name="footer"> -->
+	                
+<!-- 	            </f:facet> -->
 	        </rich:dataTable>
+	        <rich:dataScroller for="resultTable" />
 	    </h:form>		
 	</ui:define>
 </ui:composition>

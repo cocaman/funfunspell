@@ -3,6 +3,7 @@ package com.esl.web.jsf.controller.member;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 
 import org.apache.log4j.Logger;
@@ -113,6 +114,19 @@ public class SummaryController extends ESLController {
 
 		logger.info("index: returned view:" + memberIndexView);
 		return memberIndexView;
+	}
+
+	/**
+	 * Update Phonics Practice static for level change
+	 */
+	public void phonicsLevelChangeListener(AjaxBehaviorEvent event) {
+		logger.info("phonicsLevelChangeListener: START");
+		phonicsSummary = practiceResultService.getPracticeResultSummary(userSession.getMember(), PracticeResult.PHONETICSYMBOLPRACTICE, selectedLevel);
+		ChartUtil.setPracticeSummaryCharts(phonicsSummary, getLocale());
+
+		// format TopResult
+		LanguageUtil.formatTopResult(phonicsSummary.getRateRanking(), getLocale());
+		LanguageUtil.formatTopResult(phonicsSummary.getScoreRanking(), getLocale());
 	}
 
 	// ============== Setter / Getter ================//

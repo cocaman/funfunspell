@@ -8,8 +8,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import org.apache.log4j.Logger;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
 
 import com.esl.dao.IGradeDAO;
 import com.esl.dao.IMemberDAO;
@@ -23,8 +21,8 @@ import com.esl.web.jsf.controller.ESLController;
 import com.esl.web.model.group.GroupSummaryByMember;
 import com.esl.web.util.LanguageUtil;
 
-@Controller
-@Scope("session")
+//@Controller
+//@Scope("session")
 public class TeamController extends ESLController {
 	private static Logger logger = Logger.getLogger("ESL");
 

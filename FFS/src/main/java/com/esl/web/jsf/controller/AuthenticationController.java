@@ -66,7 +66,7 @@ public class AuthenticationController extends ESLController {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ResourceBundle bundle = ResourceBundle.getBundle(bundleName, facesContext.getViewRoot().getLocale());
 
-		String locale = facesContext.getViewRoot().getLocale().toString();
+		userSession.setLocale(facesContext.getViewRoot().getLocale());
 
 		// validate user input
 		if (!validateLoginForm(facesContext, bundle)) {

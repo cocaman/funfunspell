@@ -22,7 +22,7 @@
   		<a4j:repeat var="news" value="#{newsController.latestNews}" >
 		<tr>
 			<td>
-				<a href="#"	onclick="window.open('#{request.contextPath}/public/news/singlenews.jsf?id=#{news.id}','FunFunNews','location=1,status=1,scrollbars=1,width=800,height=600')">
+				<a href="#"	onclick="window.open('#{request.contextPath}/public/news/singlenews.jsf?id=#{news.id}','FunFunNews','location=1,status=1,scrollbars=1,width=800,height=800')">
 					<u><strong><h:outputText value="#{news.title}" /></strong></u>
 					<h:panelGroup rendered="#{news.showNewImage}"><img border="0" src="${request.contextPath}/images/graphic/new.gif" /></h:panelGroup>
 					<br/><h:outputText value="#{news.shortDescription}" />

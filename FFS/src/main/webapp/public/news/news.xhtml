@@ -26,10 +26,10 @@
 			<tr>				
 				<td class="dataTableColumn1"><h:outputText value="#{news.createdDate}"><f:convertDateTime pattern="dd/MM/yyyy"  /></h:outputText></td>		
 				<td class="dataTableColumn2">
-					<a href="#"	onclick="window.open('${request.contextPath}/rest/viewsinglenews?id=#{news.id}','FunFunNews','location=1,status=1,scrollbars=1,width=800,height=600')"><u><h:outputText value="#{news.title}" /></u></a>					
+					<a href="#"	onclick="window.open('#{request.contextPath}/public/news/singlenews.jsf?id=#{news.id}','FunFunNews','location=1,status=1,scrollbars=1,width=800,height=800')"><u><h:outputText value="#{news.title}" /></u></a>					
 				</td>
 				<td class="dataTableColumn3">
-					<a href="#"	onclick="window.open('${request.contextPath}/rest/viewsinglenews?id=#{news.id}','FunFunNews','location=1,status=1,scrollbars=1,width=800,height=600')"><h:outputText value="#{news.shortDescription}" /></a>					
+					<a href="#"	onclick="window.open('#{request.contextPath}/public/news/singlenews.jsf?id=#{news.id}','FunFunNews','location=1,status=1,scrollbars=1,width=800,height=800')"><h:outputText value="#{news.shortDescription}" /></a>					
 				</td>		
 			</tr>
 			</t:dataList>										

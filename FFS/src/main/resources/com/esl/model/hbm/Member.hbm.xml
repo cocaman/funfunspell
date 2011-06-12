@@ -20,7 +20,7 @@
   	<property name="totalWordLearnt" column="TOTAL_WORD_LEARNT" />
   	<property name="loginedSessionId" column="LOGINED_SESSION_ID" />
   	<property name="imagePath" column="IMAGE_PATH" length="255" />
-  	<many-to-one name="grade" column="GRADE_ID" cascade="save-update" foreign-key="FK1_GRADE_ID" />
+  	<many-to-one name="grade" column="GRADE_ID" cascade="save-update" fetch="join" lazy="false" foreign-key="FK1_GRADE_ID" />
   	<component name="name">
   		<property name="firstName" column="FIRST_NAME" />
   		<property name="lastName" column="LAST_NAME" />
