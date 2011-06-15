@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
+@RequestMapping("/")
 public class QuoteController {
 	final static String defaultCodeList = "2828,3046";
 	final String FILE_PATH = "/WEB-INF/quotes.txt";
