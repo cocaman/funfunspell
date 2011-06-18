@@ -52,7 +52,7 @@
 			</p>
 		</h:panelGroup>
 		<h:form>
-		<strong><u><h:commandLink action="practice/phoneticpractice/index" value="#{phonPracticeMsg.resultRetryPractice}" /></u></strong>
+		<h:link outcome="/practice/phoneticpractice/index?locale=#{languageController.locale}"><strong><u>#{phonPracticeMsg.resultRetryPractice}</u></strong></h:link>
 		<img src="#{request.contextPath}/images/spacer.gif" width="20" height="1" />
 		<strong><u><h:commandLink onclick="return submitRequest();" action="#{phoneticPracticeG2Controller.start}" value="#{phonPracticeMsg.resultRetrySameGradePractice}"/></u></strong>
 		</h:form>
@@ -71,30 +71,27 @@
 					<td width="20">&nbsp;</td>
 				</tr>
 				</thead>																														
-				<t:dataList var="i" rowIndexVar="index" value="#{phoneticPracticeG2Controller.history}" >
+				<a4j:repeat var="i" rowKeyVar="r" value="#{phoneticPracticeG2Controller.history}">
 				<tr>
-					<td><strong>Q<h:outputText value="#{phoneticPracticeG2Controller.totalFullMark-index-1}" /></strong></td>
-					<td>[<h:outputText escape="false" value="#{phoneticPracticeG2Controller.history[phoneticPracticeG2Controller.historySize-1-index].question.IPA}" />]</td>
-					<td><a href="#{phonPracticeMsg.practiceDictionaryLink}#{phoneticPracticeG2Controller.history[phoneticPracticeG2Controller.historySize-1-index].question.word}" target="_blank"><u><h:outputText value="#{phoneticPracticeG2Controller.history[phoneticPracticeG2Controller.historySize-1-index].question.word}" /></u></a></td>
-					<td><h:outputText value="#{phoneticPracticeG2Controller.history[phoneticPracticeG2Controller.historySize-1-index].answer}" /></td>
-					<td>
-						<h:panelGroup rendered="#{phoneticPracticeG2Controller.history[phoneticPracticeG2Controller.historySize-1-index].correct}"><img src="#{request.contextPath}/images/graphic/right.gif" /></h:panelGroup>
-						<h:panelGroup rendered="#{!phoneticPracticeG2Controller.history[phoneticPracticeG2Controller.historySize-1-index].correct}"><img src="#{request.contextPath}/images/graphic/wrong.gif" /></h:panelGroup>
-					</td>											
+					<td><strong>Q#{phoneticPracticeG2Controller.totalFullMark-r-1}</strong></td>
+					<td>[<h:outputText escape="false" value="#{phoneticPracticeG2Controller.history[r].question.IPA}" />]</td>
+					<td><a href="#{phonPracticeMsg.practiceDictionaryLink}#{phoneticPracticeG2Controller.history[r].question.word}" target="_blank"><u><h:outputText value="#{phoneticPracticeG2Controller.history[r].question.word}" /></u></a></td>
+					<td><h:outputText value="#{phoneticPracticeG2Controller.history[r].answer}" /></td>
+					<td><h:graphicImage rendered="#{phoneticPracticeG2Controller.history[r].correct}" value="/images/graphic/right.gif" /><h:graphicImage rendered="#{!phoneticPracticeG2Controller.history[r].correct}" value="/images/graphic/wrong.gif" /></td>
 					<td align="center">
-						<a4j:outputPanel rendered="#{!memberWordController.savedQuestion[phoneticPracticeG2Controller.history[index].question]}">
+						<a4j:outputPanel rendered="#{!memberWordController.savedQuestion[phoneticPracticeG2Controller.history[r].question]}">
 						<a4j:region>
 							<h:form style="padding:0px; margin:0px; height: 16px;">
-								<a4j:commandLink reRender="msgPanel" onclick="loadingAnchorImg(this)" oncomplete="removeAnchorImg();" action="#{memberWordController.saveWord}">
-									<f:setPropertyActionListener target="#{memberWordController.selectedPhoneticQuestion}" value="#{phoneticPracticeG2Controller.history[index].question}" />
+								<a4j:commandLink render="msgPanel" onclick="loadingAnchorImg(this)" oncomplete="removeAnchorImg()" action="#{memberWordController.saveWord}">
+									<f:setPropertyActionListener target="#{memberWordController.selectedPhoneticQuestion}" value="#{phoneticPracticeG2Controller.history[r].question}" />
 									<img border="0" width="15" height="15" src="#{request.contextPath}/images/graphic/plus.gif" />
 								</a4j:commandLink>
 							</h:form>
 						</a4j:region>
 						</a4j:outputPanel>												
-					</td>	
+					</td>											
 				</tr>
-				</t:dataList>										
+				</a4j:repeat>										
 			</table>
 			<p>New! #{phonPracticeMsg.practiceUseMemberWord}</p>
 			<p>* #{phonPracticeMsg.practiceWordExplanation}</p>

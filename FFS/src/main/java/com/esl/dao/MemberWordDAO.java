@@ -33,8 +33,8 @@ public class MemberWordDAO extends ESLDao<MemberWord> implements IMemberWordDAO 
 		logger.info("getWord: input member[" + member.getUserId() + "], word[" + word.getWord() + "]");
 
 		String query = "from MemberWord w where w.member = :member and w.word = :word";
-		javax.persistence.Query q = (javax.persistence.Query) sessionFactory.getCurrentSession().createQuery(query);
-		List result = q.setParameter("member", member).setParameter("word", word).getResultList();
+		Query q = sessionFactory.getCurrentSession().createQuery(query);
+		List result = q.setParameter("member", member).setParameter("word", word).list();
 
 		if (result.size() > 0 ) return (MemberWord) result.get(0);
 		else {

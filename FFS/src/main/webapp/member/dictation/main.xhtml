@@ -23,9 +23,9 @@
 	<ui:define name="mainContent">
 		<esl:dictationNav current="SHOWALL" />
 		<h:messages tooltip="true" errorClass="error" infoClass="innerHeading" globalOnly="true" />		
-		<rich:popupPanel width="100%" switchType="client" label="#{dictationMsg.createdDictation}">
+		<rich:popupPanel style="width: 100%" switchType="client" label="#{dictationMsg.createdDictation}">
 			<h:form style="padding:0px; margin:0px;">
-		        <rich:dataTable value="#{dictationManageController.selfCreated}" var="d" width="100%" rows="15" reRender="ds">
+		        <rich:dataTable value="#{dictationManageController.selfCreated}" var="d" style="width: 100%" rows="15" reRender="ds">
 		        	<rich:column>
 		                <h:commandLink action="#{dictationEditController.launchEdit}">
 							<f:setPropertyActionListener target="#{dictationEditController.editDictation}" value="#{d}" />
@@ -62,7 +62,7 @@
 		            <rich:column sortBy="#{d.totalAttempt}"><f:facet name="header">#{dictationMsg.attempts}</f:facet>
 		                <h:outputText value="#{d.totalAttempt}"/>
 		            </rich:column>
-		            <rich:column sortBy="#{d.publicAccess}"><f:facet name="header">#{dictationMsg.public}</f:facet>
+		            <rich:column sortBy="#{d.publicAccess}"><f:facet name="header">#{dictationMsg.publicStr}</f:facet>
 		                <h:graphicImage rendered="#{d.publicAccess}" value="#{context.requestPath}/images/graphic/right.gif" />		                		                
 		            </rich:column>
 		            <rich:column><f:facet name="header" width="10px">#{dictationMsg.lastModifyDate}</f:facet>
@@ -77,7 +77,7 @@
 		<img src="#{request.contextPath}/images/spacer.gif" width="1" height="10" />
 		<rich:popupPanel switchType="client" label="#{dictationMsg.lastPracticedDictation}">
 			<h:form style="padding:0px; margin:0px;">
-		        <rich:dataTable value="#{dictationManageController.lastPracticed}" var="dh" width="100%" rows="15" reRender="ds">
+		        <rich:dataTable value="#{dictationManageController.lastPracticed}" var="dh" style="width: 100%" rows="15" reRender="ds">
 		        	<rich:column>		                
 		               <h:commandLink action="#{dictationManageController.launchDictation}">
 							<f:setPropertyActionListener target="#{dictationManageController.selectedDictation}" value="#{dh.dictation}" />
@@ -117,7 +117,7 @@
 		            	<h:outputText value="#{dh.lastPracticeDate}"><f:convertDateTime pattern="dd/MM hh:mm" /></h:outputText>
 		            </rich:column>
 		            <f:facet name="footer">
-		                <rich:datascroller id="ds"></rich:datascroller>
+		                <rich:dataScroller id="ds"></rich:dataScroller>
 		            </f:facet>
 		        </rich:dataTable>
 		    </h:form>

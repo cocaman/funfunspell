@@ -101,7 +101,7 @@
 					</td>
 				</tr>				
 				<tr>
-					<td width="120" class="formTitle">#{dictationMsg.suitableAge}&nbsp;<h:graphicImage id="suitableAgeTips" value="#{context.requestPath}/images/graphic/iconQuestionMark.gif" /><rich:toolTip value="#{dictationMsg.suitableAgeTips}" for="suitableAgeTips"/><br />(#{dictationMsg.suitableAgeDesc})</td>
+					<td width="120" class="formTitle">#{dictationMsg.suitableAge}&nbsp;<h:graphicImage id="suitableAgeTips" value="#{context.requestPath}/images/graphic/iconQuestionMark.gif" /><rich:tooltip value="#{dictationMsg.suitableAgeTips}" target="suitableAgeTips"/><br />(#{dictationMsg.suitableAgeDesc})</td>
 					<td width="5" class="formTitle">:</td>
 					<td>
 						<t:selectManyCheckbox id="suitableAgeGroups" value="#{dictationEditController.editDictation.suitableAgeGroups}" layout="pageDirection" layoutWidth="4">
@@ -116,7 +116,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td width="120" class="formTitle">#{dictationMsg.tags}&nbsp;<h:graphicImage id="tagsTips" value="#{context.requestPath}/images/graphic/iconQuestionMark.gif" /><rich:toolTip value="#{dictationMsg.tagsTips}" for="tagsTips"/><br />(#{dictationMsg.tagsDesc})</td>
+					<td width="120" class="formTitle">#{dictationMsg.tags}&nbsp;<h:graphicImage id="tagsTips" value="#{context.requestPath}/images/graphic/iconQuestionMark.gif" /><rich:tooltip value="#{dictationMsg.tagsTips}" target="tagsTips"/><br />(#{dictationMsg.tagsDesc})</td>
 					<td width="5" class="formTitle">:</td>
 					<td style="padding-top: 5px; vertical-align: top;"><h:inputText id="tags" value="#{dictationEditController.editDictation.tags}" style="width: 100%">
 						<t:validateRegExpr pattern="[^'&lt;&gt;&quot;]*" message="#{dictationMsg.containInvalidChar}" />
@@ -135,7 +135,7 @@
 		<fieldset><legend class="formTitle">&nbsp;AUTHENTICATION&nbsp;</legend>
 			<table width="90%" class="formContent">
 				<tr>
-					<td width="120" class="formTitle">#{dictationMsg.allowPublicAccess}&nbsp;<h:graphicImage id="allowPublicAccessTips" value="#{context.requestPath}/images/graphic/iconQuestionMark.gif" /><rich:toolTip value="#{dictationMsg.allowPublicAccessTips}" for="allowPublicAccessTips"/></td>
+					<td width="120" class="formTitle">#{dictationMsg.allowPublicAccess}&nbsp;<h:graphicImage id="allowPublicAccessTips" value="#{context.requestPath}/images/graphic/iconQuestionMark.gif" /><rich:tooltip value="#{dictationMsg.allowPublicAccessTips}" target="allowPublicAccessTips"/></td>
 					<td width="5" class="formTitle">:</td>
 					<td style="padding-top: 5px; vertical-align: top;">						
 						<h:selectBooleanCheckbox value="#{dictationEditController.editDictation.publicAccess}" /></td>
@@ -156,7 +156,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td class="formTitle">#{dictationMsg.pwdProtect}&nbsp;<h:graphicImage id="pwdProtectTips" value="#{context.requestPath}/images/graphic/iconQuestionMark.gif" /><rich:toolTip value="#{dictationMsg.pwdProtectTips}" for="pwdProtectTips"/></td>
+					<td class="formTitle">#{dictationMsg.pwdProtect}&nbsp;<h:graphicImage id="pwdProtectTips" value="#{context.requestPath}/images/graphic/iconQuestionMark.gif" /><rich:tooltip value="#{dictationMsg.pwdProtectTips}" target="pwdProtectTips"/></td>
 					<td class="formTitle">:</td>
 					<td style="padding-top: 5px; vertical-align: top;">
 						<h:selectBooleanCheckbox value="#{dictationEditController.requirePassword}" />#{dictationMsg.require}<br />
@@ -201,7 +201,7 @@
 		<fieldset><legend class="formTitle">&nbsp;VOCABULARY&nbsp;</legend>
 			<table width="90%" class="formContent">
 				<tr>
-					<td width="180" class="formTitle">#{dictationMsg.dictationOptions}&nbsp;<h:graphicImage id="dictationOptionsTips" value="#{context.requestPath}/images/graphic/iconQuestionMark.gif" /><rich:toolTip value="#{dictationMsg.dictationOptionsTips}" for="dictationOptionsTips"/></td>
+					<td width="180" class="formTitle">#{dictationMsg.dictationOptions}&nbsp;<h:graphicImage id="dictationOptionsTips" value="#{context.requestPath}/images/graphic/iconQuestionMark.gif" /><rich:tooltip value="#{dictationMsg.dictationOptionsTips}" target="dictationOptionsTips"/></td>
 					<td width="5" class="formTitle">:</td>
 					<td style="padding-top: 5px; vertical-align: top;">						
 						<h:selectBooleanCheckbox value="#{dictationEditController.editDictation.notAllowIPA}" />#{dictationMsg.neverShowIPA}
@@ -235,9 +235,9 @@
 				</tr>
 			</table>
 		</fieldset>
-		<div class="buttons" style="margin-top: 10px;">
-			<h:commandLink action="#{dictationEditController.submit}"><img src="#{request.contextPath}/images/icon/silk/font.png" />#{dictationMsg.submit}</h:commandLink>			
-		</div>		
+		<div class="buttons" style="margin-top: 10px; float: none;">
+			<h:commandLink action="#{dictationEditController.submit}"><img src="#{request.contextPath}/images/icon/silk/font.png" />#{dictationMsg.submit}</h:commandLink>				
+		</div>
 		<div id="helpDiv9" class="helpDiv" style="width: 500px;">
 			<table>
 				<tr><td><img src="#{request.contextPath}/images/graphic/hand_point.png" /></td><td><h:outputText value="#{dictationMsg.finalHelpDivContent}" escape="false" /></td></tr>				
