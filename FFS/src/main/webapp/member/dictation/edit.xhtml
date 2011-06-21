@@ -76,7 +76,7 @@
 							<t:validateRegExpr pattern="[^'&lt;&gt;&quot;]*" message="#{dictationMsg.containInvalidChar}" />
 						</h:inputText><br />					
 						<h:message for="title" errorClass="error" />
-						<div id="helpDiv1" class="helpDiv" style="width: 500px;">
+						<div id="helpDiv1" class="helpDiv">
 							<table width="100%">
 								<tr><td><img src="#{request.contextPath}/images/graphic/hand_point.png" /></td><td><h:outputText value="#{dictationMsg.titleHelpDivContent}" escape="false" /></td></tr>
 								<tr><td colspan="2" align="right"><a id="helpNext1" class="helpNext">&gt; #{dictationMsg.nextStep}</a></td></tr>
@@ -92,7 +92,7 @@
 							<t:validateRegExpr pattern="[^'&lt;&gt;&quot;]*" message="#{dictationMsg.containInvalidChar}" />
 						</h:inputText><br />
 						<h:message for="description" errorClass="error" />
-						<div id="helpDiv2" class="helpDiv" style="width: 500px;">
+						<div id="helpDiv2" class="helpDiv">
 							<table>
 								<tr><td><img src="#{request.contextPath}/images/graphic/hand_point.png" /></td><td><h:outputText value="#{dictationMsg.descHelpDivContent}" escape="false" /></td></tr>
 								<tr><td colspan="2" align="right"><a id="helpNext2" class="helpNext">&gt; #{dictationMsg.nextStep}</a></td></tr>
@@ -107,7 +107,7 @@
 						<t:selectManyCheckbox id="suitableAgeGroups" value="#{dictationEditController.editDictation.suitableAgeGroups}" layout="pageDirection" layoutWidth="4">
 							<f:selectItems value="#{dictationEditController.availableAgeGroups}" />						
 						</t:selectManyCheckbox>
-						<div id="helpDiv3" class="helpDiv" style="width: 500px;">
+						<div id="helpDiv3" class="helpDiv">
 							<table>
 								<tr><td><img src="#{request.contextPath}/images/graphic/hand_point.png" /></td><td><h:outputText value="#{dictationMsg.suitableAgeHelpDivContent}" escape="false" /></td></tr>
 								<tr><td colspan="2" align="right"><a id="helpNext2" class="helpNext">&gt; #{dictationMsg.nextStep}</a></td></tr>
@@ -122,7 +122,7 @@
 						<t:validateRegExpr pattern="[^'&lt;&gt;&quot;]*" message="#{dictationMsg.containInvalidChar}" />
 						</h:inputText><br />
 						<h:message for="tags" errorClass="error" />
-						<div id="helpDiv4" class="helpDiv" style="width: 500px;">
+						<div id="helpDiv4" class="helpDiv">
 							<table>
 								<tr><td><img src="#{request.contextPath}/images/graphic/hand_point.png" /></td><td><h:outputText value="#{dictationMsg.tagHelpDivContent}" escape="false" /></td></tr>
 								<tr><td colspan="2" align="right"><a id="helpNext2" class="helpNext">&gt; #{dictationMsg.nextStep}</a></td></tr>
@@ -139,22 +139,7 @@
 					<td width="5" class="formTitle">:</td>
 					<td style="padding-top: 5px; vertical-align: top;">						
 						<h:selectBooleanCheckbox value="#{dictationEditController.editDictation.publicAccess}" /></td>
-				</tr>
-				<tr>
-					<td width="120" class="formTitle">#{dictationMsg.allowGroupAccess}</td>
-					<td width="5" class="formTitle">:</td>
-					<td>
-						<t:selectManyCheckbox id="allowGroupAccess" value="#{dictationEditController.selectedGroups}" layout="pageDirection" layoutWidth="5">
-							<f:selectItems value="#{dictationEditController.accessibleMemberGroups}" />							
-						</t:selectManyCheckbox>
-						<div id="helpDiv5" class="helpDiv" style="width: 500px;">
-							<table>
-								<tr><td><img src="#{request.contextPath}/images/graphic/hand_point.png" /></td><td><h:outputText value="#{dictationMsg.publicGroupHelpDivContent}" escape="false" /></td></tr>
-								<tr><td colspan="2" align="right"><a id="helpNext2" class="helpNext">&gt; #{dictationMsg.nextStep}</a></td></tr>
-							</table>							
-						</div>
-					</td>
-				</tr>
+				</tr>				
 				<tr>
 					<td class="formTitle">#{dictationMsg.pwdProtect}&nbsp;<h:graphicImage id="pwdProtectTips" value="#{context.requestPath}/images/graphic/iconQuestionMark.gif" /><rich:tooltip value="#{dictationMsg.pwdProtectTips}" target="pwdProtectTips"/></td>
 					<td class="formTitle">:</td>
@@ -174,7 +159,7 @@
 							<t:validateRegExpr pattern="[^\s'&lt;&gt;&quot;]*" message="#{dictationMsg.pwdInvalidInput}" />
 						</h:inputSecret> <br />
 						<h:message for="password2" errorClass="error" />
-						<div id="helpDiv6" class="helpDiv" style="width: 500px;">
+						<div id="helpDiv5" class="helpDiv">
 							<table>
 								<tr><td><img src="#{request.contextPath}/images/graphic/hand_point.png" /></td><td><h:outputText value="#{dictationMsg.passwordHelpDivContent}" escape="false" /></td></tr>
 								<tr><td colspan="2" align="right"><a id="helpNext2" class="helpNext">&gt; #{dictationMsg.nextStep}</a></td></tr>
@@ -208,7 +193,7 @@
 						<img src="#{request.contextPath}/images/spacer.gif" width="10" height="1" />
 						<h:selectBooleanCheckbox value="#{dictationEditController.editDictation.notAllowRandomCharacters}" />#{dictationMsg.neverShowRandomChar}
 						<br />
-						<div id="helpDiv7" class="helpDiv" style="width: 500px;">
+						<div id="helpDiv6" class="helpDiv">
 							<table>
 								<tr><td><img src="#{request.contextPath}/images/graphic/hand_point.png" /></td><td><h:outputText value="#{dictationMsg.dictationOptionsHelpDivContent}" escape="false" /></td></tr>
 								<tr><td colspan="2" align="right"><a id="helpNext2" class="helpNext">&gt; #{dictationMsg.nextStep}</a></td></tr>
@@ -225,7 +210,7 @@
 							<t:validateRegExpr pattern="^([a-zA-Z]+[\-/. ]?[a-zA-Z]+)?( ?, ?[a-zA-Z]+[\-/. ]?[a-zA-Z]+)*$" message="#{dictationMsg.vocabsInvalidInput}" />
 						</h:inputTextarea>
 						<br /><h:message for="vocabs" errorClass="error" />
-						<div id="helpDiv8" class="helpDiv" style="width: 500px;">
+						<div id="helpDiv7" class="helpDiv">
 							<table>
 								<tr><td><img src="#{request.contextPath}/images/graphic/hand_point.png" /></td><td><h:outputText value="#{dictationMsg.vocabHelpDivContent}" escape="false" /></td></tr>
 								<tr><td colspan="2" align="right"><a id="helpNext2" class="helpNext">&gt; #{dictationMsg.nextStep}</a></td></tr>
@@ -235,10 +220,10 @@
 				</tr>
 			</table>
 		</fieldset>
-		<div class="buttons" style="margin-top: 10px; float: none;">
+		<div class="buttons" style="margin-top: 10px; margin-bottom:50px;">
 			<h:commandLink action="#{dictationEditController.submit}"><img src="#{request.contextPath}/images/icon/silk/font.png" />#{dictationMsg.submit}</h:commandLink>				
 		</div>
-		<div id="helpDiv9" class="helpDiv" style="width: 500px; float: right;">
+		<div id="helpDiv8" class="helpDiv">
 			<table>
 				<tr><td><img src="#{request.contextPath}/images/graphic/hand_point.png" /></td><td><h:outputText value="#{dictationMsg.finalHelpDivContent}" escape="false" /></td></tr>				
 			</table>							
