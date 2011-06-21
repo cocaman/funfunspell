@@ -13,11 +13,19 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.esl.dao.IMemberDAO;
-import com.esl.dao.dictation.*;
-import com.esl.entity.dictation.*;
-import com.esl.model.*;
+import com.esl.dao.dictation.IDictationDAO;
+import com.esl.dao.dictation.IDictationHistoryDAO;
+import com.esl.dao.dictation.IMemberDictationHistoryDAO;
+import com.esl.entity.dictation.Dictation;
+import com.esl.entity.dictation.DictationHistory;
+import com.esl.entity.dictation.MemberDictationHistory;
+import com.esl.model.Member;
+import com.esl.model.PhoneticPractice;
+import com.esl.model.PhoneticQuestion;
 import com.esl.service.dictation.IDictationManageService;
-import com.esl.service.practice.*;
+import com.esl.service.practice.IPhoneticPracticeService;
+import com.esl.service.practice.ISelfDictationService;
+import com.esl.service.practice.PhoneticPracticeService;
 import com.esl.util.ValidationUtil;
 import com.esl.web.jsf.controller.CheckPasswordController;
 import com.esl.web.jsf.controller.ESLController;
@@ -32,7 +40,7 @@ public class DictationPracticeController extends ESLController {
 
 	private static Logger logger = Logger.getLogger("ESL");
 	private static final String bundleName = "messages.member.Dictation";
-	private static final String startDictationURL = "/rest/dictation/start?id=";
+	private static final String startDictationURL = "/member/dictation/open.jsf?id=";
 	private static final String startView = "/member/dictation/start";
 	private static final String practiceView = "/member/dictation/practice";
 	private static final String resultView = "/member/dictation/result";
