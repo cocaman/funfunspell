@@ -19,25 +19,42 @@ public class ESLViewHandler extends MultiViewHandler {
 	@Override
 	public Locale calculateLocale(FacesContext context)
 	{
-		if (context.getViewRoot() != null && context.getViewRoot().getLocale() != null)
-			return context.getViewRoot().getLocale();
+		Locale locale = null;
+
+		// Use locale from view root if any
+		if (context.getViewRoot() != null) {
+			locale = context.getViewRoot().getLocale();
+		}
 
 		ExternalContext extContext = context.getExternalContext();
 
-		Map<String, String>	paramsMap = extContext.getRequestParameterMap();
-		for (String key : paramsMap.keySet()) {
-			if (LanguageController.LOCALE_PARAM.equals(key)) {
-				logger.debug("LOCALE_PARAM [{}]", paramsMap.get(key));
-				Locale locale = new Locale(paramsMap.get(key));
-				return locale;
+		// look into request param if no locale
+		if (locale ==  null) {
+			Map<String, String>	paramsMap = extContext.getRequestParameterMap();
+			for (String key : paramsMap.keySet()) {
+				if (LanguageController.LOCALE_PARAM.equals(key)) {
+					logger.debug("LOCALE_PARAM [{}]", paramsMap.get(key));
+					locale = new Locale(paramsMap.get(key));
+				}
 			}
 		}
 
-		if (extContext.getSessionMap().containsKey("userSession")) {
-			UserSession u = (UserSession) extContext.getSessionMap().get("userSession");
-			if (u.getLocale() != null) return u.getLocale();
+		UserSession u = (UserSession) extContext.getSessionMap().get("userSession");
+		if (u == null) {
+			u = new UserSession();
+			extContext.getSessionMap().put("userSession", u);
 		}
 
-		return super.calculateLocale(context);
+
+		// look into session if still no locale
+		if (locale == null) locale = u.getLocale();
+
+		// finally use framework calculate locale
+		if (locale == null) locale = super.calculateLocale(context);
+
+		// Set locale into session bean
+		u.setLocale(locale);
+
+		return locale;
 	}
 }
