@@ -26,7 +26,7 @@
 	</repositories>
 
 	<properties>
-		<org.richfaces.bom.version>4.0.0.Final</org.richfaces.bom.version>
+		<org.richfaces.bom.version>4.1.0-SNAPSHOT</org.richfaces.bom.version>
 	</properties>
 
 	<build>
