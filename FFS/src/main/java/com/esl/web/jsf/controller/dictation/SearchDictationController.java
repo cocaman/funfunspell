@@ -20,7 +20,7 @@ import com.esl.web.jsf.controller.ESLController;
 import com.esl.web.model.SearchDictationInputForm;
 
 @Controller
-@Scope("request")
+@Scope("session")
 public class SearchDictationController extends ESLController {
 	private static Logger logger = Logger.getLogger("ESL");
 	private static final String bundleName = "messages.member.Dictation";
