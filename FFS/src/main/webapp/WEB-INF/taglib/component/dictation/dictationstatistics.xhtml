@@ -53,17 +53,11 @@
 					<a4j:repeat var="i" rowKeyVar="r" value="#{dictations}">
 						<tr>
 							<td><img src="#{languageController.imagesPath}/rank_number#{r+1}.gif" border="0" /></td>
-							<td>
-								<h:commandLink action="#{dictationPracticeController.authDictation}">
-									<f:setPropertyActionListener target="#{dictationPracticeController.dictation}" value="#{i}" />
-									#{i.title}
-								</h:commandLink>
-							</td>
+							<td><h:link outcome="/member/dictation/open?id=#{i.id}">#{i.title}</h:link></td>
 							<td>								
-								<h:commandLink action="#{dictationPracticeController.authDictation}">
-									<f:setPropertyActionListener target="#{dictationPracticeController.dictation}" value="#{i}" />
+								<h:link outcome="/member/dictation/open?id=#{i.id}">
 									<img src="#{request.contextPath}/images/graphic/practice.gif" border="0" alt="#{dictationMsg.practice}" />
-								</h:commandLink>
+								</h:link>
 								<h:commandLink action="#{dictationManageController.launchDictation}">
 									<f:setPropertyActionListener target="#{dictationManageController.selectedDictation}" value="#{i}" />
 									<img src="#{request.contextPath}/images/graphic/view.gif" border="0" alt="#{dictationMsg.view}"/>

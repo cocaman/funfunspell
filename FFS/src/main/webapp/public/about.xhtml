@@ -19,12 +19,12 @@
 		</div>
 		<br /><br />
 		<rich:tabPanel width="100%" style="line-height: 18px;" switchType="client">
-			<rich:tab header="#{generalMsg.aboutUsTag1}">
+			<rich:tab styleClass="mainContent" header="#{generalMsg.aboutUsTag1}">
 				<span class="innerContent">
 					<ui:include src="/static/AboutUs_#{languageController.locale}.xhtml" />
 				</span>
 			</rich:tab>
-			<rich:tab header="#{generalMsg.aboutUsTag2}" style="line-height: 18px;">
+			<rich:tab styleClass="mainContent" header="#{generalMsg.aboutUsTag2}" style="line-height: 18px;">
 				<span class="innerContent">
 					<ui:include src="/static/AboutUs2_#{languageController.locale}.xhtml" />
 				</span>

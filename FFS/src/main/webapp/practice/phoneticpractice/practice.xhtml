@@ -33,6 +33,7 @@
 	<ui:define name="titleImg"><img src="#{languageController.imagesPath}/title/vocabpractice.gif" /></ui:define>
 
 	<ui:define name="mainContent">
+		<a4j:region id="topColumn">
 		<h2>
 			<h:outputFormat value="#{phonPracticeMsg.practiceQuestionTitle}">
 				<f:param value="#{phoneticPracticeController.practice.currentQuestion+1}"/>
@@ -43,6 +44,7 @@
 		<a4j:outputPanel id="msgPanel">
 			<h:messages tooltip="true" errorStyle="color: rgb(220, 130, 0);" globalOnly="true" />
 		</a4j:outputPanel>
+		</a4j:region>
 	</ui:define>
 	
 	<ui:define name="leftColumn">
@@ -91,6 +93,7 @@
 	</ui:define>
 	
 	<ui:define name="rightColumn">
+		<a4j:region id="question">
 		<h:form styleClass="inputform" id="inputForm" onsubmit="return submitRequest(this)">
 			<div id="player1" style="clear: none"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> for pronounce.</div>
 		    <script type="text/javascript">
@@ -125,5 +128,6 @@
 		<h:panelGroup rendered="#{phoneticPracticeController.practice.currentQuestionObject.picFileName!=null}">
 			<img style="margin-top: 10px;" src="#{request.contextPath}/images/graphic/word/#{phoneticPracticeController.practice.currentQuestionObject.picFileName}" />
 		</h:panelGroup>
+		</a4j:region>
 	</ui:define>
 </ui:composition>

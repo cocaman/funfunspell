@@ -16,11 +16,13 @@ import com.esl.web.jsf.controller.ESLController;
 @Controller
 @Scope("request")
 public class OpenDictationController extends ESLController {
+	private static final long serialVersionUID = -6870604419654595053L;
 	private static Logger logger = Logger.getLogger("ESL");
 	private static final String bundleName = "messages.member.Dictation";
 
 	//	 Supporting instance
 	@Resource private DictationPracticeController dictationPracticeController;
+	@Resource private DictationManageController dictationManageController;
 	@Resource private IDictationDAO dictationDAO;
 
 	//	 ============== UI display data ================//
@@ -31,8 +33,8 @@ public class OpenDictationController extends ESLController {
 	public OpenDictationController() {}
 
 	//============== Functions ================//
-	public String openDictation() {
-		final String logPrefix = "openDictation: ";
+	public String openDictationForPractice() {
+		final String logPrefix = "openDictationForPractice: ";
 		logger.info(logPrefix + "START");
 
 		FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -48,6 +50,32 @@ public class OpenDictationController extends ESLController {
 		} else {
 			dictationPracticeController.setDictation(dictation);
 			String str =  dictationPracticeController.authDictation();
+			if (str == null) {
+				errorPage.setTitle(bundle.getString("notAllowOpen"));
+				return errorView;
+			}
+			else
+				return str;
+		}
+	}
+	
+	public String openDictationForView() {
+		final String logPrefix = "openDictationForPractice: ";
+		logger.info(logPrefix + "START");
+		
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ResourceBundle bundle = ResourceBundle.getBundle(bundleName, facesContext.getViewRoot().getLocale());
+
+		Dictation dictation = dictationDAO.load(selectedDictationId);
+		if (dictation == null) {
+			logger.info(logPrefix + "dictation [" + selectedDictationId + "] not found");
+
+			errorPage.setTitle(bundle.getString("dictationNotFoundTitle"));
+			errorPage.setDescription(bundle.getString("dictationNotFoundDesc"));
+			return errorView;
+		} else {
+			dictationManageController.setSelectedDictation(dictation);
+			String str =  dictationManageController.launchDictation();
 			if (str == null) {
 				errorPage.setTitle(bundle.getString("notAllowOpen"));
 				return errorView;
@@ -86,6 +114,7 @@ public class OpenDictationController extends ESLController {
 	//	 ============== Setter / Getter ================//
 	public void setDictationPracticeController(DictationPracticeController controller) {this.dictationPracticeController = controller; }
 	public void setDictationDAO(IDictationDAO dictationDAO) {this.dictationDAO = dictationDAO;}
+	public void setDictationManageController(DictationManageController controller) {this.dictationManageController = dictationManageController;}
 
 	public long getSelectedDictationId() {return selectedDictationId;}
 	public void setSelectedDictationId(long selectedDictationId) {this.selectedDictationId = selectedDictationId;}

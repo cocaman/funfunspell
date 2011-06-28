@@ -66,11 +66,11 @@
 					<td>:</td>
 					<td><h:graphicImage rendered="#{dictationManageController.selectedDictation.publicAccess}" value="#{context.requestPath}/images/graphic/right.gif" /><h:graphicImage rendered="#{!dictationManageController.selectedDictation.publicAccess}" value="#{context.requestPath}/images/graphic/wrong.gif" /></td>
 				</tr>
-				<tr>
-					<td>#{dictationMsg.allowGroupAccess}</td>
-					<td>:</td>
-					<td><t:dataList var="g" rowIndexVar="index" value="#{dictationManageController.selectedDictation.accessibleGroups}" ><h:outputText rendered="#{index > 0}" value=", " />#{g.title}</t:dataList></td>
-				</tr>
+<!--				<tr>-->
+<!--					<td>#{dictationMsg.allowGroupAccess}</td>-->
+<!--					<td>:</td>-->
+<!--					<td><t:dataList var="g" rowIndexVar="index" value="#{dictationManageController.selectedDictation.accessibleGroups}" ><h:outputText rendered="#{index > 0}" value=", " />#{g.title}</t:dataList></td>-->
+<!--				</tr>-->
 				<tr>
 					<td>#{dictationMsg.pwdProtect}</td>
 					<td>:</td>
