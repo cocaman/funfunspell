@@ -9,7 +9,7 @@
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:rich="http://richfaces.org/rich"	
 	xmlns:esl="http://www.funfunspell.com/jsf"
-	template="/template/main_2column.xhtml">
+	template="/template/main2_2column.xhtml">
 
 	<ui:define name="subTitle">#{htmlHeadMsg.practice_phoneticpractice_practice_title}</ui:define>
 	<ui:define name="head">
@@ -32,7 +32,7 @@
 		
 	<ui:define name="titleImg"><img src="#{languageController.imagesPath}/title/vocabpractice.gif" /></ui:define>
 
-	<ui:define name="mainContent">
+	<ui:define name="upperMainContent">
 		<a4j:region id="topColumn">
 		<h2>
 			<h:outputFormat value="#{phonPracticeMsg.practiceQuestionTitle}">
@@ -92,7 +92,7 @@
 		</h:panelGroup>
 	</ui:define>
 	
-	<ui:define name="rightColumn">
+	<ui:define name="lowerMainContent">
 		<a4j:region id="question">
 		<h:form styleClass="inputform" id="inputForm" onsubmit="return submitRequest(this)">
 			<div id="player1" style="clear: none"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> for pronounce.</div>

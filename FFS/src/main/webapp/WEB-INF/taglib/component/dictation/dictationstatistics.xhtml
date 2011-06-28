@@ -58,10 +58,9 @@
 								<h:link outcome="/member/dictation/open?id=#{i.id}">
 									<img src="#{request.contextPath}/images/graphic/practice.gif" border="0" alt="#{dictationMsg.practice}" />
 								</h:link>
-								<h:commandLink action="#{dictationManageController.launchDictation}">
-									<f:setPropertyActionListener target="#{dictationManageController.selectedDictation}" value="#{i}" />
+								<h:link outcome="/member/dictation/dictation?id=#{i.id}">									
 									<img src="#{request.contextPath}/images/graphic/view.gif" border="0" alt="#{dictationMsg.view}"/>
-								</h:commandLink>
+								</h:link>
 							</td>
 							<td>#{i.suitableAge}</td>
 							<td><esl:ratingStar rating="#{i.rating}" /></td>
