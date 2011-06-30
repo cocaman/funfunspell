@@ -19,13 +19,13 @@
 			<a href="#{generalMsg.wikiUrl}" target="blank" style="vertical-align: bottom;"><img src="#{request.contextPath}/images/graphic/icon_wiki.gif" border="0" width="26" height="26" alt="wiki" /><strong style="color: 12AC4C; font-size: 20px;">&nbsp;#{generalMsg.linkToWiki}</strong></a>
 		</div>
 		<br /><br />
-		<rich:tabPanel width="100%" style="line-height: 18px;" switchType="client">
-			<rich:tab style="font-size: 16px;" header="#{generalMsg.aboutUsTag1}">
+		<rich:tabPanel styleClass="tabNormal" width="100%" style="line-height: 18px;" switchType="client">
+			<rich:tab header="#{generalMsg.aboutUsTag1}">
 				<span class="innerContent">
 					<ui:include src="/static/AboutUs_#{languageController.locale}.xhtml" />
 				</span>
 			</rich:tab>			
-			<rich:tab header="#{generalMsg.aboutUsTag2}" style="line-height: 18px;">
+			<rich:tab header="#{generalMsg.aboutUsTag2}">
 				<span class="innerContent">
 					<ui:include src="/static/AboutUs2_#{languageController.locale}.xhtml" />
 				</span>

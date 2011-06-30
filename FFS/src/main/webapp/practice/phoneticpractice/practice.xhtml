@@ -9,6 +9,7 @@
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:rich="http://richfaces.org/rich"	
 	xmlns:esl="http://www.funfunspell.com/jsf"
+	xmlns:util="http://java.sun.com/jsf/composite/component/util"
 	template="/template/main2_2column.xhtml">
 
 	<ui:define name="subTitle">#{htmlHeadMsg.practice_phoneticpractice_practice_title}</ui:define>
@@ -48,6 +49,7 @@
 	</ui:define>
 	
 	<ui:define name="leftColumn">
+		<a4j:region id="history">
 		<h:panelGroup rendered="#{phoneticPracticeController.practice.currentQuestion > 0}">				
 		<!-- Histories -->		
 			<p class="innerHeading"><h:outputText value="#{phonPracticeMsg.practicePreviousQuestionsTitle}" /></p>
@@ -90,6 +92,7 @@
 			<h:panelGroup rendered="#{authenticationController.authenticated}"><p>New! <h:outputText value="#{phonPracticeMsg.practiceUseMemberWord}" /></p></h:panelGroup>
 			<p>* #{phonPracticeMsg.practiceWordExplanation}</p>
 		</h:panelGroup>
+		</a4j:region>
 	</ui:define>
 	
 	<ui:define name="lowerMainContent">
@@ -116,8 +119,8 @@
 			<table width="100%" style="margin-bottom: 20px;">
 				<tr>
 					<td align="left">
-						<div style="margin-bottom: 15px; margin-top: 15px;" class="buttons">				
-							<h:commandLink id="eslSubmit" styleClass="orange" action="#{phoneticPracticeController.submitAnswer}"><img src="#{request.contextPath}/images/icon/silk/tick.png" />#{phonPracticeMsg.practiceSubmit}</h:commandLink>
+						<div style="margin-bottom: 15px; margin-top: 15px;" class="buttons">
+							<a4j:commandLink render="topColumn, question, history" id="eslSubmit" action="#{phoneticPracticeController.submitAnswer}"><img src="#{request.contextPath}/images/icon/silk/font.png" />#{phonPracticeMsg.practiceSubmit}</a4j:commandLink>
 						</div>
 					</td>					
 				</tr>
@@ -125,9 +128,10 @@
 			<br /><h:message for="answer" errorClass="error" />
 		</h:form>
 		<br />
-		<h:panelGroup rendered="#{phoneticPracticeController.practice.currentQuestionObject.picFileName!=null}">
-			<img style="margin-top: 10px;" src="#{request.contextPath}/images/graphic/word/#{phoneticPracticeController.practice.currentQuestionObject.picFileName}" />
-		</h:panelGroup>
+		<util:googleimage keyword="#{phoneticPracticeController.practice.currentQuestionObject.word}" />
+<!-- 		<h:panelGroup rendered="#{phoneticPracticeController.practice.currentQuestionObject.picFileName!=null}"> -->
+<!-- 			<img style="margin-top: 10px;" src="#{request.contextPath}/images/graphic/word/#{phoneticPracticeController.practice.currentQuestionObject.picFileName}" /> -->
+<!-- 		</h:panelGroup> -->
 		</a4j:region>
 	</ui:define>
 </ui:composition>

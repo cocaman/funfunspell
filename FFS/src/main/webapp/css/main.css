@@ -537,3 +537,36 @@ body,td,th {
 	font-weight: bold;
 	padding-top: 5px;
 }
+
+/*--- RichFaces tablePanel styles overwriting ---*/
+.tabNormal .rf-tab-hdr-tabline-vis{
+    background:#ebf6fd;
+    border:0;   
+    height:31px;
+    padding:0;
+}
+
+.tabNormal .rf-tab-hdr{
+    border:1px solid #dddddd;
+    padding:6px 10px 0;
+    margin-right: 3px; 
+}
+
+.tabNormal .rf-tab-hdr-act{
+    background:#ffffff; 
+    border-bottom:0;
+    color:#5F9CD0;
+}
+
+.tabNormal .rf-tab-hdr-act .rf-tab-lbl{
+    font-weight:bold;
+}
+
+.tabNormal .rf-tab-hdr-spcr{
+    border-bottom:1px solid #dddddd;
+    padding:0 3px 0 0;
+}
+
+.tabNormal .rf-tab-lbl{
+    font:normal 12px "Lucida Sans Unicode", "Lucida Grande", Geneva,Verdana,Arial,sans-serif;
+}

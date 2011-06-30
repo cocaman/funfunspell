@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:t="http://myfaces.apache.org/tomahawk"	
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:composite="http://java.sun.com/jsf/composite">
+
+<composite:interface>
+	<composite:attribute name="keyword" required="true"/>    
+	<composite:attribute name="rendered" default="true" />    
+</composite:interface>
+
+<composite:implementation>
+<h:panelGroup rendered="#{rendered eq 'true'}">
+	<script src="https://www.google.com/jsapi?key=ABQIAAAATbS1XjFTq14cbzVDth8P6xTJuFYH-uIDxL_cDd1gPuOiAylt6xR1Q06eRUkV3ROSCE2N_PbOAivNFQ" type="text/javascript"></script>
+    <script language="Javascript" type="text/javascript">
+    //<![CDATA[
+		google.load('search', '1');
+		google.load("jquery", "1.4.2");
+		google.load("jqueryui", "1.7.2");
+
+		var imageSearch;
+		var resultCount = 0;
+		var page = 1;
+    
+		function searchComplete() {
+			var contentDiv = document.getElementById('gImageContent');
+			contentDiv.innerHTML = '';
+  	
+			// Check that we got results
+			if (imageSearch.results && imageSearch.results.length > 0) {
+				var results = imageSearch.results;
+  		  
+				if (imageSearch.getResultSetSize() <= resultCount) {
+					page = page + 1;
+					imageSearch.gotoPage(page);
+					resultCount = 0;
+				}
+  
+				var result = results[resultCount];
+				while (result == null) {
+					resultCount = resultCount +1;
+					result = results[resultCount];
+				}
+				var imgContainer = document.createElement('div');          		  
+				var newImg = document.createElement('img');
+				newImg.src = result.tbUrl;          
+				imgContainer.appendChild(newImg);
+				contentDiv.appendChild(imgContainer);		  
+      		} else {
+      			contentDiv.innerHTML = '#{generalMsg.imageNA}';	
+      			
+      			var nextImgDiv = document.getElementById('nextImage');
+      			nextImgDiv.innerHTML = '';
+			}
+		}
+
+		function OnLoad() {      
+			// Create an Image Search instance.
+			imageSearch = new google.search.ImageSearch();
+
+			// Set searchComplete as the callback function when a search is complete.  The imageSearch object will have results in it.
+			imageSearch.setSearchCompleteCallback(this, searchComplete, null);
+
+			// my settings
+			imageSearch.setResultSetSize(8);
+			imageSearch.setNoHtmlGeneration();
+			imageSearch.setRestriction(google.search.ImageSearch.RESTRICT_IMAGETYPE, google.search.ImageSearch.IMAGETYPE_CLIPART);
+
+			imageSearch.execute(#{keyword}); // what to find
+			google.search.Search.getBranding('branding'); // Include the required Google branding
+		}      
+ 
+		function changeImg() {
+			resultCount = resultCount + 1;
+			searchComplete();
+		}
+ 
+ 		google.setOnLoadCallback(OnLoad);
+    //]]>
+    </script>
+    <table>
+    	<tr>
+    		<td colspan="2" valign="middle" align="center"><div id="gImageContent">Loading...</div></td>
+    	</tr>
+    	<tr>
+    		<td><div id="branding"  align="left"></div></td>
+    		<td><div id="nextImage" align="right" onclick="changeImg()"><h:graphicImage value="/images/icon/silk/picture_go.png" />#{generalMsg.nextImage}</div></td>
+    	</tr>
+    </table>    
+</h:panelGroup>
+<h:panelGroup rendered="#{rendered eq 'false'}">
+	<table>
+    	<tr>
+    		<td valign="middle" align="center"><div id="gImageContent">#{generalMsg.doNotShowImage}</div></td>
+    	</tr>
+   </table>
+</h:panelGroup>
+</composite:implementation>
+</html>
