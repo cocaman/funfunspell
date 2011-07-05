@@ -546,6 +546,10 @@ body,td,th {
     padding:0;
 }
 
+.tabNormal .rf-tab-hdr-tabs {
+	background: #fff;
+}
+
 .tabNormal .rf-tab-hdr{
     border:1px solid #dddddd;
     padding:6px 10px 0;
@@ -555,7 +559,7 @@ body,td,th {
 .tabNormal .rf-tab-hdr-act{
     background:#ffffff; 
     border-bottom:0;
-    color:#5F9CD0;
+    color:#399;
 }
 
 .tabNormal .rf-tab-hdr-act .rf-tab-lbl{
@@ -568,5 +572,5 @@ body,td,th {
 }
 
 .tabNormal .rf-tab-lbl{
-    font:normal 12px "Lucida Sans Unicode", "Lucida Grande", Geneva,Verdana,Arial,sans-serif;
+    font:normal 14px "Lucida Sans Unicode", "Lucida Grande", Geneva,Verdana,Arial,sans-serif;
 }
