@@ -9,7 +9,7 @@
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:rich="http://richfaces.org/rich"	
 	xmlns:esl="http://www.funfunspell.com/jsf"
-	xmlns:util="http://java.sun.com/jsf/composite/component/util"
+	xmlns:util="http://java.sun.com/jsf/composite/components/util"
 	template="/template/main2_2column.xhtml">
 
 	<ui:define name="subTitle">#{htmlHeadMsg.practice_phoneticpractice_practice_title}</ui:define>
@@ -120,7 +120,7 @@
 				<tr>
 					<td align="left">
 						<div style="margin-bottom: 15px; margin-top: 15px;" class="buttons">
-							<a4j:commandLink render="topColumn, question, history" id="eslSubmit" action="#{phoneticPracticeController.submitAnswer}"><img src="#{request.contextPath}/images/icon/silk/font.png" />#{phonPracticeMsg.practiceSubmit}</a4j:commandLink>
+							<a4j:commandLink render="topColumn question history" id="eslSubmit" action="#{phoneticPracticeController.submitAnswer}"><img src="#{request.contextPath}/images/icon/silk/font.png" />#{phonPracticeMsg.practiceSubmit}</a4j:commandLink>
 						</div>
 					</td>					
 				</tr>
