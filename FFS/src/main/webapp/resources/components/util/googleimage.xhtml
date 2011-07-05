@@ -14,7 +14,7 @@
 </composite:interface>
 
 <composite:implementation>
-<h:panelGroup rendered="#{rendered eq 'true'}">
+<h:panelGroup rendered="#{cc.attrs.rendered eq 'true'}">
 	<script src="https://www.google.com/jsapi?key=ABQIAAAATbS1XjFTq14cbzVDth8P6xTJuFYH-uIDxL_cDd1gPuOiAylt6xR1Q06eRUkV3ROSCE2N_PbOAivNFQ" type="text/javascript"></script>
     <script language="Javascript" type="text/javascript">
     //<![CDATA[
@@ -70,7 +70,7 @@
 			imageSearch.setNoHtmlGeneration();
 			imageSearch.setRestriction(google.search.ImageSearch.RESTRICT_IMAGETYPE, google.search.ImageSearch.IMAGETYPE_CLIPART);
 
-			imageSearch.execute(#{keyword}); // what to find
+			imageSearch.execute(#{cc.attrs.keyword}); // what to find
 			google.search.Search.getBranding('branding'); // Include the required Google branding
 		}      
  
@@ -92,7 +92,7 @@
     	</tr>
     </table>    
 </h:panelGroup>
-<h:panelGroup rendered="#{rendered eq 'false'}">
+<h:panelGroup rendered="#{cc.attrs.rendered eq 'false'}">
 	<table>
     	<tr>
     		<td valign="middle" align="center"><div id="gImageContent">#{generalMsg.doNotShowImage}</div></td>
