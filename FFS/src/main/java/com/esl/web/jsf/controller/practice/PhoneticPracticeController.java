@@ -1,6 +1,10 @@
 package com.esl.web.jsf.controller.practice;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
@@ -12,9 +16,19 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.esl.dao.*;
-import com.esl.model.*;
-import com.esl.service.practice.*;
+import com.esl.dao.IGradeDAO;
+import com.esl.dao.IMemberDAO;
+import com.esl.dao.IPracticeResultDAO;
+import com.esl.model.Grade;
+import com.esl.model.Member;
+import com.esl.model.PhoneticPractice;
+import com.esl.model.PhoneticQuestion;
+import com.esl.model.PracticeResult;
+import com.esl.model.TopResult;
+import com.esl.service.practice.IPhoneticPracticeService;
+import com.esl.service.practice.ITopResultService;
+import com.esl.service.practice.PhoneticPracticeService;
+import com.esl.util.JSFUtil;
 import com.esl.web.jsf.controller.AuthenticationController;
 import com.esl.web.jsf.controller.ESLController;
 import com.esl.web.jsf.controller.member.MemberWordController;
@@ -192,9 +206,9 @@ public class PhoneticPracticeController extends ESLController {
 		answer = "";			// Clear answer field
 
 		if (PhoneticPracticeService.INVALID_INPUT.equals(result))
-			return practiceView;
+			return null;
 		else if (PhoneticPracticeService.SYSTEM_ERROR.equals(result))
-			return errorView;
+			return JSFUtil.redirect(errorView);
 
 		// Logic flow for practice completed
 		if (practice.isFinish())
@@ -203,13 +217,13 @@ public class PhoneticPracticeController extends ESLController {
 			logger.info("submitAnswer: completedPractice returned code: " + result);
 			if (PhoneticPracticeService.SAVE_HISTORY_COMPLETED.equals(result)) {
 				setScoreBar(0, practice.getMark());
-				return resultView;
+				return JSFUtil.redirect(resultView);
 			}
-			return errorView;
+			return JSFUtil.redirect(errorView);
 		}
 
 		// Continue Practice
-		return practiceView;
+		return null;
 	}
 
 	// ============== Supporting Functions ================//

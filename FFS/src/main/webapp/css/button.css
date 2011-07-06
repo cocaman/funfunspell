@@ -1,5 +1,33 @@
 /* BUTTONS */
 
+.blueButton{
+font:bold 20px Tahoma, Geneva, sans-serif;
+font-style:normal;
+color:#ffffff;
+background:#16c0e9;
+border:0px solid #ffffff;
+text-shadow:0px -1px 1px #bbbdbb;
+box-shadow:2px 2px 5px #000000;
+-moz-box-shadow:2px 2px 5px #000000;
+-webkit-box-shadow:2px 2px 5px #000000;
+border-radius:10px 10px 10px 10px;
+-moz-border-radius:10px 10px 10px 10px;
+-webkit-border-radius:10px 10px 10px 10px;
+width:83px;
+padding:20px 43px;
+cursor:pointer;
+margin:0 auto;
+}
+.blueButton:active{
+cursor:pointer;
+position:relative;
+top:2px;
+}
+
+.bludButton:HOVER {
+text-shadow:0px -1px 1px #bbbdbb;
+}
+
 .inlinebuttons {
     display:inline-block;    
     margin:0 7px 0 0;
