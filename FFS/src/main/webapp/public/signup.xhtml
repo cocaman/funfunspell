@@ -9,6 +9,10 @@
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:rich="http://richfaces.org/rich"
 	template="/template/main.xhtml">
+	
+<f:metadata>
+	<f:event type="preRenderView" listener="#{profileController.startSignUp}"/>
+</f:metadata>
 
 	<ui:define name="subTitle">#{htmlHeadMsg.public_signup_title}</ui:define>
 	<ui:define name="head"><meta name="keywords" content="#{htmlHeadMsg.public_signup_desc}" /></ui:define>
@@ -172,8 +176,8 @@
 					</tr>
 				</table>
 				</fieldset>
-				<div class="buttons" style="padding-left: 2px; padding-top: 10px;">
-					<h:commandLink action="#{profileController.signUp}"><img src="#{request.contextPath}/images/icon/silk/accept.png" />#{authMsg.signupFormSubmit}</h:commandLink>					
+				<div style="padding-left: 2px; padding-top: 10px;">
+					<h:commandLink styleClass="normalButton blue" action="#{profileController.signUp}"><img src="#{request.contextPath}/images/icon/silk/accept.png" />&nbsp;#{authMsg.signupFormSubmit}</h:commandLink>					
 				</div>
 			</h:panelGroup>
 		</h:form>

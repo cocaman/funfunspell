@@ -18,6 +18,8 @@ import com.esl.service.practice.IPhoneticPracticeService;
 @Controller
 @Scope("session")
 public class ProfileController extends ESLController {
+	private static final long serialVersionUID = 5733512605406754494L;
+
 	private static Logger logger = Logger.getLogger("ESL");
 
 	private final String bundleName = "messages.Authentication";
