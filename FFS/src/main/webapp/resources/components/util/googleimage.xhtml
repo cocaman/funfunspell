@@ -10,11 +10,11 @@
 
 <composite:interface>
 	<composite:attribute name="keyword" required="true"/>    
-<!-- 	<composite:attribute name="rendered" default="true" />     -->
+ 	<composite:attribute name="showImage" type="java.lang.Boolean" default="true" />
 </composite:interface>
 
 <composite:implementation>
-<h:panelGroup rendered="true">
+<h:panelGroup rendered="#{cc.attrs.showImage}">
 	<script src="https://www.google.com/jsapi?key=ABQIAAAATbS1XjFTq14cbzVDth8P6xTJuFYH-uIDxL_cDd1gPuOiAylt6xR1Q06eRUkV3ROSCE2N_PbOAivNFQ" type="text/javascript"></script>
     <script language="Javascript" type="text/javascript">
     //<![CDATA[
@@ -82,22 +82,22 @@
  		google.setOnLoadCallback(OnLoad);
     //]]>
     </script>
-    <table>
+    <table style="width: 300px; height: 250px; border:3px solid #FF8620;">
     	<tr>
-    		<td colspan="2" valign="middle" align="center"><div id="gImageContent">Loading...</div></td>
+    		<td colspan="2" valign="middle" align="center" style="width: 100%; height: 230;"><div id="gImageContent">Loading...</div></td>
     	</tr>
     	<tr>
-    		<td><div id="branding"  align="left"></div></td>
+    		<td style="height: 20px;"><div id="branding"  align="left"></div></td>
     		<td><div id="nextImage" align="right" onclick="changeImg()"><h:graphicImage value="/images/icon/silk/picture_go.png" />#{generalMsg.nextImage}</div></td>
     	</tr>
     </table>    
 </h:panelGroup>
-<h:panelGroup rendered="true">
-	<table>
+<h:panelGroup rendered="#{!cc.attrs.showImage}">
+	<table style="width: 300px; height: 250px; border:3px solid #FF8620;">
     	<tr>
     		<td valign="middle" align="center"><div id="gImageContent">#{generalMsg.doNotShowImage}</div></td>
     	</tr>
-   </table>
+    </table>
 </h:panelGroup>
 </composite:implementation>
 </html>
