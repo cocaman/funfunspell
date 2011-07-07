@@ -9,8 +9,8 @@ a.normalButton {
 	-moz-box-shadow: 2px 2px 5px #000000;
 	-webkit-box-shadow: 2px 2px 5px #000000;
 	border-radius: 5px 5px 5px 5px;
-	/* -moz-border-radius:10px 10px 10px 10px; */
-	/* -webkit-border-radius:10px 10px 10px 10px; */
+	-moz-border-radius:5px 5px 5px 5px; 
+	-webkit-border-radius:5px 5px 5px 5px; 
 	width: 80px;
 	padding: 5px 10px;
 	cursor: pointer;
@@ -27,21 +27,38 @@ a.normalButton:hover {
 	color: #C3EBF0;	
 }
 
-a.blue {	
-	background: #40D7D7;	
+a.rightRoundButton{
+	font: bold 16px Tahoma, Geneva, sans-serif;
+	font-style:normal;
+	color:#ffffff;
+	background:#FF8620;
+	border:0px solid #ea326f;
+	text-shadow:0px 0px 0px #ffffff;
+	box-shadow:0px 0px 3px #454545;
+	-moz-box-shadow:0px 0px 3px #454545;
+	-webkit-box-shadow:0px 0px 3px #454545;
+	border-radius:10px 15px 90px 15px;
+	-moz-border-radius:10px 15px 90px 15px;
+	-webkit-border-radius:10px 15px 90px 15px;
+	width:90px;
+	padding:5px 10px;
+	cursor:pointer;
+	margin:0 auto;
 }
-a.blue:hover {
-	color: #C3EBF0;	
+a.rightRoundButton:active{
+	cursor:pointer;
+	position:relative;
+	top:2px;
 }
 
-a.green {	
-	background: #79dc44;	
-}
-a.green:hover {
-	color: #baf5c8;	
-}
+a.blue {background: #40D7D7;}
+a.blue:hover {color: #C3EBF0;}
 
+a.green {background: #79dc44;}
+a.green:hover {color: #baf5c8;}
 
+a.orange {background: #FF8620;}
+a.orange:hover {color: #f5bc8e;}
 
 .inlinebuttons {
 	display: inline-block;

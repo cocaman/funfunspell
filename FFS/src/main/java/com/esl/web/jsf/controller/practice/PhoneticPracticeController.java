@@ -186,7 +186,7 @@ public class PhoneticPracticeController extends ESLController {
 		// Check practice have been create or not, if not created, call start
 		if (practice == null) {
 			logger.info("submitAnswer: cannot find practice");
-			return start();
+			return JSFUtil.redirect(start());
 		}
 
 		PhoneticQuestion question = practice.getCurrentQuestionObject();
