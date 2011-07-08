@@ -49,7 +49,7 @@
 	</ui:define>
 	
 	<ui:define name="leftColumn">
-		<a4j:region id="history">
+		<a4j:region id="historyRegion">
 		<h:panelGroup rendered="#{phoneticPracticeController.practice.currentQuestion > 0}">				
 		<!-- Histories -->		
 			<p class="innerHeading"><h:outputText value="#{phonPracticeMsg.practicePreviousQuestionsTitle}" /></p>
@@ -96,7 +96,7 @@
 	</ui:define>
 	
 	<ui:define name="lowerMainContent">
-		<a4j:region id="question">
+		<a4j:region id="questionRegion">
 		<h:form styleClass="inputform" id="inputForm" onsubmit="return submitRequest(this)">
 			<div id="player1" style="clear: none"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> for pronounce.</div>
 		    <script type="text/javascript">
@@ -120,7 +120,7 @@
 				<tr>
 					<td align="left">
 						<div style="margin-bottom: 15px; margin-top: 15px;" class="buttons">
-							<a4j:commandLink render="topColumn question history" id="eslSubmit" action="#{phoneticPracticeController.submitAnswer}"><img src="#{request.contextPath}/images/icon/silk/font.png" />#{phonPracticeMsg.practiceSubmit}</a4j:commandLink>
+							<a4j:commandLink render="topColumn questionRegion historyRegion" id="eslSubmit" action="#{phoneticPracticeController.submitAnswer}"><img src="#{request.contextPath}/images/icon/silk/font.png" />#{phonPracticeMsg.practiceSubmit}</a4j:commandLink>
 						</div>
 					</td>					
 				</tr>
