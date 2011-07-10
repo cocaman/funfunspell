@@ -187,8 +187,6 @@ public class SelfDictationController extends ESLController {
 		int startLength = (int) ((double)startIdx / (double)practice.getTotalQuestions() * SCOREBAR_FULLLENGTH);
 		int endLength = (int) ((double)endIdx / (double)practice.getTotalQuestions() * SCOREBAR_FULLLENGTH);
 		if (startLength < 0) startLength = 0;
-		scoreBar.setStartLength(startLength);
-		scoreBar.setEndLength(endLength);
 
 		logger.info("setScoreBar: startLength[" + startLength + "], endLength[" + endLength + "]");
 	}

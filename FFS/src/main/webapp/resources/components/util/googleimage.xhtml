@@ -25,7 +25,15 @@
 		var imageSearch;
 		var resultCount = 0;
 		var page = 1;
+		var searchText = '#{cc.attrs.keyword}';
     
+		function resetGoogleImageSearch(newTexttoSearch) {
+			resultCount = 0;
+			page = 1;
+			searchText = newTexttoSearch;
+			imageSearch.execute(searchText); // what to find
+		}
+		
 		function searchComplete() {
 			var contentDiv = document.getElementById('gImageContent');
 			contentDiv.innerHTML = '';
@@ -58,7 +66,7 @@
 			}
 		}
 
-		function OnLoad() {      
+		function onGoogleImageLoad() {      
 			// Create an Image Search instance.
 			imageSearch = new google.search.ImageSearch();
 
@@ -70,7 +78,7 @@
 			imageSearch.setNoHtmlGeneration();
 			imageSearch.setRestriction(google.search.ImageSearch.RESTRICT_IMAGETYPE, google.search.ImageSearch.IMAGETYPE_CLIPART);
 
-			imageSearch.execute('#{cc.attrs.keyword}'); // what to find
+			imageSearch.execute(searchText); // what to find
 			google.search.Search.getBranding('branding'); // Include the required Google branding
 		}      
  
@@ -79,7 +87,7 @@
 			searchComplete();
 		}
  
- 		google.setOnLoadCallback(OnLoad);
+ 		google.setOnLoadCallback(onGoogleImageLoad);
     //]]>
     </script>
     <table style="width: 250px; height: 230px; border:5px solid #FF8620;">

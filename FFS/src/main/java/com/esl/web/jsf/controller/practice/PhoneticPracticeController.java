@@ -1,10 +1,6 @@
 package com.esl.web.jsf.controller.practice;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
@@ -16,31 +12,19 @@ import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.esl.dao.IGradeDAO;
-import com.esl.dao.IMemberDAO;
-import com.esl.dao.IPracticeResultDAO;
-import com.esl.model.Grade;
-import com.esl.model.Member;
-import com.esl.model.PhoneticPractice;
-import com.esl.model.PhoneticQuestion;
-import com.esl.model.PracticeResult;
-import com.esl.model.TopResult;
-import com.esl.service.practice.IPhoneticPracticeService;
-import com.esl.service.practice.ITopResultService;
-import com.esl.service.practice.PhoneticPracticeService;
+import com.esl.dao.*;
+import com.esl.model.*;
+import com.esl.service.practice.*;
 import com.esl.util.JSFUtil;
 import com.esl.web.jsf.controller.AuthenticationController;
 import com.esl.web.jsf.controller.ESLController;
 import com.esl.web.jsf.controller.member.MemberWordController;
 import com.esl.web.model.UserSession;
-import com.esl.web.model.practice.ScoreBar;
 import com.esl.web.util.LanguageUtil;
 
 @Controller
 @Scope("session")
 public class PhoneticPracticeController extends ESLController {
-	public static int SCOREBAR_FULLLENGTH = 500;
-
 	private static Logger logger = Logger.getLogger("ESL");
 	private final String bundleName = "messages.practice.PhoneticPractice";
 	private String viewPrefix = "/practice/phoneticpractice/";
@@ -55,7 +39,6 @@ public class PhoneticPracticeController extends ESLController {
 	private TopResult rateRanking;
 	private PracticeResult currentGradeResult;
 	private boolean isLevelUp = false;
-	private ScoreBar scoreBar;
 
 	// Supporting classes
 	@Resource private IMemberDAO memberDAO;
@@ -72,10 +55,7 @@ public class PhoneticPracticeController extends ESLController {
 	private HtmlCommandButton practiceCommand;
 
 	// ============== Constructor ================//
-	public PhoneticPracticeController() {
-		scoreBar = new ScoreBar();
-		scoreBar.setFullLength(SCOREBAR_FULLLENGTH);
-	}
+	public PhoneticPracticeController() {}
 
 	// ============== Setter / Getter ================//
 	public void setMemberDAO(IMemberDAO memberDAO) {this.memberDAO = memberDAO;}
@@ -108,9 +88,6 @@ public class PhoneticPracticeController extends ESLController {
 
 	public TopResult getRateRanking() {	return rateRanking;}
 	public void setRateRanking(TopResult rateRanking) {	this.rateRanking = rateRanking;	}
-
-	public ScoreBar getScoreBar() {	return scoreBar;}
-	public void setScoreBar(ScoreBar scoreBar) {this.scoreBar = scoreBar;}
 
 	public TopResult getScoreRanking() {return scoreRanking;}
 	public void setScoreRanking(TopResult scoreRanking) {this.scoreRanking = scoreRanking;	}
@@ -170,7 +147,6 @@ public class PhoneticPracticeController extends ESLController {
 
 		if (practice != null) {
 			memberWordController.setSavedQuestion(phoneticPracticeService.getUnSavedMap(practice));
-			setScoreBar(0, 0); 			// set scoreBar
 			return practiceView;
 		}
 
@@ -194,14 +170,10 @@ public class PhoneticPracticeController extends ESLController {
 		logger.info("submitAnswer: phoneticPracticeService.checkAnswer returned code: " + result);
 		// update score bar
 		if (IPhoneticPracticeService.CORRECT_ANSWER.equals(result)) {
-			setScoreBar(practice.getMark()-1, practice.getMark());
-
 			// update socre card
 			if (userSession.getMember() != null)
 				phoneticPracticeService.updateScoreCard(userSession.getMember(), new java.sql.Date((new Date()).getTime()), true, question);
 		}
-		else
-			setScoreBar(practice.getMark(), practice.getMark());
 
 		answer = "";			// Clear answer field
 
@@ -216,7 +188,6 @@ public class PhoneticPracticeController extends ESLController {
 			result = completedPractice();
 			logger.info("submitAnswer: completedPractice returned code: " + result);
 			if (PhoneticPracticeService.SAVE_HISTORY_COMPLETED.equals(result)) {
-				setScoreBar(0, practice.getMark());
 				return JSFUtil.redirect(resultView);
 			}
 			return JSFUtil.redirect(errorView);
@@ -253,14 +224,5 @@ public class PhoneticPracticeController extends ESLController {
 		return result;
 	}
 
-	private void setScoreBar(int startIdx, int endIdx) {
-		int startLength = (int) ((double)startIdx / (double)practice.getTotalQuestions() * SCOREBAR_FULLLENGTH);
-		int endLength = (int) ((double)endIdx / (double)practice.getTotalQuestions() * SCOREBAR_FULLLENGTH);
-		if (startLength < 0) startLength = 0;
-		scoreBar.setStartLength(startLength);
-		scoreBar.setEndLength(endLength);
-
-		logger.info("setScoreBar: startLength[" + startLength + "], endLength[" + endLength + "]");
-	}
 }
 

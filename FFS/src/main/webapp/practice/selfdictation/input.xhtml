@@ -37,7 +37,8 @@
 	</ui:define>
 	
 	<ui:define name="leftColumn">
-		<h:form class="formContent">
+		<h:form>
+		<div class="formContent">
 		<p>
 			<h:outputFormat value="#{selfDictationMsg.inputVocabularyLabel}" styleClass="innerBold"><f:param value="#{selfDictationService.maxQuestions}"/></h:outputFormat><br /><br />			
 			<a4j:repeat var="vocab" rowKeyVar="r" value="#{selfDictationController.inputVocab}">
@@ -54,9 +55,10 @@
 		    <h:selectBooleanCheckbox title="withRandomCharacters" value="#{selfDictationController.withRandomCharacters}" />
 		    <h:outputText value="#{selfDictationMsg.withRamdomCharacters}" />
 		</p>
-		<div class="buttons">
-			<h:commandLink onclick="return submitRequest();" action="#{selfDictationController.start}"><img src="#{request.contextPath}/images/icon/silk/font.png" />#{selfDictationMsg.inputCommandStartTitle}</h:commandLink>
-			<a style="margin-left: 20px;" class="negative" onclick="return clearVocab()" href="#"><img border="0" src="#{request.contextPath}/images/icon/silk/cross.png" /><h:outputText value="#{selfDictationMsg.inputClearFields}" /></a>			
+		</div>
+		<div>
+			<h:commandLink styleClass="rightRoundButton blue" onclick="return submitRequest();" action="#{selfDictationController.start}"><img src="#{request.contextPath}/images/icon/silk/font.png" />&nbsp;#{selfDictationMsg.inputCommandStartTitle}</h:commandLink>
+			<a style="margin-left: 20px;" class="rightRoundButton orange" onclick="return clearVocab()" href="#"><img border="0" src="#{request.contextPath}/images/icon/silk/cross.png" />&nbsp;#{selfDictationMsg.inputClearFields}</a>			
 		</div>
 		</h:form>
 	</ui:define>

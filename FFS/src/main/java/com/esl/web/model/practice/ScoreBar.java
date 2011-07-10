@@ -2,27 +2,27 @@ package com.esl.web.model.practice;
 
 public class ScoreBar {
 	private int fullLength;
-	private int startLength;
-	private int endLength;
-	
-	public int getEndLength() {
-		return endLength;
-	}
-	public void setEndLength(int endLength) {
-		this.endLength = endLength;
-	}
+	private int currentMark;
+	private int maxMark;
+
 	public int getFullLength() {
 		return fullLength;
 	}
 	public void setFullLength(int fullLength) {
 		this.fullLength = fullLength;
 	}
-	public int getStartLength() {
-		return startLength;
+	public int getCurrentMark() {
+		return currentMark;
 	}
-	public void setStartLength(int startLength) {
-		this.startLength = startLength;
+	public void setCurrentMark(int currentMark) {
+		this.currentMark = currentMark;
 	}
-	
-	
+	public int getMaxMark() {
+		return maxMark;
+	}
+	public void setMaxMark(int maxMark) {
+		this.maxMark = maxMark;
+	}
+
+
 }

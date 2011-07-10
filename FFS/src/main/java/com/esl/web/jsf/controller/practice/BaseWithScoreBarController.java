@@ -23,14 +23,11 @@ public abstract class BaseWithScoreBarController extends ESLController {
 	}
 
 	//	============== Supporting Function ================//
-	public void setScoreBar(int startIdx, int endIdx, int baseIdx) {
-		int startLength = (int) ((double)startIdx / (double) baseIdx * SCOREBAR_FULLLENGTH);
-		int endLength = (int) ((double)endIdx / (double) baseIdx * SCOREBAR_FULLLENGTH);
-		if (startLength < 0) startLength = 0;
-		scoreBar.setStartLength(startLength);
-		scoreBar.setEndLength(endLength);
+	public void setScoreBar(int current, int max) {
+		scoreBar.setCurrentMark(current);
+		scoreBar.setMaxMark(max);
 
-		logger.info("setScoreBar: startLength[" + startLength + "], endLength[" + endLength + "]");
+		logger.info("setScoreBar: currentMark[" + current + "], maxMark[" + max + "]");
 	}
 
 	//	 ============== Setter / Getter ================//

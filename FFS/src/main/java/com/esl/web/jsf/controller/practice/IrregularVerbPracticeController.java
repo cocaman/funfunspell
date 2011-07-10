@@ -63,7 +63,7 @@ public class IrregularVerbPracticeController extends BaseWithScoreBarController 
 		phoneticQ = null;
 		input = null;
 		histories = new ArrayList<IrregularVerbPracticeHistory>();
-		setScoreBar(0,0,0);
+		setScoreBar(0,1);
 		return practice();
 	}
 
@@ -121,7 +121,7 @@ public class IrregularVerbPracticeController extends BaseWithScoreBarController 
 
 		// update mark stat
 		fullMark += markPerQuestion;
-		setScoreBar(mark, mark + corrects, fullMark);
+		setScoreBar(mark + corrects, fullMark);
 		mark += corrects;
 
 

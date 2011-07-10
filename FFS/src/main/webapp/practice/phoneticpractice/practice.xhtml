@@ -27,6 +27,11 @@
 				jQuery('#inputForm\\:answer').focus();
 			}
 		);
+		
+		function updateAfterSubmit() {
+			animateScoreBar(jQuery('#inputForm\\:hiddenCurrentMark').val(), jQuery('#inputForm\\:hiddenMaxMark').val());
+			resetGoogleImageSearch(jQuery('#inputForm\\:hiddenSearchText').val());
+		}
 		-->
 		</script>
 	</ui:define>
@@ -34,23 +39,24 @@
 	<ui:define name="titleImg"><img src="#{languageController.imagesPath}/title/vocabpractice.gif" /></ui:define>
 
 	<ui:define name="upperMainContent">
-		<a4j:region id="topColumn">
+		<a4j:outputPanel id="topHeader">
 		<h2>
 			<h:outputFormat value="#{phonPracticeMsg.practiceQuestionTitle}">
 				<f:param value="#{phoneticPracticeController.practice.currentQuestion+1}"/>
 				<f:param value="#{phoneticPracticeController.practice.totalQuestions}"/>
 			</h:outputFormat>
 		</h2>
-		<esl:scoreBar scoreBar="#{phoneticPracticeController.scoreBar}" mark="#{phoneticPracticeController.practice.mark}" />
+		</a4j:outputPanel>
+		<esl:scoreBar startMark="#{phoneticPracticeController.practice.mark}" maxMark="#{phoneticPracticeController.practice.totalQuestions}" />
 		<a4j:outputPanel id="msgPanel">
 			<h:messages tooltip="true" errorStyle="color: rgb(220, 130, 0);" globalOnly="true" />
 		</a4j:outputPanel>
-		</a4j:region>
+		
 	</ui:define>
 	
-	<ui:define name="leftColumn">
-		<a4j:region id="historyRegion">
-		<h:panelGroup rendered="#{phoneticPracticeController.practice.currentQuestion > 0}">				
+	<ui:define name="leftColumn">		
+		<a4j:outputPanel id="historyRegion">
+		<a4j:outputPanel rendered="#{phoneticPracticeController.practice.currentQuestion > 0}">				
 		<!-- Histories -->		
 			<p class="innerHeading"><h:outputText value="#{phonPracticeMsg.practicePreviousQuestionsTitle}" /></p>
 			<table class="resultTable">
@@ -90,48 +96,56 @@
 				</a4j:repeat>
 			</table>
 			<h:panelGroup rendered="#{authenticationController.authenticated}"><p>New! <h:outputText value="#{phonPracticeMsg.practiceUseMemberWord}" /></p></h:panelGroup>
-			<p>* #{phonPracticeMsg.practiceWordExplanation}</p>
-		</h:panelGroup>
-		</a4j:region>
+			<p>* #{phonPracticeMsg.practiceWordExplanation}</p>		
+		</a4j:outputPanel>
+		</a4j:outputPanel>
 	</ui:define>
 	
-	<ui:define name="lowerMainContent">
-		<a4j:region id="questionRegion">
-		<h:form styleClass="inputform" id="inputForm" onsubmit="return submitRequest(this)">
-			<div id="player1" style="clear: none"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> for pronounce.</div>
-		    <script type="text/javascript">
-			    var player1 = new SWFObject("#{request.contextPath}/player/btn_#{languageController.locale}.swf", "line", "184", "30", "7");
-			    player1.addVariable("path","#{phoneticPracticeController.practice.currentQuestionObject.pronouncedLink}");
-			    player1.write("player1");
-		    </script>
-		    <p>&nbsp;</p>
-		    <table style="color: #EE6600;">
-		    	<tr id="IPA">
-		    		<td width="180" style="font-size: 16px; font-weight: bold;"><h:outputText value="#{phonPracticeMsg.practicePhonetic}" />:</td>
-			    	<td style="font-size: 16px; font-weight: bold;">[<h:outputText escape="false" value="#{phoneticPracticeController.practice.currentQuestionObject.IPA}" />]</td>											
-			    </tr>									    
-			</table>
-			<br />
-			<h:outputText value="#{phonPracticeMsg.practiceInputAnsTitle}" style="color: #EE6600;" styleClass="formLarge" /><br />
-			<h:inputText id="answer" autocomplete="off" style="margin-right: 5px;" value="#{phoneticPracticeController.answer}" styleClass="practiceAnswer" maxlength="30">
-				<t:validateRegExpr pattern="([a-zA-Z ]+[\-/. ]?)+" message="#{phonPracticeMsg.practiceInvalidInput}"/>
-			</h:inputText>
-			<table width="100%" style="margin-bottom: 20px;">
-				<tr>
-					<td align="left">
-						<div style="margin-bottom: 15px; margin-top: 15px;" class="buttons">
-							<a4j:commandLink render="topColumn questionRegion historyRegion" id="eslSubmit" action="#{phoneticPracticeController.submitAnswer}"><img src="#{request.contextPath}/images/icon/silk/font.png" />#{phonPracticeMsg.practiceSubmit}</a4j:commandLink>
-						</div>
-					</td>					
-				</tr>
-			</table>						
-			<br /><h:message for="answer" errorClass="error" />
-		</h:form>
-		<br />
-		<util:googleimage keyword="#{phoneticPracticeController.practice.currentQuestionObject.word}" />
-<!-- 		<h:panelGroup rendered="#{phoneticPracticeController.practice.currentQuestionObject.picFileName!=null}"> -->
+	<ui:define name="lowerMainContent">		
+		<table width="100%">
+			<tr>
+				<td>
+					<a4j:outputPanel id="questionRegion">
+					<h:form styleClass="inputform" id="inputForm">
+						<div id="player1" style="clear: none"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> for pronounce.</div>
+					    <script type="text/javascript">
+						    var player1 = new SWFObject("#{request.contextPath}/player/btn_#{languageController.locale}.swf", "line", "184", "30", "7");
+						    player1.addVariable("path","#{phoneticPracticeController.practice.currentQuestionObject.pronouncedLink}");
+						    player1.write("player1");
+					    </script>
+					    <p>&nbsp;</p>
+					    <table style="color: #EE6600;">
+					    	<tr id="IPA">
+					    		<td width="180" style="font-size: 16px; font-weight: bold;"><h:outputText value="#{phonPracticeMsg.practicePhonetic}" />:</td>
+						    	<td style="font-size: 16px; font-weight: bold;">[<h:outputText escape="false" value="#{phoneticPracticeController.practice.currentQuestionObject.IPA}" />]</td>											
+						    </tr>									    
+						</table>
+						<br />
+						<h:outputText value="#{phonPracticeMsg.practiceInputAnsTitle}" style="color: #EE6600;" styleClass="formLarge" /><br />
+						<h:inputText id="answer" autocomplete="off" style="margin-right: 5px;" value="#{phoneticPracticeController.answer}" styleClass="practiceAnswer" maxlength="30">
+							<t:validateRegExpr pattern="([a-zA-Z ]+[\-/. ]?)+" message="#{phonPracticeMsg.practiceInvalidInput}"/>
+						</h:inputText>
+						<table width="100%" style="margin-bottom: 20px;">
+							<tr>
+								<td align="left">
+									<div style="margin-bottom: 15px; margin-top: 15px;" class="buttons">
+										<a4j:commandLink render="topHeader questionRegion historyRegion msgPanel" oncomplete="updateAfterSubmit()" id="eslSubmit" action="#{phoneticPracticeController.submitAnswer}"><img src="#{request.contextPath}/images/icon/silk/font.png" />#{phonPracticeMsg.practiceSubmit}</a4j:commandLink>
+										<h:inputHidden id="hiddenMaxMark" value="#{phoneticPracticeController.practice.totalQuestions}" />
+										<h:inputHidden id="hiddenCurrentMark" value="#{phoneticPracticeController.practice.mark}" />
+										<h:inputHidden id="hiddenSearchText" value="#{phoneticPracticeController.practice.currentQuestionObject.word}" />
+									</div>
+								</td>					
+							</tr>
+						</table>						
+						<br /><h:message for="answer" errorClass="error" />
+					</h:form>
+					</a4j:outputPanel>
+				</td>
+				<td><util:googleimage keyword="#{phoneticPracticeController.practice.currentQuestionObject.word}" /></td>
+			</tr>
+		</table>
+		<!-- 		<h:panelGroup rendered="#{phoneticPracticeController.practice.currentQuestionObject.picFileName!=null}"> -->
 <!-- 			<img style="margin-top: 10px;" src="#{request.contextPath}/images/graphic/word/#{phoneticPracticeController.practice.currentQuestionObject.picFileName}" /> -->
-<!-- 		</h:panelGroup> -->
-		</a4j:region>
+<!-- 		</h:panelGroup> -->	
 	</ui:define>
 </ui:composition>

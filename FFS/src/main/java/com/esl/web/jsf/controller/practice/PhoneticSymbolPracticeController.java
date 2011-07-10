@@ -256,8 +256,6 @@ public class PhoneticSymbolPracticeController extends ESLController {
 		int startLength = (int) ((double)startIdx / (double)totalFullMark * SCOREBAR_FULLLENGTH);
 		int endLength = (int) ((double)endIdx / (double)totalFullMark * SCOREBAR_FULLLENGTH);
 		if (startLength < 0) startLength = 0;
-		scoreBar.setStartLength(startLength);
-		scoreBar.setEndLength(endLength);
 
 		logger.info("setScoreBar: startLength[" + startLength + "], endLength[" + endLength + "]");
 	}
