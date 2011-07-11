@@ -1,10 +1,6 @@
 package com.esl.web.jsf.controller.practice;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import javax.annotation.Resource;
 import javax.faces.context.FacesContext;
@@ -14,16 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.esl.dao.IGradeDAO;
-import com.esl.dao.IMemberDAO;
-import com.esl.dao.IPhoneticQuestionDAO;
-import com.esl.dao.IPracticeResultDAO;
+import com.esl.dao.*;
 import com.esl.exception.ESLSystemException;
-import com.esl.model.Grade;
-import com.esl.model.Member;
-import com.esl.model.PhoneticQuestion;
-import com.esl.model.PracticeResult;
-import com.esl.model.TopResult;
+import com.esl.model.*;
 import com.esl.service.practice.IPhoneticPracticeService;
 import com.esl.service.practice.ITopResultService;
 import com.esl.util.JSFUtil;
@@ -34,7 +23,7 @@ import com.esl.web.util.LanguageUtil;
 
 @Controller
 @Scope("session")
-public class PhoneticPracticeG2Controller extends ESLController {	
+public class PhoneticPracticeG2Controller extends ESLController {
 	private static final long serialVersionUID = -7163560838834679113L;
 	public static int MAX_HISTORY = 10;
 
@@ -118,7 +107,8 @@ public class PhoneticPracticeG2Controller extends ESLController {
 
 	public boolean isTopLevel() {return topLevel;}
 	public void setTopLevel(boolean topLevel) {this.topLevel = topLevel;}
-	
+
+	public void setScoreBarCurrentMark(int foo) {}
 	public int getScoreBarCurrentMark() {
 		if (topLevel) {
 			return currentGradeResult.getMark();
@@ -126,6 +116,8 @@ public class PhoneticPracticeG2Controller extends ESLController {
 			return totalMark;
 		}
 	}
+
+	public void setScoreBarMaxMark(int foo) {}
 	public int getScoreBarMaxMark() {
 		if (topLevel) {
 			return currentGrade.getPhoneticPracticeLvUpRequire();
@@ -317,6 +309,6 @@ public class PhoneticPracticeG2Controller extends ESLController {
 
 		// set member word unsaved in controller map
 		memberWordController.getSavedQuestion().put(question, false);
-	}	
+	}
 }
 
