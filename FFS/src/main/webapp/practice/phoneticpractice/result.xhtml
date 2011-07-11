@@ -23,8 +23,8 @@
 				<f:param value="#{phoneticPracticeController.practice.totalQuestions}"/>
 				<f:param value="#{phoneticPracticeController.practice.grade.description}"/>
 			</h:outputFormat>
-		</h2>
-		<esl:scoreBar scoreBar="#{phoneticPracticeController.scoreBar}" mark="#{phoneticPracticeController.practice.mark}" />
+		</h2>		
+		<esl:scoreBar startMark="#{phoneticPracticeController.practice.mark}" maxMark="#{phoneticPracticeController.practice.totalQuestions}" />
 		<a4j:outputPanel id="msgPanel">
 			<h:messages tooltip="true" errorStyle="color: rgb(220, 130, 0);" globalOnly="true" />
 		</a4j:outputPanel>

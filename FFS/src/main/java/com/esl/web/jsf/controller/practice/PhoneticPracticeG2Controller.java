@@ -1,6 +1,10 @@
 package com.esl.web.jsf.controller.practice;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.faces.context.FacesContext;
@@ -10,22 +14,29 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.esl.dao.*;
+import com.esl.dao.IGradeDAO;
+import com.esl.dao.IMemberDAO;
+import com.esl.dao.IPhoneticQuestionDAO;
+import com.esl.dao.IPracticeResultDAO;
 import com.esl.exception.ESLSystemException;
-import com.esl.model.*;
+import com.esl.model.Grade;
+import com.esl.model.Member;
+import com.esl.model.PhoneticQuestion;
+import com.esl.model.PracticeResult;
+import com.esl.model.TopResult;
 import com.esl.service.practice.IPhoneticPracticeService;
 import com.esl.service.practice.ITopResultService;
+import com.esl.util.JSFUtil;
 import com.esl.web.jsf.controller.ESLController;
 import com.esl.web.jsf.controller.member.MemberWordController;
 import com.esl.web.model.practice.PhoneticQuestionHistory;
-import com.esl.web.model.practice.ScoreBar;
 import com.esl.web.util.LanguageUtil;
 
 @Controller
 @Scope("session")
-public class PhoneticPracticeG2Controller extends ESLController {
+public class PhoneticPracticeG2Controller extends ESLController {	
+	private static final long serialVersionUID = -7163560838834679113L;
 	public static int MAX_HISTORY = 10;
-	public static int SCOREBAR_FULLLENGTH = 500;
 
 	private static Logger logger = Logger.getLogger("ESL");
 	private final String bundleName = "messages.practice.PhoneticPractice";
@@ -45,7 +56,6 @@ public class PhoneticPracticeG2Controller extends ESLController {
 	private List<PhoneticQuestionHistory> history;
 	private int totalMark;
 	private int totalFullMark;
-	private ScoreBar scoreBar;
 
 	// Supporting classes
 	@Resource private IGradeDAO gradeDAO;
@@ -61,8 +71,6 @@ public class PhoneticPracticeG2Controller extends ESLController {
 	public PhoneticPracticeG2Controller() {
 		totalFullMark = 1;
 		history = new ArrayList<PhoneticQuestionHistory>();
-		scoreBar = new ScoreBar();
-		scoreBar.setFullLength(SCOREBAR_FULLLENGTH);
 	}
 
 	// ============== Setter / Getter ================//
@@ -75,7 +83,6 @@ public class PhoneticPracticeG2Controller extends ESLController {
 	public void setTopResultService(ITopResultService topResultService) {this.topResultService = topResultService; }
 	public void setPhoneticQuestionDAO(IPhoneticQuestionDAO phoneticQuestionDAO) {this.phoneticQuestionDAO = phoneticQuestionDAO; }
 	public void setPhoneticPracticeController(PhoneticPracticeController controller) {this.phoneticPracticeController = controller;}
-	public void setScoreBarFullLength(int length) {this.SCOREBAR_FULLLENGTH = length; }
 	public void setMemberWordController(MemberWordController memberWordController) {this.memberWordController = memberWordController; }
 
 	public String getAnswer() {	return answer;	}
@@ -111,9 +118,21 @@ public class PhoneticPracticeG2Controller extends ESLController {
 
 	public boolean isTopLevel() {return topLevel;}
 	public void setTopLevel(boolean topLevel) {this.topLevel = topLevel;}
-
-	public ScoreBar getScoreBar() {	return scoreBar;}
-	public void setScoreBar(ScoreBar scoreBar) {this.scoreBar = scoreBar;}
+	
+	public int getScoreBarCurrentMark() {
+		if (topLevel) {
+			return currentGradeResult.getMark();
+		} else {
+			return totalMark;
+		}
+	}
+	public int getScoreBarMaxMark() {
+		if (topLevel) {
+			return currentGrade.getPhoneticPracticeLvUpRequire();
+		} else {
+			return totalFullMark;
+		}
+	}
 
 	//	 ============== Getter Functions ================//
 	/**
@@ -154,12 +173,6 @@ public class PhoneticPracticeG2Controller extends ESLController {
 		// get a random question
 		getRandomQuestion();
 
-		// set scoreBar
-		if (topLevel)
-			setScoreBar(0, currentGradeResult.getMark());
-		else
-			setScoreBar(0, 0);
-
 		return practiceView;
 	}
 
@@ -169,7 +182,7 @@ public class PhoneticPracticeG2Controller extends ESLController {
 		// Check practice have been create or not, if not created, call start
 		if (currentGrade == null) {
 			logger.info("submitAnswer: cannot find current grade");
-			return start();
+			return JSFUtil.redirect(start());
 		}
 
 		// Check answer
@@ -212,17 +225,12 @@ public class PhoneticPracticeG2Controller extends ESLController {
 				logger.info("submitAnswer: Member[" + userSession.getMember().getUserId() + "] level up to grade[" + userSession.getMember().getGrade() + "]");
 			}
 			isLevelUp = true;
-			return completePractice();
+			return JSFUtil.redirect(completePractice());
 		}
 
 		getRandomQuestion();
-		if (topLevel)
-			setScoreBar(currentGradeResult.getMark()-mark, currentGradeResult.getMark());
-		else
-			setScoreBar(totalMark - mark, totalMark);
 
-
-		return practiceView;
+		return null;
 	}
 
 
@@ -281,11 +289,6 @@ public class PhoneticPracticeG2Controller extends ESLController {
 		scoreRanking = topResultService.getResultListByMemberGrade(TopResult.OrderType.Score, PracticeResult.PHONETICPRACTICE, member, currentGrade);
 		rateRanking = topResultService.getResultListByMemberGrade(TopResult.OrderType.Rate, PracticeResult.PHONETICPRACTICE, member, currentGrade);
 
-		if (topLevel)
-			setScoreBar(0, currentGradeResult.getMark());
-		else
-			setScoreBar(0, totalMark);
-
 		return resultView;
 	}
 
@@ -314,19 +317,6 @@ public class PhoneticPracticeG2Controller extends ESLController {
 
 		// set member word unsaved in controller map
 		memberWordController.getSavedQuestion().put(question, false);
-	}
-
-	private void setScoreBar(int startIdx, int endIdx) {
-		int base;
-		if (topLevel)
-			base = currentGrade.getPhoneticPracticeLvUpRequire();
-		else
-			base = totalFullMark;
-		int startLength = (int) ((double)startIdx / (double)base * SCOREBAR_FULLLENGTH);
-		int endLength = (int) ((double)endIdx / (double)base * SCOREBAR_FULLLENGTH);
-		if (startLength < 0) startLength = 0;
-
-		logger.info("setScoreBar: startLength[" + startLength + "], endLength[" + endLength + "]");
-	}
+	}	
 }
 
