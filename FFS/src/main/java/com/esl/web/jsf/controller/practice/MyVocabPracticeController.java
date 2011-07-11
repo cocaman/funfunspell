@@ -1,7 +1,13 @@
 package com.esl.web.jsf.controller.practice;
 
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
@@ -46,8 +52,7 @@ public class MyVocabPracticeController extends PhoneticPracticeG2Controller {
 	public MyVocabPracticeController() {
 		totalFullMark = 0;
 		history = new ArrayList<PhoneticQuestionHistory>();
-		scoreBar = new ScoreBar();
-		scoreBar.setFullLength(SCOREBAR_FULLLENGTH);
+		scoreBar = new ScoreBar();		
 	}
 
 
@@ -71,9 +76,6 @@ public class MyVocabPracticeController extends PhoneticPracticeG2Controller {
 			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, bundle.getString("manageNoVocab"), null));
 			return manageView;
 		}
-
-		// set scoreBar
-		setScoreBar(0, 0);
 
 		return practiceView;
 	}
@@ -124,7 +126,7 @@ public class MyVocabPracticeController extends PhoneticPracticeG2Controller {
 			return manageView;
 		}
 
-		setScoreBar(totalMark-mark, totalMark);
+//		setScoreBar(totalMark-mark, totalMark);
 
 		return practiceView;
 	}
@@ -172,21 +174,11 @@ public class MyVocabPracticeController extends PhoneticPracticeG2Controller {
 
 		// add full mark in practice result
 		totalFullMark++;
-	}
-
-	private void setScoreBar(int startIdx, int endIdx) {
-		int startLength = (int) ((double)startIdx / (double)totalFullMark * SCOREBAR_FULLLENGTH);
-		int endLength = (int) ((double)endIdx / (double)totalFullMark * SCOREBAR_FULLLENGTH);
-		if (startLength < 0) startLength = 0;
-
-		logger.info("setScoreBar: startLength[" + startLength + "], endLength[" + endLength + "]");
-	}
+	}	
 
 	//	 ============== Setter / Getter ================//
 	@Override
 	public void setMaxHistory(int max) {this.MAX_HISTORY = max; }
-	@Override
-	public void setScoreBarFullLength(int length) {this.SCOREBAR_FULLLENGTH = length; }
 	@Override
 	public void setMemberWordController(MemberWordController memberWordController) {this.memberWordController = memberWordController; }
 	public void setMemberWordDAO(IMemberWordDAO memberWordDAO) {this.memberWordDAO = memberWordDAO; }
@@ -218,9 +210,5 @@ public class MyVocabPracticeController extends PhoneticPracticeG2Controller {
 	@Override
 	public int getHistorySize() { return history.size(); }
 
-	@Override
-	public ScoreBar getScoreBar() {	return scoreBar;}
-	@Override
-	public void setScoreBar(ScoreBar scoreBar) {this.scoreBar = scoreBar;}
 }
 
