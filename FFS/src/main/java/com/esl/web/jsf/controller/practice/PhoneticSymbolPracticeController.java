@@ -1,6 +1,12 @@
 package com.esl.web.jsf.controller.practice;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.faces.context.FacesContext;
@@ -11,15 +17,21 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.esl.dao.*;
+import com.esl.dao.IGradeDAO;
+import com.esl.dao.IPhoneticQuestionDAO;
+import com.esl.dao.IPracticeResultDAO;
 import com.esl.exception.ESLSystemException;
-import com.esl.model.*;
+import com.esl.model.Grade;
+import com.esl.model.Member;
+import com.esl.model.PhoneticQuestion;
+import com.esl.model.PracticeResult;
+import com.esl.model.TopResult;
 import com.esl.model.practice.PhoneticSymbols;
 import com.esl.service.practice.IPhoneticSymbolPracticeService;
 import com.esl.service.practice.ITopResultService;
+import com.esl.util.JSFUtil;
 import com.esl.web.jsf.controller.ESLController;
 import com.esl.web.model.practice.PhoneticQuestionHistory;
-import com.esl.web.model.practice.ScoreBar;
 import com.esl.web.util.LanguageUtil;
 import com.esl.web.util.SelectItemUtil;
 
@@ -27,7 +39,6 @@ import com.esl.web.util.SelectItemUtil;
 @Scope("session")
 public class PhoneticSymbolPracticeController extends ESLController {
 	public static int MAX_HISTORY = 10;
-	public static int SCOREBAR_FULLLENGTH = 500;
 
 	private static Logger logger = Logger.getLogger("ESL");
 	private final String bundleName = "messages.practice.PhoneticSymbolPractice";
@@ -54,7 +65,6 @@ public class PhoneticSymbolPracticeController extends ESLController {
 	private List<PhoneticQuestionHistory> history;
 	private int totalMark;
 	private int totalFullMark;
-	private ScoreBar scoreBar;
 
 	private TopResult scoreRanking;
 	private TopResult rateRanking;
@@ -71,17 +81,13 @@ public class PhoneticSymbolPracticeController extends ESLController {
 	@Value("${PhoneticPracticeG2.MaxHistory}")
 	public void setMaxHistory(int max) {this.MAX_HISTORY = max; }
 
-	public void setScoreBarFullLength(int length) {this.SCOREBAR_FULLLENGTH = length; }
-
 	@Value("${Practice.ShowPopUp.Count}")
 	public void setShowSignUpPopUpCount(int count) { this.showPopUpSignUpCount = count;}
 
 	// ============== Constructor ================//
 	public PhoneticSymbolPracticeController() {
 		totalFullMark = 0;
-		history = new ArrayList<PhoneticQuestionHistory>();
-		scoreBar = new ScoreBar();
-		scoreBar.setFullLength(SCOREBAR_FULLLENGTH);
+		history = new ArrayList<PhoneticQuestionHistory>();		
 	}
 
 	// ============== Functions ================//
@@ -118,7 +124,6 @@ public class PhoneticSymbolPracticeController extends ESLController {
 		}
 
 		getRandomQuestion();		// get a random question
-		setScoreBar(0, 0); 			// set scoreBar
 
 		return practiceView;
 	}
@@ -129,7 +134,7 @@ public class PhoneticSymbolPracticeController extends ESLController {
 		// Check practice have been create or not, if not created, call start
 		if (currentGrade == null) {
 			logger.info("submitAnswer: cannot find current grade");
-			return start();
+			return JSFUtil.redirect(start());
 		}
 
 		boolean isCorrect = phoneticSymbolPracticeService.checkAnswer(question, answer);		// Check answer
@@ -149,10 +154,9 @@ public class PhoneticSymbolPracticeController extends ESLController {
 
 		updatePracticeResult(isCorrect);
 
-		setScoreBar(totalMark-mark, totalMark);
 		getRandomQuestion();
 
-		return practiceView;
+		return null;
 	}
 
 	// process when completing the practice
@@ -168,7 +172,6 @@ public class PhoneticSymbolPracticeController extends ESLController {
 
 		// reduce one mark for the undo question
 		totalFullMark--;
-		setScoreBar(0, totalMark); 			// set scoreBar
 
 		return resultView;
 	}
@@ -252,14 +255,6 @@ public class PhoneticSymbolPracticeController extends ESLController {
 		totalFullMark++;
 	}
 
-	private void setScoreBar(int startIdx, int endIdx) {
-		int startLength = (int) ((double)startIdx / (double)totalFullMark * SCOREBAR_FULLLENGTH);
-		int endLength = (int) ((double)endIdx / (double)totalFullMark * SCOREBAR_FULLLENGTH);
-		if (startLength < 0) startLength = 0;
-
-		logger.info("setScoreBar: startLength[" + startLength + "], endLength[" + endLength + "]");
-	}
-
 	private void setLevels() {
 		logger.info("setLevels: START");
 		FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -332,9 +327,6 @@ public class PhoneticSymbolPracticeController extends ESLController {
 	public List<PhoneticQuestionHistory> getHistory() {	return history;	}
 	public void setHistory(List<PhoneticQuestionHistory> history) {	this.history = history;	}
 	public int getHistorySize() { return history.size(); }
-
-	public ScoreBar getScoreBar() {	return scoreBar;}
-	public void setScoreBar(ScoreBar scoreBar) {this.scoreBar = scoreBar;}
 
 	public PhoneticSymbols.Level getSelectedLevel() {return selectedLevel;}
 	public void setSelectedLevel(PhoneticSymbols.Level selectedLevel) {	this.selectedLevel = selectedLevel;}

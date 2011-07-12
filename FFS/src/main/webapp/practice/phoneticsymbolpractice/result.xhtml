@@ -27,7 +27,7 @@
 				<f:param value="#{phoneticSymbolPracticeController.currentGrade.description}"/>
 			</h:outputFormat>
 		</h2>
-		<esl:scoreBar scoreBar="#{phoneticSymbolPracticeController.scoreBar}" mark="#{phoneticSymbolPracticeController.totalMark}" />
+		<esl:scoreBar startMark="#{phoneticSymbolPracticeController.totalMark}" maxMark="#{phoneticSymbolPracticeController.totalFullMark}" />
 		<a4j:outputPanel id="msgPanel">
 			<h:messages tooltip="true" errorStyle="color: rgb(220, 130, 0);" globalOnly="true" />
 		</a4j:outputPanel>
