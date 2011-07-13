@@ -29,7 +29,6 @@ public class LanguageController extends ESLController implements Serializable {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		facesContext.getViewRoot().setLocale(new Locale("zh"));
 		userSession.setLocale(new Locale("zh"));
-		userSession.setShowView(true);
 		return "";
 	}
 
@@ -38,7 +37,6 @@ public class LanguageController extends ESLController implements Serializable {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		facesContext.getViewRoot().setLocale(new Locale("en"));
 		userSession.setLocale(new Locale("en"));
-		userSession.setShowView(true);
 		return "";
 	}
 
@@ -47,7 +45,6 @@ public class LanguageController extends ESLController implements Serializable {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		facesContext.getViewRoot().setLocale(new Locale("zh-cn"));
 		userSession.setLocale(new Locale("zh-cn"));
-		userSession.setShowView(true);
 		return "";
 	}
 }

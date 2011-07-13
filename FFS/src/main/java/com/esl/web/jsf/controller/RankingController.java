@@ -1,7 +1,11 @@
 package com.esl.web.jsf.controller;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.annotation.Resource;
 import javax.faces.context.FacesContext;
@@ -13,7 +17,10 @@ import org.springframework.stereotype.Controller;
 
 import com.esl.dao.IGradeDAO;
 import com.esl.entity.practice.PracticeMedal;
-import com.esl.model.*;
+import com.esl.model.Grade;
+import com.esl.model.Member;
+import com.esl.model.PracticeResult;
+import com.esl.model.TopResult;
 import com.esl.model.practice.PhoneticSymbols;
 import com.esl.model.practice.PhoneticSymbols.Level;
 import com.esl.service.practice.ITopResultService;
@@ -158,7 +165,6 @@ public class RankingController extends ESLController {
 		logger.info("start: userScore[" + userScore + "]");
 		logger.info("start: userRate[" + userRate + "]");
 
-		userSession.setShowView(true);
 		return rankingView;
 	}
 

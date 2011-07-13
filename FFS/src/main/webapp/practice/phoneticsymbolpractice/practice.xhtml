@@ -211,21 +211,19 @@
 											<h:inputHidden id="hiddenCurrentMark" value="#{phoneticSymbolPracticeController.totalMark}" />
 											<h:inputHidden id="hiddenSearchText" value="#{phoneticSymbolPracticeController.question.word}" />
 										</div>
-										<a4j:status>
-								            <f:facet name="start">
-								                <h:graphicImage value="/images/graphic/loading.gif" alt="loading"/>
-								            </f:facet>
-							       		</a4j:status>
+										
 									</td>
 									<td align="right" valign="bottom">
 										<h:commandLink onclick="return submitRequest();" action="#{phoneticSymbolPracticeController.completePractice}"><u><h:outputText value="#{phonSymPracticeMsg.practiceComplete}" /></u></h:commandLink>
 									</td>
-								</tr>
-								<tr>
-									
-								</tr>
+								</tr>								
 							</table>							
 						</h:form>
+						<a4j:status>
+				            <f:facet name="start">
+				                <h:graphicImage value="/images/graphic/loading.gif" alt="loading"/>
+				            </f:facet>
+			       		</a4j:status>
 					</a4j:outputPanel>
 				</td>
 				<td><util:googleimage keyword="#{phoneticSymbolPracticeController.question.word}" /></td>

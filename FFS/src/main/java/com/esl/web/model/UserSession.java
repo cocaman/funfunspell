@@ -5,7 +5,6 @@ import java.util.Locale;
 
 import javax.faces.context.FacesContext;
 
-import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -16,7 +15,7 @@ import com.esl.model.Member;
 public class UserSession implements Serializable {
 
 	private Member member;
-	private boolean showView = false;
+	private boolean showGoogleImage = true;
 	private Locale locale = null;
 
 	public UserSession() {}
@@ -26,16 +25,9 @@ public class UserSession implements Serializable {
 
 	public Locale getLocale() {return locale;}
 	public void setLocale(Locale locale) {this.locale = locale;}
-
-	public void setShowView(boolean show) { this.showView = show; }
-	public String getShowView() throws Throwable {
-		if (!showView) {
-			Logger.getLogger("ESL").warn("getShowView: Invalid direct URL access");
-			throw new Exception("Invalid direct URL access!");
-		}
-		showView = false;
-		return "";
-	}
+	
+	public boolean isShowGoogleImage() {return showGoogleImage;}
+	public void setShowGoogleImage(boolean showGoogleImage) {this.showGoogleImage = showGoogleImage;}
 
 	public boolean isLogined() {
 		return (member != null);
@@ -45,5 +37,13 @@ public class UserSession implements Serializable {
 		return (locale==null) ? FacesContext.getCurrentInstance().getViewRoot().getLocale().toString() : locale.toString();
 	}
 
-
+	public String stopShowGoogleImage() {
+		showGoogleImage = false;
+		return null;
+	}
+	
+	public String resumeShowGoogleImage() {
+		showGoogleImage = true;
+		return null;
+	}
 }
