@@ -9,7 +9,8 @@
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:rich="http://richfaces.org/rich"	
 	xmlns:esl="http://www.funfunspell.com/jsf"
-	template="/template/main_2column.xhtml">
+	xmlns:util="http://java.sun.com/jsf/composite/components/util"
+	template="/template/main2_2column.xhtml">
 
 	<ui:define name="subTitle">#{htmlHeadMsg.member_vocab_practice_title}</ui:define>
 	<ui:define name="head">
@@ -26,13 +27,19 @@
 				jQuery('#inputForm\\:answer').focus();
 			}
 		);
+		
+		function updateAfterSubmit() {
+			animateScoreBar(jQuery('#inputForm\\:hiddenCurrentMark').val(), jQuery('#inputForm\\:hiddenMaxMark').val());
+			resetGoogleImageSearch(jQuery('#inputForm\\:hiddenSearchText').val());
+		}
 		-->
 		</script>
 	</ui:define>
 	
 	<ui:define name="titleImg"><img src="#{languageController.imagesPath}/title/myvocab.gif" /></ui:define>
 
-	<ui:define name="mainContent">	
+	<ui:define name="upperMainContent">	
+		<a4j:outputPanel id="topHeader">				
 		<h2>
 			<h:outputFormat value="#{memberWordMsg.practiceQuestionNo}">
 				<f:param value="#{myVocabPracticeController.totalFullMark}"/>
@@ -40,11 +47,13 @@
 			<img src="#{languageController.imagesPath}/spacer.gif" width="280" height="1" />
 			<h:outputText value="#{phonPracticeMsg.practiceMark}" />&nbsp;<h:outputText value="#{myVocabPracticeController.totalMark}" />
 		</h2>
-		<esl:scoreBar scoreBar="#{myVocabPracticeController.scoreBar}" mark="#{myVocabPracticeController.totalMark}" />				
+		</a4j:outputPanel>		
+		<esl:scoreBar startMark="#{myVocabPracticeController.totalMark}" maxMark="#{myVocabPracticeController.totalFullMark}" />				
 	</ui:define>
 	
 	<ui:define name="leftColumn">
-		<h:panelGroup rendered="${myVocabPracticeController.totalFullMark > 1}">				
+		<a4j:outputPanel id="historyRegion">
+		<h:panelGroup rendered="#{myVocabPracticeController.totalFullMark > 1}">				
 		<!-- Histories -->
 			<p class="innerHeading"><h:outputText value="#{phonPracticeMsg.practicePreviousQuestionsTitle}" /></p>					
 			<table class="resultTable">
@@ -72,40 +81,49 @@
 			</table>
 			<p>* #{phonPracticeMsg.practiceWordExplanation}</p>
 		</h:panelGroup>
+		</a4j:outputPanel>
 	</ui:define>
 	
-	<ui:define name="rightColumn">
-		<h:form styleClass="inputform" id="inputForm" onsubmit="return submitRequest(this)">
-			<div id="player1" style="clear: none"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> for pronounce.</div>
-		    <script type="text/javascript">
-			    var player1 = new SWFObject("#{request.contextPath}/player/btn_#{languageController.locale}.swf", "line", "184", "30", "7");
-			    player1.addVariable("path","#{myVocabPracticeController.memberWord.word.pronouncedLink}");
-			    player1.write("player1");
-		    </script>
-		    <p>&nbsp;</p>
-		    <table style="color: #EE6600;">								    								    	
-		    	<tr id="IPA">
-		    		<td width="180" class="innerHeading"><h:outputText value="#{phonPracticeMsg.practicePhonetic}" />:</td>
-			    	<td class="innerHeading">[<h:outputText escape="false" value="#{myVocabPracticeController.memberWord.word.IPA}" />]</td>											
-			    </tr>									    
-			</table>			
-			<h:outputText style="color: #EE6600;" value="#{phonPracticeMsg.practiceInputAnsTitle}" styleClass="formLarge" /><br />
-			<h:inputText id="answer" autocomplete="off" value="#{myVocabPracticeController.answer}" style="color: #EE6600;" styleClass="formLarge" maxlength="30">
-				<t:validateRegExpr pattern="([a-zA-Z ]+[\-/. ]?)+" message="#{phonPracticeMsg.practiceInvalidInput}"/>
-			</h:inputText>
-			<div style="margin-bottom: 15px; margin-top: 15px;" class="buttons">
-				<h:commandLink onclick="return submitRequest();" styleClass="orange" action="#{myVocabPracticeController.submitAnswer}"><img src="#{request.contextPath}/images/icon/silk/tick.png" />#{phonPracticeMsg.practiceSubmit}</h:commandLink>				
-			</div>
-			<img src="#{languageController.imagesPath}/spacer.gif" width="1" height="40" />											
-			<div><h:message for="answer" errorClass="error" /></div>
-		
-		<h:panelGroup rendered="#{myVocabPracticeController.memberWord.word.picFileName!=null and myVocabPracticeController.memberWord.word.picFileName!=''}">
-			<img src="#{request.contextPath}/images/graphic/word/#{myVocabPracticeController.memberWord.word.picFileName}" />
-		</h:panelGroup>			
-		<table width="100%"><tr><td align="right">
-			<h:commandLink action="#{myVocabPracticeController.completePractice}"><u><h:outputText value="#{memberWordMsg.practiceComplete}" /></u></h:commandLink>
-		</td></tr></table>
-		
-		</h:form>		
+	<ui:define name="lowerMainContent">
+		<table width="100%">
+			<tr>
+				<td>
+					<a4j:outputPanel id="questionRegion">
+						<h:form styleClass="inputform" id="inputForm" onsubmit="return submitRequest(this)">
+							<div id="player1" style="clear: none"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> for pronounce.</div>
+						    <script type="text/javascript">
+							    var player1 = new SWFObject("#{request.contextPath}/player/btn_#{languageController.locale}.swf", "line", "184", "30", "7");
+							    player1.addVariable("path","#{myVocabPracticeController.memberWord.word.pronouncedLink}");
+							    player1.write("player1");
+						    </script>
+						    <p>&nbsp;</p>
+						    <table style="color: #EE6600;">								    								    	
+						    	<tr id="IPA">
+						    		<td width="180" class="innerHeading"><h:outputText value="#{phonPracticeMsg.practicePhonetic}" />:</td>
+							    	<td class="innerHeading">[<h:outputText escape="false" value="#{myVocabPracticeController.memberWord.word.IPA}" />]</td>											
+							    </tr>									    
+							</table>			
+							<h:outputText style="color: #EE6600;" value="#{phonPracticeMsg.practiceInputAnsTitle}" styleClass="formLarge" /><br />
+							<h:inputText id="answer" autocomplete="off" value="#{myVocabPracticeController.answer}" style="color: #EE6600;" styleClass="formLarge" maxlength="30">
+								<t:validateRegExpr pattern="([a-zA-Z ]+[\-/. ]?)+" message="#{phonPracticeMsg.practiceInvalidInput}"/>
+							</h:inputText>
+							<div style="margin-bottom: 15px; margin-top: 15px;" class="buttons">
+								<a4j:commandLink render="topHeader questionRegion historyRegion msgPanel" oncomplete="updateAfterSubmit()" id="eslSubmit" action="#{myVocabPracticeController.submitAnswer}" styleClass="orange"><img src="#{request.contextPath}/images/icon/silk/tick.png" />#{phonPracticeMsg.practiceSubmit}</a4j:commandLink>								
+								<h:inputHidden id="hiddenMaxMark" value="#{myVocabPracticeController.totalFullMark}" />
+								<h:inputHidden id="hiddenCurrentMark" value="#{myVocabPracticeController.totalMark}" />
+								<h:inputHidden id="hiddenSearchText" value="#{myVocabPracticeController.memberWord.word.word}" />				
+							</div>
+							<img src="#{languageController.imagesPath}/spacer.gif" width="1" height="40" />											
+							<div><h:message for="answer" errorClass="error" /></div>
+									
+							<table width="100%"><tr><td align="right">
+								<h:commandLink action="#{myVocabPracticeController.completePractice}"><u><h:outputText value="#{memberWordMsg.practiceComplete}" /></u></h:commandLink>
+							</td></tr></table>		
+						</h:form>		
+					</a4j:outputPanel>
+				</td>
+				<td><util:googleimage keyword="#{myVocabPracticeController.memberWord.word.word}" /></td>
+			</tr>
+		</table>		
 	</ui:define>
 </ui:composition>

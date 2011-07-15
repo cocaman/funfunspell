@@ -21,13 +21,14 @@ import com.esl.dao.IMemberWordDAO;
 import com.esl.model.MemberWord;
 import com.esl.model.PhoneticQuestion;
 import com.esl.service.practice.IPhoneticPracticeService;
+import com.esl.util.JSFUtil;
 import com.esl.web.jsf.controller.member.MemberWordController;
 import com.esl.web.model.practice.PhoneticQuestionHistory;
-import com.esl.web.model.practice.ScoreBar;
 
 @Controller
 @Scope("session")
 public class MyVocabPracticeController extends PhoneticPracticeG2Controller {
+	private static final long serialVersionUID = 8187935108461189362L;
 	private static Logger logger = Logger.getLogger("ESL");
 	private final String bundleName = "messages.member.MemberWord";
 	private static final String practiceView = "/member/vocab/practice";
@@ -41,7 +42,6 @@ public class MyVocabPracticeController extends PhoneticPracticeG2Controller {
 	private List<PhoneticQuestionHistory> history;
 	private int totalMark;
 	private int totalFullMark;
-	private ScoreBar scoreBar;
 
 	// Supporting classes
 	@Resource private IMemberWordDAO memberWordDAO;
@@ -52,7 +52,6 @@ public class MyVocabPracticeController extends PhoneticPracticeG2Controller {
 	public MyVocabPracticeController() {
 		totalFullMark = 0;
 		history = new ArrayList<PhoneticQuestionHistory>();
-		scoreBar = new ScoreBar();		
 	}
 
 
@@ -89,7 +88,7 @@ public class MyVocabPracticeController extends PhoneticPracticeG2Controller {
 		// Check practice have been create or not, if not created, call start
 		if (memberWord == null) {
 			logger.info("submitAnswer: cannot find question");
-			return errorView;
+			return JSFUtil.redirect(errorView);
 		}
 
 		// Check answer
@@ -123,12 +122,10 @@ public class MyVocabPracticeController extends PhoneticPracticeG2Controller {
 			logger.info("completePractice: returned msg [" + resultString +  "]");
 			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, resultString, null));
 
-			return manageView;
+			return JSFUtil.redirect(manageView);
 		}
 
-//		setScoreBar(totalMark-mark, totalMark);
-
-		return practiceView;
+		return null;
 	}
 
 	// process when completing the practice
