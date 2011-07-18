@@ -14,10 +14,9 @@
 </composite:interface>
 
 <composite:implementation>
-<a4j:outputPanel id="googleImagePanel">
-<h:panelGroup rendered="#{cc.attrs.showImage && userSession.showGoogleImage}">
 	<script src="https://www.google.com/jsapi?key=ABQIAAAATbS1XjFTq14cbzVDth8P6xTJuFYH-uIDxL_cDd1gPuOiAylt6xR1Q06eRUkV3ROSCE2N_PbOAivNFQ" type="text/javascript"></script>
     <script language="Javascript" type="text/javascript">    
+  	//<![CDATA[
 		google.load('search', '1');
 		google.load("jquery", "1.4.2");
 		google.load("jqueryui", "1.7.2");
@@ -88,7 +87,14 @@
 		}
  
  		google.setOnLoadCallback(onGoogleImageLoad);
+	//]]>
     </script>
+    
+<a4j:outputPanel id="googleImagePanel">
+<h:panelGroup rendered="#{cc.attrs.showImage && userSession.showGoogleImage}">
+	<script language="Javascript" type="text/javascript">   
+		imageSearch.execute(searchText);
+	</script>
     <table style="width: 250px; height: 230px; border:5px solid #FF8620;">
     	<tr>
     		<td colspan="3" valign="middle" align="center" style="width: 100%; height: 200;"><div id="gImageContent">Loading...</div></td>
