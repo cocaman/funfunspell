@@ -63,6 +63,7 @@
       			var nextImgDiv = document.getElementById('nextImage');
       			nextImgDiv.innerHTML = '';
 			}
+			
 		}
 
 		function onGoogleImageLoad() {      
@@ -86,14 +87,15 @@
 			searchComplete();
 		}
  
- 		google.setOnLoadCallback(onGoogleImageLoad);
+ 		
 	//]]>
     </script>
     
 <a4j:outputPanel id="googleImagePanel">
-<h:panelGroup rendered="#{cc.attrs.showImage && userSession.showGoogleImage}">
-	<script language="Javascript" type="text/javascript">   
-		imageSearch.execute(searchText);
+<h:panelGroup rendered="#{cc.attrs.showImage and userSession.showGoogleImage}">
+	<script language="Javascript" type="text/javascript">
+		google.setOnLoadCallback(onGoogleImageLoad);
+		imageSearch.execute(searchText);		
 	</script>
     <table style="width: 250px; height: 230px; border:5px solid #FF8620;">
     	<tr>
@@ -101,18 +103,25 @@
     	</tr>
     	<tr>
     		<td style="padding-left: 10px;"><div style="cursor: pointer;" id="nextImage" align="left" onclick="changeImg()"><h:graphicImage value="/images/icon/silk/picture_go.png" />#{generalMsg.nextImage}</div></td>
-    		<td><a4j:commandLink render="googleImagePanel" id="stopShowImage" action="#{userSession.stopShowGoogleImage}"><h:graphicImage value="/images/graphic/delete.jpg" />#{generalMsg.stopShow}</a4j:commandLink></td>
+    		<td>
+    			<h:form>
+    				<a4j:commandLink render="googleImagePanel" id="stopShowImage" action="#{userSession.stopShowGoogleImage}"><h:graphicImage value="/images/graphic/delete.jpg" />#{generalMsg.stopShow}</a4j:commandLink>
+    			</h:form>
+    		</td>
     		<td style="height: 30px;"><div id="branding" align="left"></div></td>    		
     	</tr>
     </table>    
 </h:panelGroup>
-<h:panelGroup rendered="#{!cc.attrs.showImage || !userSession.showGoogleImage}">
+<h:panelGroup rendered="#{!cc.attrs.showImage or !userSession.showGoogleImage}">
+	<script language="Javascript" type="text/javascript">
+		google.setOnLoadCallback(null);
+	</script>
 	<table style="width: 300px; height: 250px; border:5px solid #FF8620;">
     	<tr>
     		<td valign="middle" align="center"><div id="gImageContent" style="font-size: 20px; font-weight: bold; color: #FF8620;">#{generalMsg.doNotShowImage}</div></td>
     	</tr>
     	<tr>    		
-    		<td align="left"><a4j:commandLink render="googleImagePanel" id="resumeShowImage" action="#{userSession.resumeShowGoogleImage}"><h:graphicImage value="/images/graphic/tick.jpg" />#{generalMsg.stopShow}</a4j:commandLink></td>
+    		<td align="left"><h:form><a4j:commandLink render="googleImagePanel" id="resumeShowImage" action="#{userSession.resumeShowGoogleImage}"><h:graphicImage value="/images/graphic/tick.jpg" />#{generalMsg.stopShow}</a4j:commandLink></h:form></td>
     	</tr>
     </table>
 </h:panelGroup>
