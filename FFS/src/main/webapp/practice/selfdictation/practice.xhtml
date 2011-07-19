@@ -38,14 +38,14 @@
 				<f:param value="#{selfDictationController.practice.currentQuestion+1}"/>
 				<f:param value="#{selfDictationController.practice.totalQuestions}"/>
 			</h:outputFormat>
-		</h2>
-		<esl:scoreBar scoreBar="#{selfDictationController.scoreBar}" mark="#{selfDictationController.practice.mark}" />		
+		</h2>		
+		<esl:scoreBar startMark="#{selfDictationController.practice.mark}" maxMark="#{selfDictationController.practice.totalQuestions}" />
 		<h:messages tooltip="true" errorStyle="color: rgb(220, 130, 0);" globalOnly="true" />
 	</ui:define>
 	
 	<ui:define name="leftColumn">
 		<!-- Histories -->
-		<h:panelGroup rendered="${selfDictationController.practice.currentQuestion > 0}">
+		<h:panelGroup rendered="#{selfDictationController.practice.currentQuestion > 0}">
 		<p class="innerHeading"><h:outputText value="#{selfDictationMsg.practicePreviousQuestionsTitle}" /></p>					
 		<table class="resultTable">
 			<thead>

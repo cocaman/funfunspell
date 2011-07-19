@@ -1,6 +1,9 @@
 package com.esl.web.jsf.controller.practice;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
@@ -14,15 +17,16 @@ import org.springframework.stereotype.Controller;
 
 import com.esl.model.PhoneticPractice;
 import com.esl.model.PhoneticQuestion;
-import com.esl.service.practice.*;
+import com.esl.service.practice.IPhoneticPracticeService;
+import com.esl.service.practice.ISelfDictationService;
+import com.esl.service.practice.PhoneticPracticeService;
 import com.esl.web.jsf.controller.ESLController;
-import com.esl.web.model.practice.ScoreBar;
 import com.esl.web.util.LanguageUtil;
 
 @Controller
 @Scope("session")
 public class SelfDictationController extends ESLController {
-	public static int SCOREBAR_FULLLENGTH = 500;
+	private static final long serialVersionUID = -7368848157958147632L;
 
 	private static Logger logger = Logger.getLogger("ESL");
 	private final String bundleName = "messages.practice.SelfDictation";
@@ -37,7 +41,6 @@ public class SelfDictationController extends ESLController {
 	private String answer;
 	private boolean withIPA = false;
 	private boolean withRandomCharacters = false;
-	private ScoreBar scoreBar;
 
 	// Supporting classes
 	@Resource private ISelfDictationService selfDictationService;
@@ -62,9 +65,6 @@ public class SelfDictationController extends ESLController {
 	public PhoneticPractice getPractice() {	return practice;}
 	public void setPractice(PhoneticPractice practice) {this.practice = practice;}
 
-	public ScoreBar getScoreBar() {	return scoreBar;}
-	public void setScoreBar(ScoreBar scoreBar) {this.scoreBar = scoreBar;}
-
 	public String[] getInputVocab() {
 		while (inputVocab.size()<selfDictationService.getMaxQuestions()) {
 			inputVocab.add("");
@@ -77,8 +77,6 @@ public class SelfDictationController extends ESLController {
 
 	// ============== Constructor ================//
 	public SelfDictationController() {
-		scoreBar = new ScoreBar();
-		scoreBar.setFullLength(SCOREBAR_FULLLENGTH);
 	}
 
 
@@ -107,7 +105,6 @@ public class SelfDictationController extends ESLController {
 				LanguageUtil.formatIPA(question, locale);
 			}
 
-			setScoreBar(0, 0); 			// set scoreBar
 			return practiceView;
 		}
 		return inputView;
@@ -125,13 +122,7 @@ public class SelfDictationController extends ESLController {
 
 		String result = phoneticPracticeService.checkAnswer(practice, answer);
 		logger.info("submitAnswer: phoneticPracticeService.checkAnswer returned code: " + result);
-
-		// update score bar
-		if (IPhoneticPracticeService.CORRECT_ANSWER.equals(result))
-			setScoreBar(practice.getMark()-1, practice.getMark());
-		else
-			setScoreBar(practice.getMark(), practice.getMark());
-
+	
 		answer = "";			// Clear answer field
 
 		if (PhoneticPracticeService.INVALID_INPUT.equals(result))
@@ -148,7 +139,6 @@ public class SelfDictationController extends ESLController {
 		{
 			logger.info("submitAnswer: Finish Practice");
 			selfDictationService.completedPractice(practice.getQuestions(), (ServletContext) facesContext.getExternalContext().getContext());
-			setScoreBar(0, practice.getMark());
 			return resultView;
 		}
 
@@ -181,13 +171,5 @@ public class SelfDictationController extends ESLController {
 		}
 		logger.info("getInputVocab: returned list size[" + vocabs.size() + "]");
 		return vocabs;
-	}
-
-	private void setScoreBar(int startIdx, int endIdx) {
-		int startLength = (int) ((double)startIdx / (double)practice.getTotalQuestions() * SCOREBAR_FULLLENGTH);
-		int endLength = (int) ((double)endIdx / (double)practice.getTotalQuestions() * SCOREBAR_FULLLENGTH);
-		if (startLength < 0) startLength = 0;
-
-		logger.info("setScoreBar: startLength[" + startLength + "], endLength[" + endLength + "]");
 	}
 }

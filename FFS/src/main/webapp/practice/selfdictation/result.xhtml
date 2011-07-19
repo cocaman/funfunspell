@@ -24,7 +24,7 @@
 			</h:outputFormat>
 			</strong>
 		</h2>
-		<esl:scoreBar scoreBar="#{selfDictationController.scoreBar}" mark="#{selfDictationController.practice.mark}" />
+		<esl:scoreBar startMark="#{selfDictationController.practice.mark}" maxMark="#{selfDictationController.practice.totalQuestions}" />
 	</ui:define>
 	
 	<ui:define name="leftColumn">

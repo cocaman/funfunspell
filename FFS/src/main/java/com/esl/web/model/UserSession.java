@@ -39,11 +39,11 @@ public class UserSession implements Serializable {
 
 	public String stopShowGoogleImage() {
 		showGoogleImage = false;
-		return null;
+		return "";
 	}
 	
 	public String resumeShowGoogleImage() {
 		showGoogleImage = true;
-		return null;
+		return "";
 	}
 }
