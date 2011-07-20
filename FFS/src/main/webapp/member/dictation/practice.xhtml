@@ -38,8 +38,8 @@
 				<f:param value="#{dictationPracticeController.practice.currentQuestion+1}"/>
 				<f:param value="#{dictationPracticeController.practice.totalQuestions}"/>
 			</h:outputFormat>
-		</h2>
-		<esl:scoreBar scoreBar="#{dictationPracticeController.scoreBar}" mark="#{dictationPracticeController.practice.mark}" />		
+		</h2>		
+		<esl:scoreBar startMark="#{dictationPracticeController.practice.mark}" maxMark="#{dictationPracticeController.practice.totalMark}" />		
 		<h:messages tooltip="true" errorStyle="color: rgb(220, 130, 0);" globalOnly="true" />
 	</ui:define>
 	
