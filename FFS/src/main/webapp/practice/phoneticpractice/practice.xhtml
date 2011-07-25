@@ -19,7 +19,7 @@
 		<script type="text/javascript" src="/ESL/js/jquery-1.3.2.min.js"></script>
 		<script type="text/javascript" src="/ESL/js/jquery-ui-1.7.2.custom.min.js"></script>
 		<script type="text/javascript">
-		<!--
+		//<![CDATA[
 		jQuery.noConflict();
 				
 		jQuery(document).ready(
@@ -30,9 +30,9 @@
 		
 		function updateAfterSubmit() {
 			animateScoreBar(jQuery('#inputForm\\:hiddenCurrentMark').val(), jQuery('#inputForm\\:hiddenMaxMark').val());
-			resetGoogleImageSearch(jQuery('#inputForm\\:hiddenSearchText').val());
+ 			resetGoogleImageSearch(jQuery('#inputForm\\:hiddenSearchText').val());
 		}
-		-->
+		//]]>
 		</script>
 	</ui:define>
 		
@@ -83,12 +83,12 @@
 					<td align="center">
 						<a4j:outputPanel rendered="#{authenticationController.authenticated and !memberWordController.savedQuestion[phoneticPracticeController.practice.questions[phoneticPracticeController.practice.currentQuestion-1-r]]}">
 						<a4j:region>
-							<h:form id="addWord" style="padding:0px; margin:0px; height: 16px;">
+<!-- 							<h:form id="addWord" style="padding:0px; margin:0px; height: 16px;"> -->
 								<a4j:commandLink render="msgPanel" onclick="loadingAnchorImg(this)" oncomplete="removeAnchorImg();" action="#{memberWordController.saveWord}">
 									<f:setPropertyActionListener target="#{memberWordController.selectedPhoneticQuestion}" value="#{phoneticPracticeController.practice.questions[phoneticPracticeController.practice.currentQuestion-1-r]}" />
 									<img border="0" width="15" height="15" src="#{request.contextPath}/images/graphic/plus.gif" />
 								</a4j:commandLink>
-							</h:form>
+<!-- 							</h:form> -->
 						</a4j:region>
 						</a4j:outputPanel>												
 					</td>

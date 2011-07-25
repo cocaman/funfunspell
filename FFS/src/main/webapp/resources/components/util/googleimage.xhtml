@@ -26,11 +26,13 @@
 		var page = 1;
 		var searchText = '#{cc.attrs.keyword}';
     
-		function resetGoogleImageSearch(newTexttoSearch) {
+		function resetGoogleImageSearch(newTexttoSearch) {			
 			resultCount = 0;
 			page = 1;
 			searchText = newTexttoSearch;
-			imageSearch.execute(searchText); // what to find
+			if (imageSearch != null) {
+				imageSearch.execute(searchText); // what to find
+			}
 		}
 		
 		function searchComplete() {
@@ -94,8 +96,9 @@
 <a4j:outputPanel id="googleImagePanel">
 <h:panelGroup rendered="#{cc.attrs.showImage and userSession.showGoogleImage}">
 	<script language="Javascript" type="text/javascript">
+	//<![CDATA[
 		google.setOnLoadCallback(onGoogleImageLoad);
-		imageSearch.execute(searchText);		
+	//]]>
 	</script>
     <table style="width: 250px; height: 230px; border:5px solid #FF8620;">
     	<tr>
