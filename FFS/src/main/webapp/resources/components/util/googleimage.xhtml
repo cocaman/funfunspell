@@ -100,18 +100,18 @@
 		google.setOnLoadCallback(onGoogleImageLoad);
 	//]]>
 	</script>
-    <table style="width: 250px; height: 230px; border:5px solid #FF8620;">
+    <table style="width: 250px; height: 230px; border:5px solid #FF8620; padding-left: 30px;">
     	<tr>
-    		<td colspan="3" valign="middle" align="center" style="width: 100%; height: 200;"><div id="gImageContent">Loading...</div></td>
+    		<td colspan="2" valign="middle" align="center" style="width: 100%; height: 200;"><div id="gImageContent">Loading...</div></td>
     	</tr>
+    	<tr><td colspan="2"><div id="branding" align="left"></div></td></tr>
     	<tr>
-    		<td style="padding-left: 10px;"><div style="cursor: pointer;" id="nextImage" align="left" onclick="changeImg()"><h:graphicImage value="/images/icon/silk/picture_go.png" />#{generalMsg.nextImage}</div></td>
-    		<td>
+    		<td align="center" style="height: 20px;"><div style="cursor: pointer;" id="nextImage" align="left" onclick="changeImg()"><h:graphicImage value="/images/icon/silk/picture_go.png" />#{generalMsg.nextImage}</div></td>
+    		<td align="center">
     			<h:form>
     				<h:commandLink render="googleImagePanel" id="stopShowImage" action="#{userSession.stopShowGoogleImage}"><h:graphicImage value="/images/icon/silk/cancel.png" />#{generalMsg.stopShow}</h:commandLink>
     			</h:form>
-    		</td>
-    		<td style="height: 30px;"><div id="branding" align="left"></div></td>    		
+    		</td>    		
     	</tr>
     </table>    
 </h:panelGroup>
@@ -121,7 +121,7 @@
     		<td valign="middle" align="center"><div id="gImageContent" style="font-size: 20px; font-weight: bold; color: #FF8620;">#{generalMsg.doNotShowImage}</div></td>
     	</tr>
     	<tr>    		
-    		<td align="left"><h:form><h:commandLink render="googleImagePanel" id="resumeShowImage" action="#{userSession.resumeShowGoogleImage}"><h:graphicImage value="/images/icon/silk/cancel.png" />#{generalMsg.stopShow}</h:commandLink></h:form></td>
+    		<td align="center" style="height: 20px;"><h:form><h:commandLink render="googleImagePanel" id="resumeShowImage" action="#{userSession.resumeShowGoogleImage}"><h:graphicImage value="/images/icon/silk/picture.png" />#{generalMsg.resumeShow}</h:commandLink></h:form></td>
     	</tr>
     </table>
 </h:panelGroup>
