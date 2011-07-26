@@ -18,7 +18,7 @@
 		<script type="text/javascript" src="/ESL/js/jquery-1.3.2.min.js"></script>
 		<script type="text/javascript" src="/ESL/js/jquery-ui-1.7.2.custom.min.js"></script>
 		<script type="text/javascript">
-		<!--
+		//<![CDATA[ 
 		jQuery.noConflict();
 				
 		jQuery(document).ready(
@@ -26,7 +26,7 @@
 				jQuery('#inputForm\\:answer').focus();
 			}
 		);
-		-->
+		//]]>
 		</script>
 	</ui:define>
 	
@@ -39,7 +39,7 @@
 				<f:param value="#{dictationPracticeController.practice.totalQuestions}"/>
 			</h:outputFormat>
 		</h2>		
-		<esl:scoreBar startMark="#{dictationPracticeController.practice.mark}" maxMark="#{dictationPracticeController.practice.totalMark}" />		
+		<esl:scoreBar startMark="#{dictationPracticeController.practice.mark}" maxMark="#{dictationPracticeController.practice.totalQuestions}" />		
 		<h:messages tooltip="true" errorStyle="color: rgb(220, 130, 0);" globalOnly="true" />
 	</ui:define>
 	
