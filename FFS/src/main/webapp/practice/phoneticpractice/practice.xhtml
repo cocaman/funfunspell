@@ -131,6 +131,11 @@
 										<h:inputHidden id="hiddenMaxMark" value="#{phoneticPracticeController.practice.totalQuestions}" />
 										<h:inputHidden id="hiddenCurrentMark" value="#{phoneticPracticeController.practice.mark}" />
 										<h:inputHidden id="hiddenSearchText" value="#{phoneticPracticeController.practice.currentQuestionObject.word}" />
+										<a4j:status>
+								            <f:facet name="start">
+								                <h:graphicImage value="/images/graphic/loading.gif" alt="loading"/>
+								            </f:facet>
+								        </a4j:status>
 									</div>
 								</td>					
 							</tr>
