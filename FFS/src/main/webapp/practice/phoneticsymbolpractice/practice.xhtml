@@ -207,6 +207,11 @@
 									<td align="left">
 										<div style="margin-bottom: 15px; margin-top: 15px;" class="buttons">
 											<a4j:commandLink render="topHeader questionRegion historyRegion msgPanel" oncomplete="updateAfterSubmit()" id="eslSubmit" styleClass="orange" action="#{phoneticSymbolPracticeController.submitAnswer}"><img src="#{request.contextPath}/images/icon/silk/tick.png" />#{phonPracticeMsg.practiceSubmit}</a4j:commandLink>
+											<a4j:status>
+									            <f:facet name="start">
+									                <h:graphicImage value="/images/graphic/loading.gif" alt="loading"/>
+									            </f:facet>
+									        </a4j:status>
 											<h:inputHidden id="hiddenMaxMark" value="#{phoneticSymbolPracticeController.totalFullMark}" />
 											<h:inputHidden id="hiddenCurrentMark" value="#{phoneticSymbolPracticeController.totalMark}" />
 											<h:inputHidden id="hiddenSearchText" value="#{phoneticSymbolPracticeController.question.word}" />
@@ -218,12 +223,7 @@
 									</td>
 								</tr>								
 							</table>							
-						</h:form>
-						<a4j:status>
-				            <f:facet name="start">
-				                <h:graphicImage value="/images/graphic/loading.gif" alt="loading"/>
-				            </f:facet>
-			       		</a4j:status>
+						</h:form>						
 					</a4j:outputPanel>
 				</td>
 				<td><util:googleimage keyword="#{phoneticSymbolPracticeController.question.word}" /></td>

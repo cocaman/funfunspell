@@ -123,11 +123,16 @@
 							</h:inputText>
 							<br />
 							<div style="margin-bottom: 15px; margin-top: 15px;" class="buttons">				
-								<a4j:commandLink render="topHeader questionRegion historyRegion msgPanel" oncomplete="updateAfterSubmit()" id="eslSubmit" action="#{phoneticPracticeG2Controller.submitAnswer}" styleClass="orange"><img src="#{request.contextPath}/images/icon/silk/control_play_blue.png" />#{phonPracticeMsg.practiceSubmit}</a4j:commandLink>
-								<h:commandLink onclick="return submitRequest();" styleClass="orange" action="#{phoneticPracticeG2Controller.submitAndEnd}"><img src="#{request.contextPath}/images/icon/silk/control_stop_blue.png" />#{phonPracticeMsg.practiceG2EndPractice}</h:commandLink>
+								<a4j:commandLink   render="topHeader questionRegion historyRegion msgPanel" oncomplete="updateAfterSubmit()" id="eslSubmit" action="#{phoneticPracticeG2Controller.submitAnswer}" styleClass="orange"><img src="#{request.contextPath}/images/icon/silk/control_play_blue.png" />#{phonPracticeMsg.practiceSubmit}</a4j:commandLink>
+								<a4j:status>
+						            <f:facet name="start">
+						                <h:graphicImage value="/images/graphic/loading.gif" alt="loading"/>
+						            </f:facet>
+						        </a4j:status>								
+								<a4j:commandLink onclick="return submitRequest();" styleClass="orange" action="#{phoneticPracticeG2Controller.submitAndEnd}"><img src="#{request.contextPath}/images/icon/silk/control_stop_blue.png" />#{phonPracticeMsg.practiceG2EndPractice}</a4j:commandLink>
 								<h:inputHidden id="hiddenMaxMark" value="#{phoneticPracticeG2Controller.scoreBarMaxMark}" />
 								<h:inputHidden id="hiddenCurrentMark" value="#{phoneticPracticeG2Controller.scoreBarCurrentMark}" />
-								<h:inputHidden id="hiddenSearchText" value="#{phoneticPracticeG2Controller.question.word}" />				
+								<h:inputHidden id="hiddenSearchText" value="#{phoneticPracticeG2Controller.question.word}" />
 							</div>
 							<img src="#{languageController.imagesPath}/spacer.gif" width="1" height="40" />											
 							<div><h:message for="answer" errorClass="error" /></div>
