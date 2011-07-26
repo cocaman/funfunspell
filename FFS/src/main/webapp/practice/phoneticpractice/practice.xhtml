@@ -83,12 +83,10 @@
 					<td align="center">
 						<a4j:outputPanel rendered="#{authenticationController.authenticated and !memberWordController.savedQuestion[phoneticPracticeController.practice.questions[phoneticPracticeController.practice.currentQuestion-1-r]]}">
 						<a4j:region>
-<!-- 							<h:form id="addWord" style="padding:0px; margin:0px; height: 16px;"> -->
-								<a4j:commandLink render="msgPanel" onclick="loadingAnchorImg(this)" oncomplete="removeAnchorImg();" action="#{memberWordController.saveWord}">
-									<f:setPropertyActionListener target="#{memberWordController.selectedPhoneticQuestion}" value="#{phoneticPracticeController.practice.questions[phoneticPracticeController.practice.currentQuestion-1-r]}" />
-									<img border="0" width="15" height="15" src="#{request.contextPath}/images/graphic/plus.gif" />
-								</a4j:commandLink>
-<!-- 							</h:form> -->
+							<a4j:commandLink render="msgPanel" onclick="loadingAnchorImg(this)" oncomplete="removeAnchorImg();" action="#{memberWordController.saveWord}">
+								<f:setPropertyActionListener target="#{memberWordController.selectedPhoneticQuestion}" value="#{phoneticPracticeController.practice.questions[phoneticPracticeController.practice.currentQuestion-1-r]}" />
+								<img border="0" width="15" height="15" src="#{request.contextPath}/images/graphic/plus.gif" />
+							</a4j:commandLink>
 						</a4j:region>
 						</a4j:outputPanel>												
 					</td>
