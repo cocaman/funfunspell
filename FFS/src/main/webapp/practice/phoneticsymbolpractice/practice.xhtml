@@ -106,6 +106,7 @@
 				<td>
 					<a4j:outputPanel id="questionRegion">
 						<h:form styleClass="inputform" id="inputForm">
+							<a4j:queue />
 							<div id="player1" style="clear: none"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> for pronounce.</div>
 						    <script type="text/javascript">
 							    var player1 = new SWFObject("#{request.contextPath}/player/btn_#{languageController.locale}.swf", "line", "184", "30", "7");
@@ -206,20 +207,19 @@
 								<tr>
 									<td align="left">
 										<div style="margin-bottom: 15px; margin-top: 15px;" class="buttons">
-											<a4j:commandLink render="topHeader questionRegion historyRegion msgPanel" oncomplete="updateAfterSubmit()" id="eslSubmit" styleClass="orange" action="#{phoneticSymbolPracticeController.submitAnswer}"><img src="#{request.contextPath}/images/icon/silk/tick.png" />#{phonPracticeMsg.practiceSubmit}</a4j:commandLink>
+											<a4j:commandLink render="topHeader questionRegion historyRegion msgPanel" oncomplete="updateAfterSubmit()" id="eslSubmit" styleClass="orange" action="#{phoneticSymbolPracticeController.submitAnswer}"><img src="#{request.contextPath}/images/icon/silk/tick.png" />#{phonPracticeMsg.practiceSubmit}</a4j:commandLink>											
+											<h:inputHidden id="hiddenMaxMark" value="#{phoneticSymbolPracticeController.totalFullMark}" />
+											<h:inputHidden id="hiddenCurrentMark" value="#{phoneticSymbolPracticeController.totalMark}" />
+											<h:inputHidden id="hiddenSearchText" value="#{phoneticSymbolPracticeController.question.word}" />
 											<a4j:status>
 									            <f:facet name="start">
 									                <h:graphicImage value="/images/graphic/loading.gif" alt="loading"/>
 									            </f:facet>
 									        </a4j:status>
-											<h:inputHidden id="hiddenMaxMark" value="#{phoneticSymbolPracticeController.totalFullMark}" />
-											<h:inputHidden id="hiddenCurrentMark" value="#{phoneticSymbolPracticeController.totalMark}" />
-											<h:inputHidden id="hiddenSearchText" value="#{phoneticSymbolPracticeController.question.word}" />
-										</div>
-										
+										</div>										
 									</td>
 									<td align="right" valign="bottom">
-										<h:commandLink onclick="return submitRequest();" action="#{phoneticSymbolPracticeController.completePractice}"><u><h:outputText value="#{phonSymPracticeMsg.practiceComplete}" /></u></h:commandLink>
+										<a4j:commandLink action="#{phoneticSymbolPracticeController.completePractice}"><u><h:outputText value="#{phonSymPracticeMsg.practiceComplete}" /></u></a4j:commandLink>
 									</td>
 								</tr>								
 							</table>							

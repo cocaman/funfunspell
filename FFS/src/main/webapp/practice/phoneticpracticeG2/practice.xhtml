@@ -102,7 +102,8 @@
 			<tr>
 				<td>
 					<a4j:outputPanel id="questionRegion">
-						<h:form styleClass="inputform" id="inputForm" onsubmit="return submitRequest(this)">
+						<h:form styleClass="inputform" id="inputForm">
+							<a4j:queue />
 							<div id="player1" style="clear: none"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> for pronounce.</div>
 						    <script type="text/javascript">
 							    var player1 = new SWFObject("#{request.contextPath}/player/btn_#{languageController.locale}.swf", "line", "184", "30", "7");
@@ -123,16 +124,16 @@
 							</h:inputText>
 							<br />
 							<div style="margin-bottom: 15px; margin-top: 15px;" class="buttons">				
-								<a4j:commandLink   render="topHeader questionRegion historyRegion msgPanel" oncomplete="updateAfterSubmit()" id="eslSubmit" action="#{phoneticPracticeG2Controller.submitAnswer}" styleClass="orange"><img src="#{request.contextPath}/images/icon/silk/control_play_blue.png" />#{phonPracticeMsg.practiceSubmit}</a4j:commandLink>
+								<a4j:commandLink render="topHeader questionRegion historyRegion msgPanel" oncomplete="updateAfterSubmit()" id="eslSubmit" action="#{phoneticPracticeG2Controller.submitAnswer}" styleClass="orange"><img src="#{request.contextPath}/images/icon/silk/control_play_blue.png" />#{phonPracticeMsg.practiceSubmit}</a4j:commandLink>																
+								<a4j:commandLink styleClass="orange" action="#{phoneticPracticeG2Controller.submitAndEnd}"><img src="#{request.contextPath}/images/icon/silk/control_stop_blue.png" />#{phonPracticeMsg.practiceG2EndPractice}</a4j:commandLink>
+								<h:inputHidden id="hiddenMaxMark" value="#{phoneticPracticeG2Controller.scoreBarMaxMark}" />
+								<h:inputHidden id="hiddenCurrentMark" value="#{phoneticPracticeG2Controller.scoreBarCurrentMark}" />
+								<h:inputHidden id="hiddenSearchText" value="#{phoneticPracticeG2Controller.question.word}" />
 								<a4j:status>
 						            <f:facet name="start">
 						                <h:graphicImage value="/images/graphic/loading.gif" alt="loading"/>
 						            </f:facet>
-						        </a4j:status>								
-								<a4j:commandLink onclick="return submitRequest();" styleClass="orange" action="#{phoneticPracticeG2Controller.submitAndEnd}"><img src="#{request.contextPath}/images/icon/silk/control_stop_blue.png" />#{phonPracticeMsg.practiceG2EndPractice}</a4j:commandLink>
-								<h:inputHidden id="hiddenMaxMark" value="#{phoneticPracticeG2Controller.scoreBarMaxMark}" />
-								<h:inputHidden id="hiddenCurrentMark" value="#{phoneticPracticeG2Controller.scoreBarCurrentMark}" />
-								<h:inputHidden id="hiddenSearchText" value="#{phoneticPracticeG2Controller.question.word}" />
+						        </a4j:status>
 							</div>
 							<img src="#{languageController.imagesPath}/spacer.gif" width="1" height="40" />											
 							<div><h:message for="answer" errorClass="error" /></div>
