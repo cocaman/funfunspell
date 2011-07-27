@@ -30,7 +30,7 @@
 		
 		function updateAfterSubmit() {
 			animateScoreBar(jQuery('#inputForm\\:hiddenCurrentMark').val(), jQuery('#inputForm\\:hiddenMaxMark').val());
-			resetGoogleImageSearch(jQuery('#inputForm\\:hiddenSearchText').val());
+			resetGoogleImageSearch(jQuery('#hiddenSearchText').val());
 		}
 		-->
 		</script>
@@ -103,7 +103,7 @@
 				<td>
 					<a4j:outputPanel id="questionRegion">
 						<h:form styleClass="inputform" id="inputForm">
-							<a4j:queue />
+							<a4j:queue id="abc" />
 							<div id="player1" style="clear: none"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> for pronounce.</div>
 						    <script type="text/javascript">
 							    var player1 = new SWFObject("#{request.contextPath}/player/btn_#{languageController.locale}.swf", "line", "184", "30", "7");
@@ -128,7 +128,7 @@
 								<a4j:commandLink styleClass="orange" action="#{phoneticPracticeG2Controller.submitAndEnd}"><img src="#{request.contextPath}/images/icon/silk/control_stop_blue.png" />#{phonPracticeMsg.practiceG2EndPractice}</a4j:commandLink>
 								<h:inputHidden id="hiddenMaxMark" value="#{phoneticPracticeG2Controller.scoreBarMaxMark}" />
 								<h:inputHidden id="hiddenCurrentMark" value="#{phoneticPracticeG2Controller.scoreBarCurrentMark}" />
-								<h:inputHidden id="hiddenSearchText" value="#{phoneticPracticeG2Controller.question.word}" />
+								<input type="hidden" id="hiddenSearchText" value="#{phoneticPracticeG2Controller.question.word}" />
 								<a4j:status>
 						            <f:facet name="start">
 						                <h:graphicImage value="/images/graphic/loading.gif" alt="loading"/>
