@@ -144,7 +144,7 @@ public class MyVocabPracticeController extends PhoneticPracticeG2Controller {
 		clearController();
 
 		// go to member word manage page
-		return memberWordController.launchManage();
+		return JSFUtil.redirect(memberWordController.launchManage());
 	}
 
 	// ============== Supporting Functions ================//

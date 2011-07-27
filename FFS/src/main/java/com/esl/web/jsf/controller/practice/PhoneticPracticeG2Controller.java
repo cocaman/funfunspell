@@ -1,6 +1,10 @@
 package com.esl.web.jsf.controller.practice;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.faces.context.FacesContext;
@@ -10,9 +14,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import com.esl.dao.*;
+import com.esl.dao.IGradeDAO;
+import com.esl.dao.IMemberDAO;
+import com.esl.dao.IPhoneticQuestionDAO;
+import com.esl.dao.IPracticeResultDAO;
 import com.esl.exception.ESLSystemException;
-import com.esl.model.*;
+import com.esl.model.Grade;
+import com.esl.model.Member;
+import com.esl.model.PhoneticQuestion;
+import com.esl.model.PracticeResult;
+import com.esl.model.TopResult;
 import com.esl.service.practice.IPhoneticPracticeService;
 import com.esl.service.practice.ITopResultService;
 import com.esl.util.JSFUtil;
@@ -269,7 +280,7 @@ public class PhoneticPracticeG2Controller extends ESLController {
 			}
 			isLevelUp = true;
 		}
-		return completePractice();
+		return JSFUtil.redirect(completePractice());
 	}
 
 	// process when completing the practice

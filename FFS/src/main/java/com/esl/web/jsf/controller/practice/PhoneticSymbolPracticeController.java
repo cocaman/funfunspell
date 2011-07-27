@@ -173,7 +173,7 @@ public class PhoneticSymbolPracticeController extends ESLController {
 		// reduce one mark for the undo question
 		totalFullMark--;
 
-		return resultView;
+		return JSFUtil.redirect(resultView);
 	}
 
 	//	 ============== Getter Functions ================//
