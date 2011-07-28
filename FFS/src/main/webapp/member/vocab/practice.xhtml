@@ -30,7 +30,7 @@
 		
 		function updateAfterSubmit() {
 			animateScoreBar(jQuery('#inputForm\\:hiddenCurrentMark').val(), jQuery('#inputForm\\:hiddenMaxMark').val());
- 			resetGoogleImageSearch(jQuery('#inputForm\\:hiddenSearchText').val());
+ 			resetGoogleImageSearch(jQuery('#hiddenSearchText').val());
 		}
 		//]]>
 		</script>
@@ -111,8 +111,8 @@
 							<div style="margin-bottom: 15px; margin-top: 15px;" class="buttons">
 								<a4j:commandLink render="topHeader questionRegion historyRegion msgPanel" oncomplete="updateAfterSubmit()" id="eslSubmit" action="#{myVocabPracticeController.submitAnswer}" styleClass="orange"><img src="#{request.contextPath}/images/icon/silk/tick.png" />#{phonPracticeMsg.practiceSubmit}</a4j:commandLink>								
 								<h:inputHidden id="hiddenMaxMark" value="#{myVocabPracticeController.totalFullMark}" />
-								<h:inputHidden id="hiddenCurrentMark" value="#{myVocabPracticeController.totalMark}" />
-								<h:inputHidden id="hiddenSearchText" value="#{myVocabPracticeController.memberWord.word.word}" />
+								<h:inputHidden id="hiddenCurrentMark" value="#{myVocabPracticeController.totalMark}" />								
+								<input type="hidden" id="hiddenSearchText" value="#{myVocabPracticeController.memberWord.word.word}" />
 								<a4j:status>
 						            <f:facet name="start">
 						                <h:graphicImage value="/images/graphic/loading.gif" alt="loading"/>
