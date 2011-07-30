@@ -19,7 +19,7 @@
 		<script type="text/javascript" src="/ESL/js/jquery-1.3.2.min.js"></script>
 		<script type="text/javascript" src="/ESL/js/jquery-ui-1.7.2.custom.min.js"></script>
 		<script type="text/javascript">
-		<!--
+		//<![CDATA[
 		jQuery.noConflict();
 				
 		jQuery(document).ready(
@@ -27,7 +27,7 @@
 				jQuery('#inputForm\\:answer').focus();
 			}
 		);
-		-->
+		//]]>
 		</script>
 	</ui:define>
 
@@ -37,13 +37,10 @@
 				<f:param value="#{irregularVerbPracticeController.totalQuestions}"/>
 			</h:outputFormat>
 		</h2>
-		<esl:scoreBar scoreBar="#{irregularVerbPracticeController.scoreBar}" mark="#{irregularVerbPracticeController.mark}" />
+		<esl:scoreBar startMark="#{irregularVerbPracticeController.mark}" maxMark="#{irregularVerbPracticeController.fullMark}" />
 		<a4j:outputPanel id="msgPanel">
 			<h:messages tooltip="true" errorStyle="color: rgb(220, 130, 0);" globalOnly="false" />
-		</a4j:outputPanel>		
-		<h:panelGroup rendered="#{irregularVerbPracticeController.showSignUpPopUp}">
-			<h:form><ui:include src="/public/signuppopup.xhtml" /></h:form>
-		</h:panelGroup>
+		</a4j:outputPanel>
 			
 		<table>
 			<tr><td style="background-image: url('#{languageController.imagesPath}/innerbox2_06.gif')" width="749" height="9"></td></tr>

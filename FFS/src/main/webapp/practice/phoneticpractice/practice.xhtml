@@ -29,7 +29,7 @@
 		);
 		
 		function updateAfterSubmit() {
-			animateScoreBar(jQuery('#inputForm\\:hiddenCurrentMark').val(), jQuery('#inputForm\\:hiddenMaxMark').val());
+			animateScoreBar(jQuery('#hiddenCurrentMark').val(), jQuery('#hiddenMaxMark').val());
  			resetGoogleImageSearch(jQuery('#hiddenSearchText').val());
 		}
 		//]]>
@@ -102,7 +102,7 @@
 	<ui:define name="lowerMainContent">		
 		<table width="100%">
 			<tr>
-				<td>
+				<td align="left" width="50%">
 					<a4j:outputPanel id="questionRegion">
 					<h:form styleClass="inputform" id="inputForm">
 						<a4j:queue />
@@ -129,15 +129,15 @@
 								<td align="left">
 									<div style="margin-bottom: 15px; margin-top: 15px;" class="buttons">
 										<a4j:commandLink render="topHeader questionRegion historyRegion msgPanel" oncomplete="updateAfterSubmit()" id="eslSubmit" action="#{phoneticPracticeController.submitAnswer}"><img src="#{request.contextPath}/images/icon/silk/font.png" />#{phonPracticeMsg.practiceSubmit}</a4j:commandLink>
-										<h:inputHidden id="hiddenMaxMark" value="#{phoneticPracticeController.practice.totalQuestions}" />
-										<h:inputHidden id="hiddenCurrentMark" value="#{phoneticPracticeController.practice.mark}" />										
-										<input type="hidden" id="hiddenSearchText" value="#{phoneticPracticeController.practice.currentQuestionObject.word}" />
-										<a4j:status>
-								            <f:facet name="start">
-								                <h:graphicImage value="/images/graphic/loading.gif" alt="loading"/>
-								            </f:facet>
-								        </a4j:status>
+										<input type="hidden" id="hiddenMaxMark" value="#{phoneticPracticeController.practice.totalQuestions}" />
+										<input type="hidden" id="hiddenCurrentMark" value="#{phoneticPracticeController.practice.mark}" />										
+										<input type="hidden" id="hiddenSearchText" value="#{phoneticPracticeController.practice.currentQuestionObject.word}" />										
 									</div>
+									<a4j:status>
+							            <f:facet name="start">
+							                <h:graphicImage style="display: block; float: left;" value="/images/graphic/loading.gif" alt="loading"/>
+							            </f:facet>
+								    </a4j:status>
 								</td>					
 							</tr>
 						</table>						
@@ -145,7 +145,7 @@
 					</h:form>
 					</a4j:outputPanel>
 				</td>
-				<td><util:googleimage keyword="#{phoneticPracticeController.practice.currentQuestionObject.word}" /></td>
+				<td align="left"><util:googleimage keyword="#{phoneticPracticeController.practice.currentQuestionObject.word}" /></td>
 			</tr>
 		</table>
 		<!-- 		<h:panelGroup rendered="#{phoneticPracticeController.practice.currentQuestionObject.picFileName!=null}"> -->

@@ -1,9 +1,6 @@
 package com.esl.web.jsf.controller.practice;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
@@ -17,9 +14,7 @@ import org.springframework.stereotype.Controller;
 
 import com.esl.model.PhoneticPractice;
 import com.esl.model.PhoneticQuestion;
-import com.esl.service.practice.IPhoneticPracticeService;
-import com.esl.service.practice.ISelfDictationService;
-import com.esl.service.practice.PhoneticPracticeService;
+import com.esl.service.practice.*;
 import com.esl.web.jsf.controller.ESLController;
 import com.esl.web.util.LanguageUtil;
 
@@ -41,6 +36,7 @@ public class SelfDictationController extends ESLController {
 	private String answer;
 	private boolean withIPA = false;
 	private boolean withRandomCharacters = false;
+	private int totalQuestions;
 
 	// Supporting classes
 	@Resource private ISelfDictationService selfDictationService;
@@ -74,6 +70,8 @@ public class SelfDictationController extends ESLController {
 	public void setInputVocab(List<String> inputVocab) {	this.inputVocab = inputVocab;}
 
 	public int getTotalInput() {return selfDictationService.getMaxQuestions();	}
+
+	public int getTotalQuestions() {return totalQuestions; }
 
 	// ============== Constructor ================//
 	public SelfDictationController() {
@@ -122,7 +120,7 @@ public class SelfDictationController extends ESLController {
 
 		String result = phoneticPracticeService.checkAnswer(practice, answer);
 		logger.info("submitAnswer: phoneticPracticeService.checkAnswer returned code: " + result);
-	
+
 		answer = "";			// Clear answer field
 
 		if (PhoneticPracticeService.INVALID_INPUT.equals(result))
@@ -138,6 +136,7 @@ public class SelfDictationController extends ESLController {
 		if (practice.isFinish())
 		{
 			logger.info("submitAnswer: Finish Practice");
+			totalQuestions = practice.getTotalQuestions();
 			selfDictationService.completedPractice(practice.getQuestions(), (ServletContext) facesContext.getExternalContext().getContext());
 			return resultView;
 		}

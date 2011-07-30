@@ -29,7 +29,7 @@
 		);
 		
 		function updateAfterSubmit() {
-			animateScoreBar(jQuery('#inputForm\\:hiddenCurrentMark').val(), jQuery('#inputForm\\:hiddenMaxMark').val());
+			animateScoreBar(jQuery('#hiddenCurrentMark').val(), jQuery('#hiddenMaxMark').val());
 			resetGoogleImageSearch(jQuery('#hiddenSearchText').val());
 		}
 		-->
@@ -100,7 +100,7 @@
 	<ui:define name="lowerMainContent">
 		<table width="100%">
 			<tr>
-				<td>
+				<td align="left" width="50%">
 					<a4j:outputPanel id="questionRegion">
 						<h:form styleClass="inputform" id="inputForm">
 							<a4j:queue id="abc" />
@@ -126,21 +126,21 @@
 							<div style="margin-bottom: 15px; margin-top: 15px;" class="buttons">				
 								<a4j:commandLink render="topHeader questionRegion historyRegion msgPanel" oncomplete="updateAfterSubmit()" id="eslSubmit" action="#{phoneticPracticeG2Controller.submitAnswer}" styleClass="orange"><img src="#{request.contextPath}/images/icon/silk/control_play_blue.png" />#{phonPracticeMsg.practiceSubmit}</a4j:commandLink>																
 								<a4j:commandLink styleClass="orange" action="#{phoneticPracticeG2Controller.submitAndEnd}"><img src="#{request.contextPath}/images/icon/silk/control_stop_blue.png" />#{phonPracticeMsg.practiceG2EndPractice}</a4j:commandLink>
-								<h:inputHidden id="hiddenMaxMark" value="#{phoneticPracticeG2Controller.scoreBarMaxMark}" />
-								<h:inputHidden id="hiddenCurrentMark" value="#{phoneticPracticeG2Controller.scoreBarCurrentMark}" />
-								<input type="hidden" id="hiddenSearchText" value="#{phoneticPracticeG2Controller.question.word}" />
-								<a4j:status>
-						            <f:facet name="start">
-						                <h:graphicImage value="/images/graphic/loading.gif" alt="loading"/>
-						            </f:facet>
-						        </a4j:status>
+								<input type="hidden" id="hiddenMaxMark" value="#{phoneticPracticeG2Controller.scoreBarMaxMark}" />
+								<input type="hidden" id="hiddenCurrentMark" value="#{phoneticPracticeG2Controller.scoreBarCurrentMark}" />
+								<input type="hidden" id="hiddenSearchText" value="#{phoneticPracticeG2Controller.question.word}" />								
 							</div>
+							<a4j:status>
+					            <f:facet name="start">
+					                <h:graphicImage style="display: block; float: left;" value="/images/graphic/loading.gif" alt="loading"/>
+					            </f:facet>
+						    </a4j:status>
 							<img src="#{languageController.imagesPath}/spacer.gif" width="1" height="40" />											
 							<div><h:message for="answer" errorClass="error" /></div>
 						</h:form>
 					</a4j:outputPanel>
 				</td>
-				<td><util:googleimage keyword="#{phoneticPracticeG2Controller.question.word}" /></td>
+				<td align="left"><util:googleimage keyword="#{phoneticPracticeG2Controller.question.word}" /></td>
 			</tr>
 		</table>
 	</ui:define>

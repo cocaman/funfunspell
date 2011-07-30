@@ -24,14 +24,14 @@
 			</h:outputFormat>
 			</strong>
 		</h2>
-		<esl:scoreBar startMark="#{selfDictationController.practice.mark}" maxMark="#{selfDictationController.practice.totalQuestions}" />
+		<esl:scoreBar startMark="#{selfDictationController.practice.mark}" maxMark="#{selfDictationController.totalQuestions}" />
 	</ui:define>
 	
 	<ui:define name="leftColumn">
 		<h:form>
 			<p class="innerBold">									
 				<h:outputText value="#{selfDictationMsg.resultRetryMessage}" />
-				<h:commandLink action="/practice/selfdictation/input" onclick="return submitRequest();">
+				<h:commandLink action="/practice/selfdictation/input" onclick="return submitRequest()">
 					<h:outputText style="text-decoration:underline" value="#{selfDictationMsg.resultRetryLinkTitle}" />
 				</h:commandLink>
 			</p>

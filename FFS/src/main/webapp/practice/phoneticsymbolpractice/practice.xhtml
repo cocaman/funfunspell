@@ -36,7 +36,7 @@
 		  	}
 		  	
 		  	function updateAfterSubmit() {
-				animateScoreBar(jQuery('#inputForm\\:hiddenCurrentMark').val(), jQuery('#inputForm\\:hiddenMaxMark').val());
+				animateScoreBar(jQuery('#hiddenCurrentMark').val(), jQuery('#hiddenMaxMark').val());
 				resetGoogleImageSearch(jQuery('#hiddenSearchText').val());
 			}
 		-->
@@ -103,7 +103,7 @@
 	<ui:define name="lowerMainContent">
 		<table width="100%">
 			<tr>
-				<td>
+				<td align="left">
 					<a4j:outputPanel id="questionRegion">
 						<h:form styleClass="inputform" id="inputForm">
 							<a4j:queue />
@@ -205,18 +205,18 @@
 							</table>
 							<table width="100%" style="margin-bottom: 20px;">
 								<tr>
-									<td align="left">
+									<td align="left" width="50%">
 										<div style="margin-bottom: 15px; margin-top: 15px;" class="buttons">
 											<a4j:commandLink render="topHeader questionRegion historyRegion msgPanel" oncomplete="updateAfterSubmit()" id="eslSubmit" styleClass="orange" action="#{phoneticSymbolPracticeController.submitAnswer}"><img src="#{request.contextPath}/images/icon/silk/tick.png" />#{phonPracticeMsg.practiceSubmit}</a4j:commandLink>											
-											<h:inputHidden id="hiddenMaxMark" value="#{phoneticSymbolPracticeController.totalFullMark}" />
-											<h:inputHidden id="hiddenCurrentMark" value="#{phoneticSymbolPracticeController.totalMark}" />
-											<input type="hidden" id="hiddenSearchText" value="#{phoneticSymbolPracticeController.question.word}" />
-											<a4j:status>
-									            <f:facet name="start">
-									                <h:graphicImage value="/images/graphic/loading.gif" alt="loading"/>
-									            </f:facet>
-									        </a4j:status>
-										</div>										
+											<input type="hidden" id="hiddenMaxMark" value="#{phoneticSymbolPracticeController.totalFullMark}" />
+											<input type="hidden" id="hiddenCurrentMark" value="#{phoneticSymbolPracticeController.totalMark}" />
+											<input type="hidden" id="hiddenSearchText" value="#{phoneticSymbolPracticeController.question.word}" />											
+										</div>	
+										<a4j:status>
+								            <f:facet name="start">
+								                <h:graphicImage style="display: block; float: left;" value="/images/graphic/loading.gif" alt="loading"/>
+								            </f:facet>
+									    </a4j:status>									
 									</td>
 									<td align="right" valign="bottom">
 										<a4j:commandLink action="#{phoneticSymbolPracticeController.completePractice}"><u><h:outputText value="#{phonSymPracticeMsg.practiceComplete}" /></u></a4j:commandLink>
@@ -226,7 +226,7 @@
 						</h:form>						
 					</a4j:outputPanel>
 				</td>
-				<td><util:googleimage keyword="#{phoneticSymbolPracticeController.question.word}" /></td>
+				<td align="left" valign="top"><util:googleimage keyword="#{phoneticSymbolPracticeController.question.word}" /></td>
 			</tr>			
 		</table>
 	</ui:define>
