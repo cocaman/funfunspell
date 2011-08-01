@@ -9,6 +9,7 @@
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:esl="http://www.funfunspell.com/jsf"
+	xmlns:util="http://java.sun.com/jsf/composite/components/util"
 	template="/template/main.xhtml">
 
 	<ui:define name="subTitle">#{htmlHeadMsg.practice_irregularverb_practice_title}</ui:define>		
@@ -27,28 +28,35 @@
 				jQuery('#inputForm\\:answer').focus();
 			}
 		);
+		
+		function updateAfterSubmit() {
+			animateScoreBar(jQuery('#hiddenCurrentMark').val(), jQuery('#hiddenMaxMark').val());
+ 			resetGoogleImageSearch(jQuery('#hiddenSearchText').val());
+		}
 		//]]>
 		</script>
 	</ui:define>
 
 	<ui:define name="mainContent">
+		<a4j:outputPanel id="topHeader">
 		<h2>
 			<h:outputFormat value="#{irregularVerbMsg.practiceQuestionTitle}">
 				<f:param value="#{irregularVerbPracticeController.totalQuestions}"/>
 			</h:outputFormat>
 		</h2>
-		<esl:scoreBar startMark="#{irregularVerbPracticeController.mark}" maxMark="#{irregularVerbPracticeController.fullMark}" />
+		</a4j:outputPanel>
+		<esl:scoreBar startMark="#{irregularVerbPracticeController.mark}" maxMark="#{irregularVerbPracticeController.fullMark}" />		
 		<a4j:outputPanel id="msgPanel">
 			<h:messages tooltip="true" errorStyle="color: rgb(220, 130, 0);" globalOnly="false" />
 		</a4j:outputPanel>
-			
-		<table>
+
+		<table style="width: 100%">
 			<tr><td style="background-image: url('#{languageController.imagesPath}/innerbox2_06.gif')" width="749" height="9"></td></tr>
 			<tr>				
 				<td>
-					<table><tr>
-						<td>
-							<a4j:outputPanel rendered="#{not empty irregularVerbPracticeController.phoneticQ and not empty irregularVerbPracticeController.phoneticQ.pronouncedLink}">
+					<table style="width: 100%"><tr>
+						<td style="width: 50%" align="left">
+							<a4j:outputPanel id="questionInfoPanel" rendered="#{not empty irregularVerbPracticeController.phoneticQ and not empty irregularVerbPracticeController.phoneticQ.pronouncedLink}">
 								<div id="player1" style="clear: none"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> for pronounce.</div>
 							    <script type="text/javascript">
 								    var player1 = new SWFObject("#{request.contextPath}/player/btn_#{languageController.locale}.swf", "line", "184", "30", "7");
@@ -64,17 +72,15 @@
 								</table>
 							</a4j:outputPanel>
 						</td>
-						<td>
-							<h:panelGroup rendered="#{not empty irregularVerbPracticeController.phoneticQ.picFileName}">
-								<img src="#{request.contextPath}/images/graphic/word/#{irregularVerbPracticeController.phoneticQ.picFileName}" />
-							</h:panelGroup>
-						</td>
+						<td align="left"><util:googleimage keyword="#{dictationPracticeController.practice.currentQuestionObject.word}" /></td>
 					</tr></table>
 				</td>
 			</tr>
 			<tr>
-				<td>					
-					<h:form styleClass="inputform" id="inputForm" onsubmit="return submitRequest(this)">			
+				<td>	
+					<a4j:outputPanel id="questionRegion">		
+					<h:form styleClass="inputform" id="inputForm" onsubmit="return submitRequest(this)">
+						<a4j:queue />								
 						<table width="600px">
 							<tr>
 								<td valign="top" width="25%">
@@ -119,13 +125,17 @@
 							<tr>
 								<td colspan="3" width="90%">&nbsp;</td>
 								<td align="right">
-									<div style="margin-bottom: 15px; margin-top: 15px;" class="buttons">				
-										<h:commandLink id="eslSubmit" styleClass="orange" action="#{irregularVerbPracticeController.practice}"><img src="#{request.contextPath}/images/icon/silk/tick.png" />#{irregularVerbMsg.practiceSubmit}</h:commandLink>
+									<div style="margin-bottom: 15px; margin-top: 15px;" class="buttons">
+										<a4j:commandLink render="topHeader questionInfoPanel questionRegion historyRegion msgPanel" oncomplete="updateAfterSubmit()" id="eslSubmit" action="#{irregularVerbPracticeController.practice}"><img src="#{request.contextPath}/images/icon/silk/tick.png" />#{irregularVerbMsg.practiceSubmit}</a4j:commandLink>
+										<input type="hidden" id="hiddenMaxMark" value="#{irregularVerbPracticeController.fullMark}" />
+										<input type="hidden" id="hiddenCurrentMark" value="#{irregularVerbPracticeController.mark}" />										
+										<input type="hidden" id="hiddenSearchText" value="#{irregularVerbPracticeController.answer.present}" />										
 									</div>
 								</td>
 							</tr>
 						</table>
 					</h:form>
+					</a4j:outputPanel>
 				</td>				
 			</tr>
 			<tr><td style="background-image: url('#{languageController.imagesPath}/innerbox2_06.gif')" width="749" height="9"></td></tr>
@@ -142,6 +152,7 @@
 								<h:panelGroup rendered="#{irregularVerbPracticeController.withPastParticiple}"><td width="23%">#{irregularVerbMsg.pastParticiple}</td></h:panelGroup>
 							</tr>
 						</thead>
+						<a4j:outputPanel id="historyRegion">
 						<a4j:repeat var="history" rowKeyVar="r" value="#{irregularVerbPracticeController.histories}">
 						<tr>
 							<td>#{irregularVerbPracticeController.totalQuestions - r - 1}</td>
@@ -151,6 +162,7 @@
 							<h:panelGroup rendered="#{irregularVerbPracticeController.withPastParticiple}"><td><esl:ivpHistoryUnit word="#{history.pastParticiple.word}" type="#{history.pastParticiple.type}" /></td></h:panelGroup>
 						</tr>							
 						</a4j:repeat>
+						</a4j:outputPanel>
 						<tr><td align="left" colspan="4"><br />* #{irregularVerbMsg.dictionaryLink}</td></tr>
 					</table>
 				</td>

@@ -109,7 +109,7 @@
     		<td align="center" style="height: 20px;"><div style="cursor: pointer;" id="nextImage" onclick="changeImg()"><h:graphicImage value="/images/icon/silk/picture_go.png" />#{generalMsg.nextImage}</div></td>
     		<td align="center">
     			<h:form>
-    				<h:commandLink render="googleImagePanel" id="stopShowImage" action="#{userSession.stopShowGoogleImage}"><h:graphicImage value="/images/icon/silk/cancel.png" />#{generalMsg.stopShow}</h:commandLink>
+    				<h:commandLink render="googleImagePanel" id="stopShowImage" action="#{userSession.stopShowGoogleImage}"><h:graphicImage value="/images/icon/silk/cancel.png" style="border: 0px;" />#{generalMsg.stopShow}</h:commandLink>
     			</h:form>
     		</td>    		
     	</tr>
@@ -121,7 +121,7 @@
     		<td valign="middle" align="center"><div id="gImageContent" style="font-size: 20px; font-weight: bold; color: #FF8620;">#{generalMsg.doNotShowImage}</div></td>
     	</tr>
     	<tr>    		
-    		<td align="center" style="height: 20px;"><h:form><h:commandLink render="googleImagePanel" id="resumeShowImage" action="#{userSession.resumeShowGoogleImage}"><h:graphicImage value="/images/icon/silk/picture.png" />#{generalMsg.resumeShow}</h:commandLink></h:form></td>
+    		<td align="center" style="height: 20px;"><h:form><h:commandLink render="googleImagePanel" id="resumeShowImage" action="#{userSession.resumeShowGoogleImage}"><h:graphicImage value="/images/icon/silk/picture.png" style="border: 0px;" />#{generalMsg.resumeShow}</h:commandLink></h:form></td>
     	</tr>
     </table>
 </h:panelGroup>

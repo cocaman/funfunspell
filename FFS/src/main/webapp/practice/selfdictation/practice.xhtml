@@ -9,7 +9,8 @@
 	xmlns:a4j="http://richfaces.org/a4j"
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:esl="http://www.funfunspell.com/jsf"
-	template="/template/main_2column.xhtml">
+	xmlns:util="http://java.sun.com/jsf/composite/components/util"
+	template="/template/main2_2column.xhtml">
 
 	<ui:define name="subTitle">#{htmlHeadMsg.practice_selfdictation_practice_title}</ui:define>	
 	<ui:define name="head">
@@ -26,26 +27,36 @@
 				jQuery('#inputForm\\:answer').focus();
 			}
 		);
+		
+		function updateAfterSubmit() {
+			animateScoreBar(jQuery('#hiddenCurrentMark').val(), jQuery('#hiddenMaxMark').val());
+ 			resetGoogleImageSearch(jQuery('#hiddenSearchText').val());
+		}
 		//]]>
 		</script>
 	</ui:define>
 	
 	<ui:define name="titleImg"><img src="#{languageController.imagesPath}/title/mydictation.gif" /></ui:define>
 
-	<ui:define name="mainContent">
+	<ui:define name="upperMainContent">
+		<a4j:outputPanel id="topHeader">
 		<h2>
 			<h:outputFormat value="#{selfDictationMsg.practiceQuestionTitle}">
 				<f:param value="#{selfDictationController.practice.currentQuestion+1}"/>
 				<f:param value="#{selfDictationController.practice.totalQuestions}"/>
 			</h:outputFormat>
-		</h2>		
+		</h2>	
+		</a4j:outputPanel>	
 		<esl:scoreBar startMark="#{selfDictationController.practice.mark}" maxMark="#{selfDictationController.practice.totalQuestions}" />
-		<h:messages tooltip="true" errorStyle="color: rgb(220, 130, 0);" globalOnly="true" />
+		<a4j:outputPanel id="msgPanel">
+			<h:messages tooltip="true" errorStyle="color: rgb(220, 130, 0);" globalOnly="true" />
+		</a4j:outputPanel>
 	</ui:define>
 	
 	<ui:define name="leftColumn">
 		<!-- Histories -->
-		<h:panelGroup rendered="#{selfDictationController.practice.currentQuestion > 0}">
+		<a4j:outputPanel id="historyRegion">
+		<a4j:outputPanel rendered="#{selfDictationController.practice.currentQuestion > 0}">
 		<p class="innerHeading"><h:outputText value="#{selfDictationMsg.practicePreviousQuestionsTitle}" /></p>					
 		<table class="resultTable">
 			<thead>
@@ -75,88 +86,101 @@
 			</t:dataList>			
 		</table>
 		<p>* #{selfDictationMsg.practiceWordExplanation}</p>
-		</h:panelGroup>	
+		</a4j:outputPanel>
+		</a4j:outputPanel>	
 	</ui:define>
 	
-	<ui:define name="rightColumn">
-		<h:form styleClass="inputform" id="inputForm" onsubmit="return submitRequest()">
-	    <table style="color: #EE6600;">
-	    	<!-- Show Pronounce -->			
-	    	<tr>
-	    		<td colspan="2">								    									
-				    <div id="player1" style="clear: none"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> for pronounce.</div>
-				    <script type="text/javascript">
-				    <!--
-					    var player = new SWFObject("#{request.contextPath}/player/btn_#{languageController.locale}.swf", "line", "184", "30", "7");
-					    player.addVariable("path","#{selfDictationController.practice.currentQuestionObject.pronouncedLink}");
-					    player.write("player1");
-					-->
-				    </script>
-				    <h:panelGroup rendered="#{selfDictationController.practice.currentQuestionObject.IPAUnavailable}">
-				    	<br/><h:outputText value="#{selfDictationMsg.aiPronounceNotice}" />
-				    </h:panelGroup>
-	    		</td>
-	    	</tr>
-	    	<!-- Show IPA -->
-	    	<tr>
-	    		<h:panelGroup rendered="#{selfDictationController.withIPA}">
-		    		<td class="innerHeading"><h:outputText value="#{selfDictationMsg.practicePhonetic}" />:</td>
-		    		<td class="innerHeading">[<h:outputText escape="false" value="#{selfDictationController.practice.currentQuestionObject.IPA}" />]</td>
-	    		</h:panelGroup>
-	    		<h:panelGroup rendered="#{!selfDictationController.withIPA}">
-	    			<script type="text/javascript">
-	    			<!--
-					function showIPA() {
-	    				document.getElementById("IPALeftTD").innerHTML="#{selfDictationMsg.practicePhonetic} :";
-						document.getElementById("IPARightTD").innerHTML="[#{selfDictationController.practice.currentQuestionObject.IPA}]";						
-					}
-					-->													
-					</script>
-	    			<td id="IPALeftTD" align="left" class="innerHeading">
-						<a href="#" onclick="showIPA()" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('btn_ipa','','#{languageController.imagesPath}/button/GetPhoneticSymbol_r.gif',1)">
-							<img src="#{languageController.imagesPath}/button/GetPhoneticSymbol.gif" name="btn_ipa" border="0" id="btn_ipa" /></a>																							
-					</td>
-					<td id="IPARightTD" class="innerHeading"></td>
-	    		</h:panelGroup>
-	    	</tr>
-	    	<!-- Show shuffled Characters -->
-	    	<tr>								    		
-	    		<h:panelGroup rendered="#{selfDictationController.withRandomCharacters}">
-		    		<td class="innerHeading"><h:outputText value="#{selfDictationMsg.suffledTips}" />:</td>
-		    		<td class="innerHeading"><h:outputText value="[#{selfDictationController.practice.currentQuestionObject.suffledWord}]"/></td>
-		    	</h:panelGroup>
-		    	<h:panelGroup rendered="#{!selfDictationController.withRandomCharacters}">
-		    		<script type="text/javascript">
-		    		<!--
-					function showShuffledCharacters() {
-						document.getElementById("ShuffledCharLeftTD").innerHTML="#{selfDictationMsg.suffledTips} :";
-						document.getElementById("ShuffledCharRightTD").innerHTML="[#{selfDictationController.practice.currentQuestionObject.suffledWord}]";
-					}
-					-->
-					</script>
-		    		<td id="ShuffledCharLeftTD" class="innerHeading">
-		    			<a href="#" onclick="showShuffledCharacters()" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('btn_ShuffledCharacters','','#{languageController.imagesPath}/button/GetShuffledWord_r.gif',1)">
-							<img src="#{languageController.imagesPath}/button/GetShuffledWord.gif" name="btn_ShuffledCharacters" border="0" id="btn_ShuffledCharacters" /></a>											
-		    		</td>
-		    		<td id="ShuffledCharRightTD" class="innerHeading"></td>
-		    		
-		    	</h:panelGroup>
-	    	</tr>
-	    	<tr>
-	    		<td width="180"></td>
-	    		<td></td>
-	    	</tr>
-	    </table>	
-		<div style="color: #EE6600; margin-bottom: 15px; margin-top: 15px;">
-			<h:outputText value="#{selfDictationMsg.practiceInputAnsTitle}" styleClass="formLarge" /><br />
-			<h:inputText autocomplete="off" id="answer" styleClass="practiceAnswer" value="#{selfDictationController.answer}" maxlength="30">
-				<t:validateRegExpr pattern="([a-zA-Z ]+[\-/. ]?)+" message="#{phonPracticeMsg.practiceInvalidInput}"/>
-			</h:inputText>
-			<div class="buttons" style="margin-top: 5px;">			
-				<h:commandLink id="eslSubmit" styleClass="orange" action="#{selfDictationController.submitAnswer}"><img src="#{request.contextPath}/images/icon/silk/tick.png" />#{selfDictationMsg.practiceInputAnsBtn}</h:commandLink>
-			</div>						
-			<p><h:message for="answer" errorClass="error" /></p>
-		</div>										
-	</h:form>
+	<ui:define name="lowerMainContent">
+		<table width="100%">
+			<tr>
+				<td align="left" width="50%">
+					<a4j:outputPanel id="questionRegion">	
+						<a4j:queue />
+						<h:form styleClass="inputform" id="inputForm">
+					    <table style="color: #EE6600;">
+					    	<!-- Show Pronounce -->			
+					    	<tr>
+					    		<td colspan="2">								    									
+								    <div id="player1" style="clear: none"><a href="http://www.macromedia.com/go/getflashplayer">Get the Flash Player</a> for pronounce.</div>
+								    <script type="text/javascript">
+									    var player = new SWFObject("#{request.contextPath}/player/btn_#{languageController.locale}.swf", "line", "184", "30", "7");
+									    player.addVariable("path","#{selfDictationController.practice.currentQuestionObject.pronouncedLink}");
+									    player.write("player1");
+								    </script>
+								    <h:panelGroup rendered="#{selfDictationController.practice.currentQuestionObject.IPAUnavailable}">
+								    	<br/><h:outputText value="#{selfDictationMsg.aiPronounceNotice}" />
+								    </h:panelGroup>
+					    		</td>
+					    	</tr>
+					    	<!-- Show IPA -->
+					    	<tr>
+					    		<h:panelGroup rendered="#{selfDictationController.withIPA}">
+						    		<td class="innerHeading"><h:outputText value="#{selfDictationMsg.practicePhonetic}" />:</td>
+						    		<td class="innerHeading">[<h:outputText escape="false" value="#{selfDictationController.practice.currentQuestionObject.IPA}" />]</td>
+					    		</h:panelGroup>
+					    		<h:panelGroup rendered="#{!selfDictationController.withIPA}">
+					    			<script type="text/javascript">
+									function showIPA() {
+					    				document.getElementById("IPALeftTD").innerHTML="#{selfDictationMsg.practicePhonetic} :";
+										document.getElementById("IPARightTD").innerHTML="[#{selfDictationController.practice.currentQuestionObject.IPA}]";						
+									}										
+									</script>
+					    			<td id="IPALeftTD" align="left" class="innerHeading">
+										<a href="#" onclick="showIPA()" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('btn_ipa','','#{languageController.imagesPath}/button/GetPhoneticSymbol_r.gif',1)">
+											<img src="#{languageController.imagesPath}/button/GetPhoneticSymbol.gif" name="btn_ipa" border="0" id="btn_ipa" /></a>																							
+									</td>
+									<td id="IPARightTD" class="innerHeading"></td>
+					    		</h:panelGroup>
+					    	</tr>
+					    	<!-- Show shuffled Characters -->
+					    	<tr>								    		
+					    		<h:panelGroup rendered="#{selfDictationController.withRandomCharacters}">
+						    		<td class="innerHeading"><h:outputText value="#{selfDictationMsg.suffledTips}" />:</td>
+						    		<td class="innerHeading"><h:outputText value="[#{selfDictationController.practice.currentQuestionObject.suffledWord}]"/></td>
+						    	</h:panelGroup>
+						    	<h:panelGroup rendered="#{!selfDictationController.withRandomCharacters}">
+						    		<script type="text/javascript">
+									function showShuffledCharacters() {
+										document.getElementById("ShuffledCharLeftTD").innerHTML="#{selfDictationMsg.suffledTips} :";
+										document.getElementById("ShuffledCharRightTD").innerHTML="[#{selfDictationController.practice.currentQuestionObject.suffledWord}]";
+									}
+									</script>
+						    		<td id="ShuffledCharLeftTD" class="innerHeading">
+						    			<a href="#" onclick="showShuffledCharacters()" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('btn_ShuffledCharacters','','#{languageController.imagesPath}/button/GetShuffledWord_r.gif',1)">
+											<img src="#{languageController.imagesPath}/button/GetShuffledWord.gif" name="btn_ShuffledCharacters" border="0" id="btn_ShuffledCharacters" /></a>											
+						    		</td>
+						    		<td id="ShuffledCharRightTD" class="innerHeading"></td>
+						    		
+						    	</h:panelGroup>
+					    	</tr>
+					    	<tr>
+					    		<td width="180"></td>
+					    		<td></td>
+					    	</tr>
+					    </table>	
+						<div style="color: #EE6600; margin-bottom: 15px; margin-top: 15px;">
+							<h:outputText value="#{selfDictationMsg.practiceInputAnsTitle}" styleClass="formLarge" /><br />
+							<h:inputText autocomplete="off" id="answer" styleClass="practiceAnswer" value="#{selfDictationController.answer}" maxlength="30">
+								<t:validateRegExpr pattern="([a-zA-Z ]+[\-/. ]?)+" message="#{phonPracticeMsg.practiceInvalidInput}"/>
+							</h:inputText>
+							<div class="buttons" style="margin-top: 5px;">
+								<a4j:commandLink render="topHeader questionRegion historyRegion msgPanel" oncomplete="updateAfterSubmit()" id="eslSubmit" action="#{selfDictationController.submitAnswer}"><img src="#{request.contextPath}/images/icon/silk/tick.png" />#{selfDictationMsg.practiceInputAnsBtn}</a4j:commandLink>
+								<input type="hidden" id="hiddenMaxMark" value="#{selfDictationController.practice.totalQuestions}" />
+								<input type="hidden" id="hiddenCurrentMark" value="#{selfDictationController.practice.mark}" />										
+								<input type="hidden" id="hiddenSearchText" value="#{selfDictationController.practice.currentQuestionObject.word}" />								
+							</div>
+							<a4j:status>
+					            <f:facet name="start">
+					                <h:graphicImage style="display: block; float: left;" value="/images/graphic/loading.gif" alt="loading"/>
+					            </f:facet>
+						    </a4j:status>				
+							<p><h:message for="answer" errorClass="error" /></p>
+						</div>										
+					</h:form>
+				</a4j:outputPanel>
+			</td>
+			<td align="left"><util:googleimage keyword="#{selfDictationController.practice.currentQuestionObject.word}" /></td>
+		</tr>
+	</table>
 	</ui:define>
 </ui:composition>

@@ -1,6 +1,9 @@
 package com.esl.web.jsf.controller.practice;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.annotation.Resource;
 import javax.faces.application.FacesMessage;
@@ -14,7 +17,10 @@ import org.springframework.stereotype.Controller;
 
 import com.esl.model.PhoneticPractice;
 import com.esl.model.PhoneticQuestion;
-import com.esl.service.practice.*;
+import com.esl.service.practice.IPhoneticPracticeService;
+import com.esl.service.practice.ISelfDictationService;
+import com.esl.service.practice.PhoneticPracticeService;
+import com.esl.util.JSFUtil;
 import com.esl.web.jsf.controller.ESLController;
 import com.esl.web.util.LanguageUtil;
 
@@ -115,7 +121,7 @@ public class SelfDictationController extends ESLController {
 		// Check practice have been create or not, if not created, call start
 		if (practice == null) {
 			logger.warn("submitAnswer: cannot find practice");
-			return inputView;
+			return JSFUtil.redirect(inputView);
 		}
 
 		String result = phoneticPracticeService.checkAnswer(practice, answer);
@@ -124,12 +130,12 @@ public class SelfDictationController extends ESLController {
 		answer = "";			// Clear answer field
 
 		if (PhoneticPracticeService.INVALID_INPUT.equals(result))
-			return practiceView;
+			return null;
 		else if (PhoneticPracticeService.SYSTEM_ERROR.equals(result))
 		{
 			// Need to set errorPage title and description
 
-			return errorView;
+			return JSFUtil.redirect(errorView);
 		}
 
 		// Logic flow for practice completed
@@ -138,11 +144,11 @@ public class SelfDictationController extends ESLController {
 			logger.info("submitAnswer: Finish Practice");
 			totalQuestions = practice.getTotalQuestions();
 			selfDictationService.completedPractice(practice.getQuestions(), (ServletContext) facesContext.getExternalContext().getContext());
-			return resultView;
+			return JSFUtil.redirect(resultView);
 		}
 
 		// Continue Practice
-		return practiceView;
+		return null;
 	}
 
 	public String retry() {

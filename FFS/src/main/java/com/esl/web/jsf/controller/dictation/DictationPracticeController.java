@@ -13,11 +13,20 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.esl.dao.IMemberDAO;
-import com.esl.dao.dictation.*;
-import com.esl.entity.dictation.*;
-import com.esl.model.*;
+import com.esl.dao.dictation.IDictationDAO;
+import com.esl.dao.dictation.IDictationHistoryDAO;
+import com.esl.dao.dictation.IMemberDictationHistoryDAO;
+import com.esl.entity.dictation.Dictation;
+import com.esl.entity.dictation.DictationHistory;
+import com.esl.entity.dictation.MemberDictationHistory;
+import com.esl.model.Member;
+import com.esl.model.PhoneticPractice;
+import com.esl.model.PhoneticQuestion;
 import com.esl.service.dictation.IDictationManageService;
-import com.esl.service.practice.*;
+import com.esl.service.practice.IPhoneticPracticeService;
+import com.esl.service.practice.ISelfDictationService;
+import com.esl.service.practice.PhoneticPracticeService;
+import com.esl.util.JSFUtil;
 import com.esl.util.ValidationUtil;
 import com.esl.web.jsf.controller.CheckPasswordController;
 import com.esl.web.jsf.controller.ESLController;
@@ -161,7 +170,7 @@ public class DictationPracticeController extends ESLController {
 		// Check practice have been create or not, if not created, call start
 		if (practice == null) {
 			logger.warn("submitAnswer: cannot find practice");
-			return errorView;
+			return JSFUtil.redirect(errorView);
 		}
 
 		String result = phoneticPracticeService.checkAnswer(practice, answer);
@@ -175,18 +184,18 @@ public class DictationPracticeController extends ESLController {
 
 		answer = "";			// Clear answer field
 
-		if (PhoneticPracticeService.INVALID_INPUT.equals(result)) return practiceView;
-		else if (PhoneticPracticeService.SYSTEM_ERROR.equals(result)) return errorView;
+		if (PhoneticPracticeService.INVALID_INPUT.equals(result)) return null;
+		else if (PhoneticPracticeService.SYSTEM_ERROR.equals(result)) return JSFUtil.redirect(errorView);
 
 		// Logic flow for practice completed
 		if (practice.isFinish())
 		{
 			logger.info("submitAnswer: Finish Practice");
-			return finishDictation();
+			return JSFUtil.redirect(finishDictation());
 		}
 
 		// Continue Practice
-		return practiceView;
+		return null;
 	}
 
 	public String submitDictationHistory() {
