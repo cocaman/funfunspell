@@ -2,9 +2,9 @@
 	background-color: #19a1e7;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;	
-	behavior: url(/ESL/css/border-radius.htc);
+	-webkit-border-radius: 5px;
 	color:#115566;		
+	border: 0px;
 }
 .eslBox th {
 	text-align: left;

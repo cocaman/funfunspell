@@ -17,7 +17,7 @@
 	<ui:define name="head">
 		<meta name="keywords" content="#{htmlHeadMsg.practice_irregularverb_start_desc}" />
 		<script type="text/javascript" src="#{request.contextPath}/player/swfobject.js"></script>
-		<script type="text/javascript" src="/ESL/js/jquery-1.3.2.min.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 		<script type="text/javascript" src="/ESL/js/jquery-ui-1.7.2.custom.min.js"></script>
 		<script type="text/javascript">
 		//<![CDATA[
@@ -72,7 +72,7 @@
 								</table>
 							</a4j:outputPanel>
 						</td>
-						<td align="left"><util:googleimage keyword="#{dictationPracticeController.practice.currentQuestionObject.word}" /></td>
+						<td align="left"><util:googleimage keyword="#{irregularVerbPracticeController.answer.present}" /></td>
 					</tr></table>
 				</td>
 			</tr>
@@ -131,6 +131,11 @@
 										<input type="hidden" id="hiddenCurrentMark" value="#{irregularVerbPracticeController.mark}" />										
 										<input type="hidden" id="hiddenSearchText" value="#{irregularVerbPracticeController.answer.present}" />										
 									</div>
+									<a4j:status>
+							            <f:facet name="start">
+							                <h:graphicImage style="display: block; float: left;" value="/images/graphic/loading.gif" alt="loading"/>
+							            </f:facet>
+								    </a4j:status>	
 								</td>
 							</tr>
 						</table>
@@ -142,6 +147,7 @@
 			<tr>
 				<td>					
 					<p class="innerHeading">#{irregularVerbMsg.history}</p>
+					<a4j:outputPanel id="historyRegion">
 					<table class="resultTable" width="90%">
 						<thead>
 							<tr>							
@@ -151,8 +157,7 @@
 								<td width="23%">#{irregularVerbMsg.past}</td>
 								<h:panelGroup rendered="#{irregularVerbPracticeController.withPastParticiple}"><td width="23%">#{irregularVerbMsg.pastParticiple}</td></h:panelGroup>
 							</tr>
-						</thead>
-						<a4j:outputPanel id="historyRegion">
+						</thead>						
 						<a4j:repeat var="history" rowKeyVar="r" value="#{irregularVerbPracticeController.histories}">
 						<tr>
 							<td>#{irregularVerbPracticeController.totalQuestions - r - 1}</td>
@@ -161,10 +166,10 @@
 							<td><esl:ivpHistoryUnit word="#{history.past.word}" type="#{history.past.type}" /></td>
 							<h:panelGroup rendered="#{irregularVerbPracticeController.withPastParticiple}"><td><esl:ivpHistoryUnit word="#{history.pastParticiple.word}" type="#{history.pastParticiple.type}" /></td></h:panelGroup>
 						</tr>							
-						</a4j:repeat>
-						</a4j:outputPanel>
+						</a4j:repeat>						
 						<tr><td align="left" colspan="4"><br />* #{irregularVerbMsg.dictionaryLink}</td></tr>
 					</table>
+					</a4j:outputPanel>
 				</td>
 			</tr>
 		</table>

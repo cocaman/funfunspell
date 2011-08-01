@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -11,9 +11,9 @@
 	xmlns:esl="http://www.funfunspell.com/jsf">
 	
 	<link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/esl-box.css" />
-	<script type="text/javascript" src="/ESL/js/jquery-1.3.2.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 	<script type="text/javascript">
-		<!--
+	//<![CDATA[
 		jQuery.noConflict();
 
 		function expandDictationStatistics() {			
@@ -28,11 +28,11 @@
 				
 			}
 		}
-		-->
+		//]]>
 	</script>
-	<table width="100%" class="eslBox">
+	<table width="100%" class="eslBox" bgcolor="#3CE">
 		<tr>
-			<td colspan="3" class="head">
+			<td colspan="3" class="head" >
 				#{title}
 				<div style="float: right; top: 1px; position: relative;"><img id="expandDictationStatisticsButton" onclick="expandDictationStatistics()" style="cursor: pointer;" src="#{request.contextPath}/images/graphic/mb_close.gif" /></div>
 			</td>
