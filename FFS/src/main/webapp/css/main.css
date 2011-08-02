@@ -574,3 +574,20 @@ body,td,th {
 .tabNormal .rf-tab-lbl{
     font:normal 14px "Lucida Sans Unicode", "Lucida Grande", Geneva,Verdana,Arial,sans-serif;
 }
+
+/*--- irregular practice history ---*/
+.ivpHistoryQuestion {		
+	color: #000;
+	font-size: 12px;
+	font-weight: bold;
+} 
+.ivpHistoryCorrect {		
+	color: blue;
+	font-size: 14px;
+	font-weight: bold;
+}
+.ivpHistoryWrong {		
+	color: red;
+	font-size: 14px;
+	font-weight: bold;
+}
