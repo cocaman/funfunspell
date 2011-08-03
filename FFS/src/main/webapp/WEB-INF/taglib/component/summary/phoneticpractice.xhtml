@@ -37,10 +37,10 @@
 			</tr>			
 		</table>
 		<div class="summaryBoxFooter">
-			<h:commandLink action="practice/phoneticsymbolpractice/input">
+			<h:link outcome="/practice/phoneticsymbolpractice/input?locale=#{languageController.locale}">
 				<img src="#{request.contextPath}/images/graphic/phoneitcsymbol.png" border="0" width="24" height="18" />
 				<u>&gt; #{memberSumMsg.toPhoneticPractice}</u>
-			</h:commandLink>
+			</h:link>
 		</div>	
 	</div>
 	

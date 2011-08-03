@@ -13,30 +13,28 @@
 <!-- All phonetic Practice result -->
 <h:form id="mainForm">
 <rich:tabPanel styleClass="tabNormal" style="width: 100%" switchType="client">
-<rich:tab header="#{memberSumMsg.summaryAll}">
-	<h:form id="allSummaryForm">
-		<table width="100%" cellpadding="5px">
-			<tr>
-				<td width="50" valign="top">
-					<rich:collapsiblePanel style="width: 100%" height="180" switchType="client" header="#{memberSumMsg.vocabPracticeSummary}" headerClass="summaryBoxHeader">
-						<esl:vocabPracticeSummary summary="#{summaryController.vocabPracticeSummary}" />						
-					</rich:collapsiblePanel>
-				</td>
-				<td width="50" valign="top">
-					<rich:collapsiblePanel style="width: 100%" height="180" switchType="client" header="#{memberSumMsg.phoneticPracticeSummary}" headerClass="summaryBoxHeader">
-						<esl:phoneticPracticeSummary summary="#{summaryController.phonPracticeSummary}" />						
-					</rich:collapsiblePanel>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2" valign="top">
-					<rich:collapsiblePanel style="width: 100%" switchType="client" header="#{memberSumMsg.myDictationSummary}" headerClass="summaryBoxHeader">				
-						<esl:dictationSummary summary="#{summaryController.dictationSummary}" />						
-					</rich:collapsiblePanel>
-				</td>
-			</tr>
-		</table>
-	</h:form>
+<rich:tab header="#{memberSumMsg.summaryAll}">	
+	<table width="100%" cellpadding="5px">
+		<tr>
+			<td width="50" valign="top">
+				<rich:collapsiblePanel style="width: 100%" height="180" switchType="client" header="#{memberSumMsg.vocabPracticeSummary}" headerClass="summaryBoxHeader">
+					<esl:vocabPracticeSummary summary="#{summaryController.vocabPracticeSummary}" />						
+				</rich:collapsiblePanel>
+			</td>
+			<td width="50" valign="top">
+				<rich:collapsiblePanel style="width: 100%" height="180" switchType="client" header="#{memberSumMsg.phoneticPracticeSummary}" headerClass="summaryBoxHeader">
+					<esl:phoneticPracticeSummary summary="#{summaryController.phonPracticeSummary}" />						
+				</rich:collapsiblePanel>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" valign="top">
+				<rich:collapsiblePanel style="width: 100%" switchType="client" header="#{memberSumMsg.myDictationSummary}" headerClass="summaryBoxHeader">				
+					<esl:dictationSummary summary="#{summaryController.dictationSummary}" />						
+				</rich:collapsiblePanel>
+			</td>
+		</tr>
+	</table>
 </rich:tab>
 <rich:tab header="#{summaryController.vocabSummary.scoreRanking.practiceTitle}">
 	<h1>#{memberSumMsg.indexVocabPractSummary}</h1>

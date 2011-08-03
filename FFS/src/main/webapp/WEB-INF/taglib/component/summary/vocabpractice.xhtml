@@ -38,10 +38,10 @@
 			</tr>			
 		</table>
 		<div class="summaryBoxFooter">
-			<h:commandLink action="practice/phoneticpractice/index">
+			<h:link outcome="/practice/phoneticpractice/index?locale=#{languageController.locale}">
 				<img src="#{request.contextPath}/images/graphic/vocab.gif" border="0" width="18" height="18" />
 				<u>&gt; #{memberSumMsg.toVocabPractice}</u>
-			</h:commandLink>
+			</h:link>
 		</div>
 	</div>
 	

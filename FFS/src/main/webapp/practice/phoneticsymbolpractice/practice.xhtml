@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8">
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -18,7 +17,7 @@
 		<meta name="keywords" content="#{htmlHeadMsg.practice_phoneticsymbolpractice_practice_desc}" />
 		<script type="text/javascript" src="#{request.contextPath}/player/swfobject.js" />
 		<script type="text/javascript">
-		<!--
+		//<![CDATA[
 		  	var phonicsInputId = "inputForm:inputPhonics";
 		  	var phonicsInputSpanId = "phonicsInputSpan";
 		  	function addPhonics(phonics) {
@@ -40,7 +39,7 @@
 				animateScoreBar(jQuery('#hiddenCurrentMark').val(), jQuery('#hiddenMaxMark').val());
 				resetGoogleImageSearch(jQuery('#hiddenSearchText').val());
 			}
-		-->
+		//]]>
 		</script>
 	</ui:define>
 
@@ -62,9 +61,6 @@
 				<h:messages tooltip="true" errorStyle="color: rgb(220, 130, 0);" globalOnly="true" />
 			</a4j:outputPanel>
 		</p>
-<!--		<h:panelGroup rendered="#{phoneticSymbolPracticeController.showSignUpPopUp}">-->
-<!--			<h:form><ui:include src="/public/signuppopup.xhtml" /></h:form>-->
-<!--		</h:panelGroup>-->
 	</ui:define>
 	
 	<ui:define name="leftColumn">
@@ -195,14 +191,7 @@
 									<td align="center"><esl:phonicsButton phonics="j" phonicsMap="#{phoneticSymbolPracticeController.selectionPhonics}" /></td>
 									<td align="center"><esl:phonicsButton phonics="ˈ" phonicsMap="#{phoneticSymbolPracticeController.selectionPhonics}" /></td>
 									<td align="center"><esl:phonicsButton phonics="͵" phonicsMap="#{phoneticSymbolPracticeController.selectionPhonics}" /></td>
-								</tr>
-								<!-- 
-								<t:dataList var="phonic" rowIndexVar="rowIndex" value="#{phoneticSymbolPracticeController.selectionPhonics}">
-									<h:outputText escape="false" rendered="#{rowIndex%6 == 0}" value="&lt;tr&gt;" />											
-									<td style="letter-spacing: 0px;" width="50s" class="off" onmouseover="this.className='on'" onmouseout="this.className='off'" onclick="addPhonics('#{phonic.id}');"><a4j:repeat var="symbol" value="#{phonic.phonicList}"><img border="0" src="#{request.contextPath}/images/phoneticsymbols/#{symbol}.gif" /></a4j:repeat></td>											
-									<h:outputText escape="false" rendered="#{rowIndex%6 == 5 || phoneticSymbolPracticeController.totalSelectionPhonics==rowIndex+1}" value="&lt;/tr&gt;" />
-								</t:dataList>
-								 -->
+								</tr>							
 							</table>
 							<table width="100%" style="margin-bottom: 20px;">
 								<tr>
