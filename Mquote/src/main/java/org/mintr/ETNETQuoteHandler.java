@@ -1,5 +1,8 @@
 package org.mintr;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import org.htmlparser.*;
 import org.htmlparser.filters.OrFilter;
 import org.htmlparser.filters.TagNameFilter;
@@ -32,9 +35,16 @@ public class ETNETQuoteHandler implements Runnable {
 			NodeFilter filterSPAN = new TagNameFilter ("SPAN");
 			NodeFilter orFilter = new OrFilter(new NodeFilter[] {filterTD, filterSPAN});
 
+			HttpURLConnection connection;
+			URL url = new URL (ETNET_QUOTE_URL + quote.getStockCode());
+			connection = (HttpURLConnection)url.openConnection ();
+			connection.setRequestMethod ("POST");
+			connection.setRequestProperty ("User-Agent", "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; Trident/5.0)");
+
 			// for a simple dump, use more verbose settings
 			parser.setFeedback (Parser.STDOUT);
-			parser.setResource(ETNET_QUOTE_URL + quote.getStockCode());
+			parser.setConnection(connection);
+
 			NodeList list = parser.parse (orFilter);
 			for (Node n : list.toNodeArray()) {
 				if (n.getText().contains("Quote")) {
