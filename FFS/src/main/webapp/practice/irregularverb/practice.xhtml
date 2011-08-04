@@ -31,7 +31,7 @@
 		
 		function updateAfterSubmit() {
 			animateScoreBar(jQuery('#hiddenCurrentMark').val(), jQuery('#hiddenMaxMark').val());
- 			resetGoogleImageSearch(jQuery('#hiddenSearchText').val());
+//  			resetImageSearch(jQuery('#hiddenSearchText').val());
 		}
 		//]]>
 		</script>
@@ -72,7 +72,7 @@
 								</table>
 							</a4j:outputPanel>
 						</td>
-						<td align="left"><util:googleimage keyword="#{irregularVerbPracticeController.answer.present}" /></td>
+<!-- 						<td align="left"><util:bingimage keyword="#{irregularVerbPracticeController.answer.present}" /></td> -->
 					</tr></table>
 				</td>
 			</tr>

@@ -30,7 +30,7 @@
 		
 		function updateAfterSubmit() {
 			animateScoreBar(jQuery('#hiddenCurrentMark').val(), jQuery('#hiddenMaxMark').val());
- 			resetGoogleImageSearch(jQuery('#hiddenSearchText').val());
+			resetImageSearch(jQuery('#hiddenSearchText').val());
 		}
 		//]]>
 		</script>
@@ -145,7 +145,7 @@
 					</h:form>
 					</a4j:outputPanel>
 				</td>
-				<td align="left"><util:googleimage keyword="#{phoneticPracticeController.practice.currentQuestionObject.word}" /></td>
+				<td align="left"><util:bingimage keyword="#{phoneticPracticeController.practice.currentQuestionObject.word}" /></td>
 			</tr>
 		</table>
 		<!-- 		<h:panelGroup rendered="#{phoneticPracticeController.practice.currentQuestionObject.picFileName!=null}"> -->

@@ -30,7 +30,7 @@
 		
 		function updateAfterSubmit() {
 			animateScoreBar(jQuery('#hiddenCurrentMark').val(), jQuery('#hiddenMaxMark').val());
- 			resetGoogleImageSearch(jQuery('#hiddenSearchText').val());
+ 			resetImageSearch(jQuery('#hiddenSearchText').val());
 		}
 		//]]>
 		</script>
@@ -179,7 +179,7 @@
 					</h:form>
 				</a4j:outputPanel>
 			</td>
-			<td align="left"><util:googleimage keyword="#{selfDictationController.practice.currentQuestionObject.word}" /></td>
+			<td align="left"><util:bingimage keyword="#{selfDictationController.practice.currentQuestionObject.word}" /></td>
 		</tr>
 	</table>
 	</ui:define>

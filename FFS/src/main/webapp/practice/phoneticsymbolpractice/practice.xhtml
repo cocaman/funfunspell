@@ -37,7 +37,7 @@
 		  	
 		  	function updateAfterSubmit() {
 				animateScoreBar(jQuery('#hiddenCurrentMark').val(), jQuery('#hiddenMaxMark').val());
-				resetGoogleImageSearch(jQuery('#hiddenSearchText').val());
+				resetImageSearch(jQuery('#hiddenSearchText').val());
 			}
 		//]]>
 		</script>
@@ -216,7 +216,7 @@
 						</h:form>						
 					</a4j:outputPanel>
 				</td>
-				<td align="left" valign="top"><util:googleimage keyword="#{phoneticSymbolPracticeController.question.word}" /></td>
+				<td align="left" valign="top"><util:bingimage keyword="#{phoneticSymbolPracticeController.question.word}" /></td>
 			</tr>			
 		</table>
 	</ui:define>
