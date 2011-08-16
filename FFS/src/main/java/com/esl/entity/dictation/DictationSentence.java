@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "DICTATION_SENTENCE")
-public class Sentence implements Serializable {
+public class DictationSentence implements Serializable {
 	private static final long serialVersionUID = 2676912467971615861L;
 	
 	@Id
@@ -41,9 +41,9 @@ public class Sentence implements Serializable {
 	private Date createdDate = new Date();
 
 	// ********************** Constructors ********************** //
-	public Sentence() {}
+	public DictationSentence() {}
 
-	public Sentence(String content, int ordering, Dictation dictation) {
+	public DictationSentence(String content, int ordering, Dictation dictation) {
 		this.content = content;
 		this.ordering = ordering;
 		this.dictation = dictation;
@@ -83,7 +83,7 @@ public class Sentence implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Sentence other = (Sentence) obj;
+		DictationSentence other = (DictationSentence) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -95,7 +95,7 @@ public class Sentence implements Serializable {
 	@Override
 	public String toString() {
 		return String
-				.format("Sentence(%s) [content=%s, ordering=%s, dictationId=%s]",
+				.format("DictationSentence(%s) [content=%s, ordering=%s, dictationId=%s]",
 						id, content, ordering, dictation==null?"null":dictation.getId());
 	}
 }

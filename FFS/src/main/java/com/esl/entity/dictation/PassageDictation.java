@@ -6,6 +6,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
+import com.esl.entity.practice.qa.Sentence;
+
 
 public class PassageDictation extends Dictation {
 	@OneToMany(mappedBy="dictation", cascade={CascadeType.ALL}, fetch=FetchType.EAGER)
