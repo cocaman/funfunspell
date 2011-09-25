@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import com.esl.model.PhoneticQuestion;
 import com.esl.model.practice.PhoneticSymbols;
+import com.esl.util.web.CambridgeDictionaryParser;
+import com.esl.util.web.DictionaryParser;
 import com.sun.speech.freetts.Voice;
 import com.sun.speech.freetts.VoiceManager;
 import com.sun.speech.freetts.audio.SingleFileAudioPlayer;
@@ -83,21 +85,11 @@ public class PhoneticQuestionUtil {
 	public void setSoundFileLength(int soundFileLength) {	this.soundFileLength = soundFileLength;	}
 
 	public void findIPA(PhoneticQuestion question) {
-		try
-		{
-			if ("Google".equals(Provider)) {
-				setGoogleIPAAndPhonetic(question);
-			} else {
-				// get data using the user input string
-				if (!setYahooIPAAndPhonetic(question)) {
-					// set word to lowercase to get phonetic again
-					logger.debug("Cannot get word [{}], try using lowercase", question.getWord());
-					question.setWord(question.getWord().toLowerCase());
-					setYahooIPAAndPhonetic(question);
-				}
-			}
-		}catch (Exception e) {
-			logger.error("findIPA: " + e, e);
+		DictionaryParser parser = new CambridgeDictionaryParser(question.getWord());
+		if (parser.parse()) {
+			question.setIPA(parser.getIpa());
+			question.setPronouncedLink(parser.getAudioLink());
+			logger.debug("Found IPA [{}] and PronounceLink [{}]", question.getIPA(), question.getPronouncedLink());
 		}
 	}
 

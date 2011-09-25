@@ -1,0 +1,54 @@
+package com.esl.service.manage;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.esl.service.IMailService;
+import com.esl.util.SourceChecker;
+
+public class WebSourceChecker {
+	private static Logger logger = LoggerFactory.getLogger("ESL");
+	private static String failEmailSubject = "Web source test: fail with number of cases ";
+
+	List<SourceChecker> checkers = new ArrayList<SourceChecker>();
+	IMailService mailService;
+
+	public void addTestContent(SourceChecker content) {
+		checkers.add(content);
+	}
+
+	public IMailService getMailService() {	return mailService;}
+	public void setMailService(IMailService mailService) {	this.mailService = mailService;}
+
+	public void checkAll() {
+		final String logPrefix = "checkAll:";
+		logger.debug("{} START", logPrefix);
+
+		List<SourceChecker> fails = new ArrayList<SourceChecker>();
+		runCheck(fails);
+		sendFailsNotification(fails);
+	}
+
+	private void runCheck(List<SourceChecker> fails) {
+		for (SourceChecker checker : checkers) {
+			logger.debug("run check for class {}", checker.getClass().getName());
+			if (!checker.parse()) {
+				fails.add(checker);
+			}
+		}
+	}
+
+	private void sendFailsNotification(List<SourceChecker> fails) {
+		if (fails.size() < 0) return;
+
+		logger.debug("Web source test fail, send notification email");
+		StringBuffer sb = new StringBuffer();
+
+		for (SourceChecker checker : fails) {
+
+		}
+	}
+}

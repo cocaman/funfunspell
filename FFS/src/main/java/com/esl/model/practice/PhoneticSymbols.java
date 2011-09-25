@@ -25,17 +25,17 @@ public class PhoneticSymbols {
 
 	static {
 		allPhonics = new HashSet<String>();
-		allPhonics.add("i:");
+		allPhonics.add("iː");
 		allPhonics.add("i");
 		allPhonics.add("e");
 		allPhonics.add("æ");
-		allPhonics.add("ɑ:");
+		allPhonics.add("ɑː");
 		allPhonics.add("ɔ");
-		allPhonics.add("ɔ:");
+		allPhonics.add("ɔː");
 		allPhonics.add("u");
-		allPhonics.add("u:");
+		allPhonics.add("uː");
 		allPhonics.add("ʌ");
-		allPhonics.add("ə:");
+		allPhonics.add("əː");
 		allPhonics.add("ə");
 		allPhonics.add("ei");
 		allPhonics.add("ai");
@@ -73,13 +73,13 @@ public class PhoneticSymbols {
 		allPhonics.add("dʒ");
 
 		allPhonics.add("j");
-		allPhonics.add("ˈ");
-		allPhonics.add("͵");
+		//allPhonics.add("ˈ");
+		//allPhonics.add("͵");
 
 		googlePhonicsMap = new HashMap<String, String>();
-		googlePhonicsMap.put("ː", ":");
+		//googlePhonicsMap.put("ː", ":");
 		googlePhonicsMap.put("ɪ", "i");
-		googlePhonicsMap.put("ː", ":");
+		//googlePhonicsMap.put("ː", ":");
 		googlePhonicsMap.put("ɒ", "ɔ");
 		googlePhonicsMap.put("ʊ", "u");
 		googlePhonicsMap.put("ɜ", "ə");

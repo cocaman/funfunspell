@@ -18,7 +18,7 @@
 	<script type="text/javascript">
 	//<![CDATA[
     var AppId = "E1E75E33638F8276B1F9A64ADD901C58C2386905";
-    var searchText = '#{cc.attrs.keyword}';
+    var searchText = '#{cc.attrs.keyword}';    
     var imageCount = 0;
     var maxCount = 10;
     var searchResults;
@@ -26,7 +26,9 @@
     function resetImageSearch(newTexttoSearch) {			
     	searchText = newTexttoSearch;
     	imageCount = 0;
-    	startSearching();
+    	if (#{cc.attrs.showImage} && #{userSession.showGoogleImage}) {
+    		startSearching();
+    	}
     }
             
     function buildBingApiUri() {

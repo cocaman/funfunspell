@@ -50,7 +50,13 @@
 							<directory>prodconfig</directory>
 						</resource>
 					</webResources>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+						</manifest>
+					</archive>
 				</configuration>
+
 			</plugin>
 		</plugins>
 	</build>
@@ -182,33 +188,34 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.6.8</version>
 		</dependency>
-		
+
 		<!-- Test scope dependency -->
 		<dependency>
-        	<groupId>junit</groupId>
-        	<artifactId>junit</artifactId>
-        	<version>4.8.2</version>
-        	<scope>test</scope>
-        </dependency>
-        <dependency>
-        	<groupId>org.easymock</groupId>
-        	<artifactId>easymock</artifactId>
-        	<version>3.0</version>
-        	<scope>test</scope>
-        </dependency>
-        <dependency>
-        	<groupId>org.springframework</groupId>
-        	<artifactId>spring-test</artifactId>
-        	<version>3.0.5.RELEASE</version>
-        	<scope>test</scope>
-        </dependency>
-        <dependency>
-        	<groupId>org.hsqldb</groupId>
-        	<artifactId>hsqldb-j5</artifactId>
-        	<version>2.2.4</version>
-        	<scope>test</scope>
-        </dependency>
-		
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymock</artifactId>
+			<version>3.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>3.0.5.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb-j5</artifactId>
+			<version>2.2.4</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Test scope dependency (END) -->
+
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
@@ -218,7 +225,7 @@
 			<groupId>javax</groupId>
 			<artifactId>javaee-web-api</artifactId>
 			<version>6.0</version>
-		</dependency>		
+		</dependency>
 
 		<!-- JSF 2.0 -->
 		<dependency>
@@ -314,6 +321,6 @@
 			<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/mbrola.jar</systemPath>
 		</dependency>
 
-		
+
 	</dependencies>
 </project>
