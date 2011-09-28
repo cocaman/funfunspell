@@ -19,5 +19,5 @@ public interface IMailService {
 	public Member forgetPassword(String userId, Locale locale);
 	public MimeMessageHelper getMimeMessageHelperInstance();
 	public void send(MimeMessage message);
-	public void sendToHost(MimeMessage message);
+	public boolean sendToHost(String subject, String text);
 }

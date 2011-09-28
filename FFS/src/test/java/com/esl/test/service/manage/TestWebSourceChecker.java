@@ -1,6 +1,9 @@
 package com.esl.test.service.manage;
 
-import static org.easymock.EasyMock.*;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.replay;
+import static org.easymock.EasyMock.verify;
 
 import org.easymock.EasyMockSupport;
 import org.junit.Before;
@@ -47,7 +50,9 @@ public class TestWebSourceChecker extends EasyMockSupport {
 	public void testFailCheck() {
 		checker.addTestContent(parser);
 		expect(parser.parse()).andReturn(false);
-		mockMailService.send(null);
+		expect(parser.getSourceLink()).andReturn("");
+		expect(parser.getParsedContent()).andReturn("");
+		expect(mockMailService.sendToHost("abc","adc")).andReturn(true);
 		expectLastCall().once();
 
 		replayAll();

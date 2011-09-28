@@ -2,6 +2,7 @@ package com.esl.util.web;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.text.MessageFormat;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,5 +103,15 @@ public class CambridgeDictionaryParser implements SourceChecker, DictionaryParse
 
 	private String concatURL2() {
 		return URLPrefix + query + "_1?q=" + query;
+	}
+
+	@Override
+	public String getSourceLink() {		
+		return concatURL() + " or " + concatURL2();
+	}
+
+	@Override
+	public String getParsedContent() {
+		return MessageFormat.format("[ipa:{0}],[audioLink:{1}]", ipa, audioLink);
 	}
 }

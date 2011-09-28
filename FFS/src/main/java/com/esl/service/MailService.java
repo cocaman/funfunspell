@@ -1,11 +1,14 @@
 package com.esl.service;
 
-import java.util.*;
+import java.util.Locale;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +23,7 @@ import com.esl.web.model.ContactUsForm;
 @Transactional
 public class MailService implements IMailService {
 	// Logging
-	private static Logger log = Logger.getLogger("MAIL");
+	private static Logger log = LoggerFactory.getLogger("ESL");
 
 	private String primaryMailAddress;
 	private JavaMailSenderImpl mailSender;
@@ -143,8 +146,22 @@ public class MailService implements IMailService {
 	}
 
 	@Override
-	public void sendToHost(MimeMessage message) {
-		// TODO Auto-generated method stub
+	public boolean sendToHost(String subject, String text) {
+		log.debug("[START] sendToHost: subject[{}]", subject);
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message);
 
+		try {
+			helper.setTo(primaryMailAddress);
+			helper.setSubject("[FunFunSpell] " + subject);
+			helper.setText(text);			
+			mailSender.send(message);
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("Fail to send mail to host: subject [{}], text[{}]", subject, text);
+			return false;
+		}
+		log.debug("Email sent");
+		return true;
 	}
 }

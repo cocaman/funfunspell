@@ -27,28 +27,34 @@ public class WebSourceChecker {
 		final String logPrefix = "checkAll:";
 		logger.debug("{} START", logPrefix);
 
-		List<SourceChecker> fails = new ArrayList<SourceChecker>();
-		runCheck(fails);
+		List<SourceChecker> fails = runCheck();
 		sendFailsNotification(fails);
 	}
 
-	private void runCheck(List<SourceChecker> fails) {
+	private List<SourceChecker> runCheck() {
+		List<SourceChecker> fails = new ArrayList<SourceChecker>();
 		for (SourceChecker checker : checkers) {
 			logger.debug("run check for class {}", checker.getClass().getName());
 			if (!checker.parse()) {
 				fails.add(checker);
 			}
 		}
+		return fails;
 	}
 
 	private void sendFailsNotification(List<SourceChecker> fails) {
-		if (fails.size() < 0) return;
-
+		if (fails.size() <= 0) return;
+		
 		logger.debug("Web source test fail, send notification email");
+		String subject = "Web source check fail: (total:" + fails.size() + ")";				
 		StringBuffer sb = new StringBuffer();
 
 		for (SourceChecker checker : fails) {
-
+			sb.append("Checker: " + checker.getClass().getName() + "\n");
+			sb.append("URL: " + checker.getSourceLink() + "\n");
+			sb.append("Content: " + checker.getParsedContent() + "\n");
 		}
+		
+		mailService.sendToHost(subject, sb.toString());
 	}
 }
