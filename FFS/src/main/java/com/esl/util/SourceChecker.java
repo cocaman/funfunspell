@@ -15,4 +15,9 @@ public interface SourceChecker {
 	 * Return all content parsed
 	 */
 	public String getParsedContent();
+		
+	public void setParsedContentCheck(String expected);
+	public String getParsedContentCheck();
+	
+	public boolean isContentCorrect();
 }

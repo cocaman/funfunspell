@@ -35,7 +35,8 @@ public class WebSourceChecker {
 		List<SourceChecker> fails = new ArrayList<SourceChecker>();
 		for (SourceChecker checker : checkers) {
 			logger.debug("run check for class {}", checker.getClass().getName());
-			if (!checker.parse()) {
+			checker.parse();
+			if (!checker.isContentCorrect()) {
 				fails.add(checker);
 			}
 		}
@@ -52,7 +53,8 @@ public class WebSourceChecker {
 		for (SourceChecker checker : fails) {
 			sb.append("Checker: " + checker.getClass().getName() + "\n");
 			sb.append("URL: " + checker.getSourceLink() + "\n");
-			sb.append("Content: " + checker.getParsedContent() + "\n");
+			sb.append("Actual Content: " + checker.getParsedContent() + "\n");
+			sb.append("Expected Content: " + checker.getParsedContentCheck() + "\n");
 		}
 		
 		mailService.sendToHost(subject, sb.toString());

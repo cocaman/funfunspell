@@ -40,6 +40,7 @@ public class TestWebSourceChecker extends EasyMockSupport {
 	public void testSuccessCheck() {
 		checker.addTestContent(parser);
 		expect(parser.parse()).andReturn(true);
+		expect(parser.isContentCorrect()).andReturn(true);
 
 		replayAll();
 		checker.checkAll();
@@ -50,9 +51,11 @@ public class TestWebSourceChecker extends EasyMockSupport {
 	public void testFailCheck() {
 		checker.addTestContent(parser);
 		expect(parser.parse()).andReturn(false);
+		expect(parser.isContentCorrect()).andReturn(false);
 		expect(parser.getSourceLink()).andReturn("");
 		expect(parser.getParsedContent()).andReturn("");
-		expect(mockMailService.sendToHost("abc","adc")).andReturn(true);
+		expect(parser.getParsedContentCheck()).andReturn("");
+		expect(mockMailService.sendToHost("Web source check fail:(total:1)","Checker:com.esl.util.web.CambridgeDictionaryParser")).andReturn(true);
 		expectLastCall().once();
 
 		replayAll();
