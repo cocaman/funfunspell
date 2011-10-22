@@ -207,7 +207,7 @@
 					<td>
 						#{dictationMsg.maxWord}: <strong>#{dictationEditController.maxVocabs}</strong>, #{dictationMsg.youHaveInput}: <strong><span id="totalWords"></span></strong><br /> 
 						<h:inputTextarea id="vocabs" required="true" rows="4" cols="50" value="#{dictationEditController.vocabs}" onkeyup="calculateTotalWords();">						
-							<t:validateRegExpr pattern="^([a-zA-Z]+[\-/. ]?[a-zA-Z]+)?( ?, ?[a-zA-Z]+[\-/. ]?[a-zA-Z]+)*$" message="#{dictationMsg.vocabsInvalidInput}" />
+							<t:validateRegExpr pattern="^([a-zA-Z]+[\-/. ]?[a-zA-Z]+){1}( ?, ?[a-zA-Z]+[\-/. ]?[a-zA-Z]+)*$" message="#{dictationMsg.vocabsInvalidInput}" />
 						</h:inputTextarea>
 						<br /><h:message for="vocabs" errorClass="error" />
 						<div id="helpDiv7" class="helpDiv">

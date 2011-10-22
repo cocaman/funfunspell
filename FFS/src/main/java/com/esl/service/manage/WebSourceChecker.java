@@ -11,10 +11,13 @@ import com.esl.util.SourceChecker;
 
 public class WebSourceChecker {
 	private static Logger logger = LoggerFactory.getLogger("ESL");
-	private static String failEmailSubject = "Web source test: fail with number of cases ";
 
 	List<SourceChecker> checkers = new ArrayList<SourceChecker>();
 	IMailService mailService;
+
+	public void setCheckers(List<SourceChecker> checkers) {
+		this.checkers = checkers;
+	}
 
 	public void addTestContent(SourceChecker content) {
 		checkers.add(content);
@@ -45,9 +48,9 @@ public class WebSourceChecker {
 
 	private void sendFailsNotification(List<SourceChecker> fails) {
 		if (fails.size() <= 0) return;
-		
+
 		logger.debug("Web source test fail, send notification email");
-		String subject = "Web source check fail: (total:" + fails.size() + ")";				
+		String subject = "Web source check fail: (total:" + fails.size() + ")";
 		StringBuffer sb = new StringBuffer();
 
 		for (SourceChecker checker : fails) {
@@ -56,7 +59,7 @@ public class WebSourceChecker {
 			sb.append("Actual Content: " + checker.getParsedContent() + "\n");
 			sb.append("Expected Content: " + checker.getParsedContentCheck() + "\n");
 		}
-		
+
 		mailService.sendToHost(subject, sb.toString());
 	}
 }

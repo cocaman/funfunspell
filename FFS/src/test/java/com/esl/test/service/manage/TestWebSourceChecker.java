@@ -1,9 +1,6 @@
 package com.esl.test.service.manage;
 
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.expectLastCall;
-import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.verify;
+import static org.easymock.EasyMock.*;
 
 import org.easymock.EasyMockSupport;
 import org.junit.Before;
@@ -55,7 +52,7 @@ public class TestWebSourceChecker extends EasyMockSupport {
 		expect(parser.getSourceLink()).andReturn("");
 		expect(parser.getParsedContent()).andReturn("");
 		expect(parser.getParsedContentCheck()).andReturn("");
-		expect(mockMailService.sendToHost("Web source check fail:(total:1)","Checker:com.esl.util.web.CambridgeDictionaryParser")).andReturn(true);
+		expect(mockMailService.sendToHost((String)anyObject(),(String)anyObject())).andReturn(true);
 		expectLastCall().once();
 
 		replayAll();

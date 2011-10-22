@@ -60,6 +60,31 @@
 	    <!-- repeat every 60 seconds -->
 	    <property name="repeatInterval" value="60000" />
 	</bean>
+	
+	<!-- WebSourceChecker -->
+	<bean id="cambridgeDictionaryChecker" class="com.esl.util.web.CambridgeDictionaryParser">
+		<constructor-arg value="lemon"/>
+		<property name="parsedContentCheck" value="[ipa:lemən],[audioLink:http://dictionary.cambridge.org/media/british/uk_pron/u/ukl/uklei/ukleisu005.mp3]" />		
+	</bean>
+	<bean id="webSourceChecker" class="com.esl.service.manage.WebSourceChecker">
+		<property name="checkers">
+			<list>
+				<ref bean="cambridgeDictionaryChecker"/>
+			</list>
+		</property>
+		<property name="mailService" ref="mailService" />
+	</bean>
+	<bean id="webSourceCheckerSchedule" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="webSourceChecker" />
+		<property name="targetMethod" value="checkAll" />
+		<property name="concurrent" value="false" />		
+	</bean>	
+	<bean id="webSourceCheckerTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">    
+    	<property name="jobDetail" ref="webSourceCheckerSchedule" />
+    	<property name="startDelay" value="0" />
+	    <!-- repeat every 60 seconds -->
+	    <property name="repeatInterval" value="3600000" />
+	</bean>
 		
 	<!-- Scheduler -->	
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
@@ -68,6 +93,7 @@
 				<ref bean="generateGroupPracticeResultTrigger" />
 				<ref bean="generateDictationStatisticsTrigger" />
 				<ref bean="generateMedalsTrigger" />		
+				<ref bean="webSourceCheckerTrigger" />
 			</list>
 		</property>
 	</bean>

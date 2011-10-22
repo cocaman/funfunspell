@@ -25,7 +25,7 @@ public class CambridgeDictionaryParser implements SourceChecker, DictionaryParse
 	String ipa;
 	String audioLink;
 	String query;			// input word
-	String expectedContent; 	// used for SourceChecker	
+	String expectedContent; 	// used for SourceChecker
 
 	// ------------------------ getter / setter --------------------- //
 	public CambridgeDictionaryParser(String query) {
@@ -38,7 +38,7 @@ public class CambridgeDictionaryParser implements SourceChecker, DictionaryParse
 
 	public String getIpa() {return this.ipa;}
 	public String getAudioLink() {return this.audioLink;}
-	
+
 	public void setParsedContentCheck(String expected) {this.expectedContent = expected;}
 	public String getParsedContentCheck() { return expectedContent;}
 
@@ -110,7 +110,7 @@ public class CambridgeDictionaryParser implements SourceChecker, DictionaryParse
 	}
 
 	@Override
-	public String getSourceLink() {		
+	public String getSourceLink() {
 		return concatURL() + " or " + concatURL2();
 	}
 
@@ -122,6 +122,6 @@ public class CambridgeDictionaryParser implements SourceChecker, DictionaryParse
 
 	@Override
 	public boolean isContentCorrect() {
-		return getSourceLink().equals(expectedContent);
+		return getParsedContent().equals(expectedContent);
 	}
 }
