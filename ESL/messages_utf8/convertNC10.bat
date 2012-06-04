@@ -1,1 +1,0 @@
-"c:\program files\java\jdk1.6.0_12\bin\native2ascii.exe" -encoding utf-8 ".\%1" "C:\workspace\ESL\src\messages\%1"
