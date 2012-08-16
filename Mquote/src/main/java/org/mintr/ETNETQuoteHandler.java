@@ -33,7 +33,7 @@ public class ETNETQuoteHandler implements Runnable {
 			parser = new Parser ();
 			NodeFilter filterTD = new TagNameFilter ("TD");
 			NodeFilter filterSPAN = new TagNameFilter ("SPAN");
-			NodeFilter orFilter = new OrFilter(new NodeFilter[] {filterTD, filterSPAN});
+			NodeFilter orFilter = new OrFilter(new NodeFilter[] {filterTD, filterSPAN});			
 
 			HttpURLConnection connection;
 			URL url = new URL (ETNET_QUOTE_URL + quote.getStockCode());
