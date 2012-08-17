@@ -46,19 +46,21 @@ public class GrepForumContentService {
 		ExecutorService executor = Executors.newFixedThreadPool(urls.length);
 		List<ForumThread> results = new ArrayList<ForumThread>();
 		
-		// create thread and run
-		for (String url : urls) {
-			ContentParserRunner runner = new ContentParserRunner();
-			futures.add(executor.submit(runner));
-		}
-		
-		// Getting result
-		for (Future<List<ForumThread>> future : futures) {
-			try {
-				results.addAll(future.get());
-			} catch (Exception e) {
-				e.printStackTrace();
+		try {
+			// create thread and run
+			for (String url : urls) {
+				ContentParserRunner runner = new ContentParserRunner();
+				runner.url = url;
+				runner.parser = urlToParserClassMap.get(url).newInstance();
+				futures.add(executor.submit(runner));
 			}
+			
+			// Getting result
+			for (Future<List<ForumThread>> future : futures) {
+				results.addAll(future.get());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		executor.shutdown();
 		return results;
