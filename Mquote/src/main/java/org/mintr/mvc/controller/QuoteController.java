@@ -1,15 +1,10 @@
 package org.mintr.mvc.controller;
 
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 
 import org.mintr.Mquote;
 import org.mintr.model.RTStockQuote;
@@ -17,11 +12,7 @@ import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/")
@@ -59,13 +50,13 @@ public class QuoteController {
 			}
 
 			if (ACTION_SAVE.equals(action.toLowerCase())) {
-				File f = new File(request.getRealPath(FILE_PATH));
-				f.createNewFile();
-				FileWriter fw = new FileWriter(f);
-				fw.write(reqCodeList);
-				fw.flush();
-				fw.close();
-				f.exists();
+				//				File f = new File(request.getRealPath(FILE_PATH));
+				//				f.createNewFile();
+				//				FileWriter fw = new FileWriter(f);
+				//				fw.write(reqCodeList);
+				//				fw.flush();
+				//				fw.close();
+				//				f.exists();
 			}
 		} catch (Exception e) {}
 

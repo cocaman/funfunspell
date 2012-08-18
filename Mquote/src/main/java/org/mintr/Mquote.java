@@ -8,6 +8,8 @@ import javax.annotation.Resource;
 
 import org.htmlparser.Parser;
 import org.mintr.model.RTStockQuote;
+import org.mintr.web.quote.ETNETIndexHandler;
+import org.mintr.web.quote.ETNETQuoteHandler;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
