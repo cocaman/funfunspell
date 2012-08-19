@@ -8,13 +8,29 @@ import org.junit.Test;
 import org.mintr.entity.ForumThread;
 import org.mintr.html.parser.TvboxnowContentParser;
 import org.mintr.html.parser.UwantsDiscussContentParser;
+import org.mintr.html.service.GrepForumContentService;
+import org.mintr.html.service.GrepForumContentService.ContentType;
 
 
-public class TestReadhtml {
+public class TestGrepForumContentService {
 	@BeforeClass
 	public static void setup() {
 		//		HttpURLConnectionBuilder.setProxyPort(8443);
 		//		HttpURLConnectionBuilder.setProxyUrl("proxy.jpmchase.net");
+	}
+
+	@Test
+	public void grepForumContentServiceFromMusicPage2() {
+		GrepForumContentService service = new GrepForumContentService();
+		List<ForumThread> threads = service.grepForumContentByType(ContentType.MUSIC, 2);
+
+		assertTrue(threads.size() > 10);
+		for (ForumThread f : threads) {
+			System.out.println(f);
+			assertNotNull(f.getUrl());
+			assertNotNull(f.getTitle());
+			assertNotNull(f.getDate());
+		}
 	}
 
 	@Test
