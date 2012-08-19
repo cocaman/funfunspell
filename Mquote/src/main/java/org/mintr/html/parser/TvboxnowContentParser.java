@@ -11,7 +11,7 @@ import org.jsoup.select.Elements;
 import org.mintr.entity.ForumThread;
 import org.mintr.util.HttpURLConnectionBuilder;
 
-public class UwantsDiscussContentParser implements ForumParser {
+public class TvboxnowContentParser implements ForumParser {
 
 	@Override
 	public List<ForumThread> getForumThreads(String url) {
@@ -22,13 +22,14 @@ public class UwantsDiscussContentParser implements ForumParser {
 		{
 			HttpURLConnection connection = new HttpURLConnectionBuilder().setURL(url).createConnection();
 			Document doc = Jsoup.parse(connection.getInputStream(), connection.getContentEncoding(), connection.getURL().getPath());
-			Elements tbodys = doc.select("tbody[id^=normal]");				// each normal thread row have that id
+
+			Elements tbodys = doc.select("tbody[id*=thread_]");				// each thread row have that id
 			Iterator<Element> tbIterator = tbodys.iterator();
 
 			while (tbIterator.hasNext()) {
 				Element e = tbIterator.next();
-				results.add(new ForumThread(connection.getURL().getHost() + "/" + e.select("span[id^=thread] a[href^=viewthread.php]").attr("href"),
-						e.select("span[id^=thread] a[href^=viewthread.php]").text(),
+				results.add(new ForumThread(connection.getURL().getHost() + "/" + e.select("span[id^=thread_] a[href^=thread-]").attr("href"),
+						e.select("span[id^=thread] a[href^=thread-]").text(),
 						sdf.parse(e.select("td.author em").text())));
 			}
 

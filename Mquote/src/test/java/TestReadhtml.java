@@ -1,69 +1,66 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-import java.net.HttpURLConnection;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
-import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Iterator;
 import java.util.List;
 
-import javax.validation.constraints.AssertTrue;
-
-import org.htmlparser.Node;
-import org.htmlparser.NodeFilter;
-import org.htmlparser.Parser;
-import org.htmlparser.filters.HasAttributeFilter;
-import org.htmlparser.filters.OrFilter;
-import org.htmlparser.filters.TagNameFilter;
-import org.htmlparser.nodes.TagNode;
-import org.htmlparser.util.NodeList;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mintr.entity.ForumThread;
+import org.mintr.html.parser.TvboxnowContentParser;
 import org.mintr.html.parser.UwantsDiscussContentParser;
-import org.mintr.util.HttpURLConnectionBuilder;
 
 
 public class TestReadhtml {
 	@BeforeClass
 	public static void setup() {
-		HttpURLConnectionBuilder.setProxyPort(8443);
-		HttpURLConnectionBuilder.setProxyUrl("proxy.jpmchase.net");
+		//		HttpURLConnectionBuilder.setProxyPort(8443);
+		//		HttpURLConnectionBuilder.setProxyUrl("proxy.jpmchase.net");
 	}
-	
+
 	@Test
 	public void readUwantsMusic() {
 		String inputUrl = "http://www.uwants.com/forumdisplay.php?fid=472";
 		UwantsDiscussContentParser p = new UwantsDiscussContentParser();
 		List<ForumThread> results = p.getForumThreads(inputUrl);
-		
-		assertTrue(results.size() > 0);
+
+		assertTrue(results.size() > 10);
 		for (ForumThread f : results) {
 			System.out.println(f);
-			assertTrue(f.getUrl().startsWith("viewthread.php"));
+			assertTrue(f.getUrl().startsWith("www.uwants.com/viewthread.php"));
 			assertNotNull(f.getTitle());
 			assertNotNull(f.getDate());
-		}		
+		}
 	}
-	
+
 	@Test
 	public void readDiscussMusic() {
 		String inputUrl = "http://www.discuss.com.hk/forumdisplay.php?fid=101";
 		UwantsDiscussContentParser p = new UwantsDiscussContentParser();
 		List<ForumThread> results = p.getForumThreads(inputUrl);
-		
-		assertTrue(results.size() > 0);
+
+		assertTrue(results.size() > 10);
 		for (ForumThread f : results) {
 			System.out.println(f);
-			assertTrue(f.getUrl().startsWith("viewthread.php"));
+			assertTrue(f.getUrl().startsWith("www.discuss.com.hk/viewthread.php"));
 			assertNotNull(f.getTitle());
 			assertNotNull(f.getDate());
-		}		
+		}
+	}
+
+	@Test
+	public void readTvboxnow() {
+		String inputUrl = "http://www.tvboxnow.com/forum-8-1.html";
+
+		TvboxnowContentParser p = new TvboxnowContentParser();
+		List<ForumThread> results = p.getForumThreads(inputUrl);
+
+		assertTrue(results.size() > 10);
+		for (ForumThread f : results) {
+			System.out.println(f);
+			assertTrue(f.getUrl().startsWith("www.tvboxnow.com/thread-"));
+			assertNotNull(f.getTitle());
+			assertNotNull(f.getDate());
+		}
 	}
 
 }
