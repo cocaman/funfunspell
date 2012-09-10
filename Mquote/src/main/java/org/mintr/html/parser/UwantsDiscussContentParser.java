@@ -21,7 +21,7 @@ public class UwantsDiscussContentParser implements ForumParser {
 		try
 		{
 			HttpURLConnection connection = new HttpURLConnectionBuilder().setURL(url).createConnection();
-			Document doc = Jsoup.parse(connection.getInputStream(), connection.getContentEncoding(), connection.getURL().getPath());
+			Document doc = Jsoup.parse(connection.getInputStream(), "Big5", connection.getURL().getPath());
 			Elements tbodys = doc.select("tbody[id^=normal]");				// each normal thread row have that id
 			Iterator<Element> tbIterator = tbodys.iterator();
 

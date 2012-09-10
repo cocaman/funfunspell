@@ -21,7 +21,7 @@ public class TvboxnowContentParser implements ForumParser {
 		try
 		{
 			HttpURLConnection connection = new HttpURLConnectionBuilder().setURL(url).createConnection();
-			Document doc = Jsoup.parse(connection.getInputStream(), connection.getContentEncoding(), connection.getURL().getPath());
+			Document doc = Jsoup.parse(connection.getInputStream(), "UTF-8", connection.getURL().getPath());
 
 			Elements tbodys = doc.select("tbody[id*=thread_]");				// each thread row have that id
 			Iterator<Element> tbIterator = tbodys.iterator();
