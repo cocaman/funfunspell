@@ -11,7 +11,7 @@ import org.jsoup.select.Elements;
 import org.mintr.entity.ForumThread;
 import org.mintr.util.HttpURLConnectionBuilder;
 
-public class TvboxnowContentParser implements ForumParser {
+public class TvboxnowContentParserJ implements ForumParser {
 
 	@Override
 	public List<ForumThread> getForumThreads(String url) {
