@@ -51,7 +51,7 @@ public class AAStockQuoteRequestor implements Runnable, WebQuoteRequestor {
 				if (n.getText().contains("Quote")) {
 					if (n.getFirstChild()!= null) {
 						// Get last update time
-						if (n.getFirstChild().getText().contains("現價")) {
+						if (n.getFirstChild().getText().contains("")) {
 							quote.setLastUpdate(n.getChildren().elementAt(2).getFirstChild().getText());
 						}
 
