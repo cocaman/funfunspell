@@ -1,11 +1,12 @@
 package test.html.parser;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
 import org.junit.Test;
 import org.mintr.html.parser.IndexConstituentPerformanceParser;
+import org.mintr.model.RTStockQuote;
 
 public class TestIndexConstituentPerformanceParser {
 
@@ -34,5 +35,37 @@ public class TestIndexConstituentPerformanceParser {
 		assertTrue(constituents.contains("00941"));
 		assertTrue(constituents.contains("00883"));
 		assertTrue(constituents.contains("00762"));
+	}
+
+	@Test
+	public void testGet883DetailQuote() {
+		RTStockQuote quote = new IndexConstituentPerformanceParser().getDetailStockQuote("883");
+
+		assertEquals("883", quote.getStockCode());
+		assertNotNull(quote.getChange());
+		assertNotNull(quote.getChangeAmount());
+		assertNotNull(quote.getHigh());
+		assertNotNull(quote.getLastUpdate());
+		assertNotNull(quote.getLow());
+		assertNotNull(quote.getNAV());
+		assertNotNull(quote.getPe());
+		assertNotNull(quote.getPrice());
+		assertNotNull(quote.getYearHigh());
+		assertNotNull(quote.getYearLow());
+		assertNotNull(quote.getYield());
+
+		assertFalse("NA".equals(quote.getChange()));
+		assertFalse("NA".equals(quote.getChangeAmount()));
+		assertFalse("NA".equals(quote.getHigh()));
+		assertFalse("NA".equals(quote.getLastUpdate()));
+		assertFalse("NA".equals(quote.getLow()));
+		assertFalse("NA".equals(quote.getNAV()));
+		assertFalse("NA".equals(quote.getPe()));
+		assertFalse("NA".equals(quote.getPrice()));
+		assertFalse("NA".equals(quote.getYearHigh()));
+		assertFalse("NA".equals(quote.getYearLow()));
+		assertFalse("NA".equals(quote.getYield()));
+
+
 	}
 }

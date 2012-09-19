@@ -10,6 +10,12 @@ public class RTStockQuote {
 	private String high = "NA";
 	private String low = "NA";
 	private String change = "NA";
+	private String changeAmount = "NA";
+	private String pe = "NA";
+	private String yield = "NA";
+	private String NAV = "NA";
+	private String yearLow = "NA";
+	private String yearHigh = "NA";
 
 	public RTStockQuote() {}
 
@@ -54,6 +60,7 @@ public class RTStockQuote {
 		this.change = change;
 	}
 
+
 	@Override
 	public String toString() {
 		StringBuilder sbuilder = new StringBuilder();
@@ -71,6 +78,54 @@ public class RTStockQuote {
 		sbuilder.append(this.lastUpdate);
 		sbuilder.append(")");
 		return sbuilder.toString();
+	}
+
+	public String getPe() {
+		return pe;
+	}
+
+	public void setPe(String pe) {
+		this.pe = pe;
+	}
+
+	public String getYield() {
+		return yield;
+	}
+
+	public void setYield(String yield) {
+		this.yield = yield;
+	}
+
+	public String getNAV() {
+		return NAV;
+	}
+
+	public void setNAV(String nAV) {
+		NAV = nAV;
+	}
+
+	public String getYearLow() {
+		return yearLow;
+	}
+
+	public void setYearLow(String yearLow) {
+		this.yearLow = yearLow;
+	}
+
+	public String getYearHigh() {
+		return yearHigh;
+	}
+
+	public void setYearHigh(String yearHigh) {
+		this.yearHigh = yearHigh;
+	}
+
+	public String getChangeAmount() {
+		return changeAmount;
+	}
+
+	public void setChangeAmount(String changeAmount) {
+		this.changeAmount = changeAmount;
 	}
 
 
