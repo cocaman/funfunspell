@@ -17,19 +17,19 @@ public class IndexConstituentPerformanceParser {
 	public static String HCCIConstituentsURL= "http://www.etnet.com.hk/www/tc/stocks/indexes_detail.php?subtype=cci";
 	public static String AAStockDetailQuote = "http://www.aastocks.com/en/stock/detailquote.aspx?symbol=";
 
-	public List<String> getHSIConstituents() {
+	public static List<String> getHSIConstituents() {
 		return getEtnetIndexConstituents(HSIConstituentsURL);
 	}
 
-	public List<String> getHCEIConstituents() {
+	public static List<String> getHCEIConstituents() {
 		return getEtnetIndexConstituents(HCEIConstituentsURL);
 	}
 
-	public List<String> getHCCIConstituents() {
+	public static List<String> getHCCIConstituents() {
 		return getEtnetIndexConstituents(HCCIConstituentsURL);
 	}
 
-	public List<String> getEtnetIndexConstituents(String url) {
+	public static List<String> getEtnetIndexConstituents(String url) {
 		List<String> results = new ArrayList<String>();
 
 		try
@@ -51,7 +51,7 @@ public class IndexConstituentPerformanceParser {
 		return results;
 	}
 
-	public RTStockQuote getDetailStockQuote(String code) {
+	public static RTStockQuote getDetailStockQuote(String code) {
 		if (!StringUtils.isNumeric(code)) return null;
 
 		RTStockQuote quote = new RTStockQuote(code);

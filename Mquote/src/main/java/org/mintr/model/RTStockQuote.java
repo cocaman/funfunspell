@@ -16,6 +16,7 @@ public class RTStockQuote {
 	private String NAV = "NA";
 	private String yearLow = "NA";
 	private String yearHigh = "NA";
+	private Double yearHighPercentage = null;
 
 	public RTStockQuote() {}
 
@@ -45,6 +46,7 @@ public class RTStockQuote {
 		return price;
 	}
 	public void setPrice(String price) {
+		yearHighPercentage = null;
 		this.price = price;
 	}
 	public String getStockCode() {
@@ -117,6 +119,7 @@ public class RTStockQuote {
 	}
 
 	public void setYearHigh(String yearHigh) {
+		yearHighPercentage = null;
 		this.yearHigh = yearHigh;
 	}
 
@@ -127,6 +130,13 @@ public class RTStockQuote {
 	public void setChangeAmount(String changeAmount) {
 		this.changeAmount = changeAmount;
 	}
-
+	public double getYearHighPercentage() {
+		if (yearHighPercentage == null) {
+			double yearHighValue = Double.valueOf(yearHigh);
+			double realPrice = Double.valueOf(price);
+			yearHighPercentage = ((realPrice - yearHighValue) / yearHighValue) * 100;
+		}
+		return yearHighPercentage;
+	}
 
 }

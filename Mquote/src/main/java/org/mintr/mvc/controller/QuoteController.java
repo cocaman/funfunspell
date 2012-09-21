@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.*;
 
 import org.mintr.Mquote;
+import org.mintr.html.parser.IndexConstituentPerformanceParser;
 import org.mintr.model.RTStockQuote;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,12 @@ public class QuoteController {
 	private static Logger log = org.slf4j.LoggerFactory.getLogger(QuoteController.class);
 
 	@Resource private Mquote quoteService;
+	
+	@RequestMapping(value="/indexstockperformance")
+	public String indexConstituentPerformance(ModelMap model) {
+		model.put("2828", IndexConstituentPerformanceParser.getDetailStockQuote("2828"));
+		return "constituentperformance";
+	}
 
 	@RequestMapping(value="/list", method = RequestMethod.GET)
 	public String list(@RequestParam(value="codeList", required = false, defaultValue = "") String reqCodeList,
