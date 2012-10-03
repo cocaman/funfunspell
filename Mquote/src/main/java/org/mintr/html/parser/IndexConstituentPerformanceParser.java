@@ -67,8 +67,8 @@ public class IndexConstituentPerformanceParser {
 			// change
 			Elements divs = doc.select("ul.UL1.W1 li.LI1:contains(Chg)");
 			boolean isDown = divs.get(0).parent().nextElementSibling().select("img").first().attr("src").contains("downarrow");
-			quote.setChangeAmount(isDown?"-":"" + divs.get(0).parent().nextElementSibling().select("span.bold").first().html());
-			quote.setChange(isDown?"-":"" + divs.get(1).parent().nextElementSibling().select("span.bold").first().html());
+			quote.setChangeAmount(isDown?"-" + divs.get(0).parent().nextElementSibling().select("span.bold").first().html():"+" + divs.get(0).parent().nextElementSibling().select("span.bold").first().html());
+			quote.setChange(isDown?"-" + divs.get(1).parent().nextElementSibling().select("span.bold").first().html():"+" + divs.get(1).parent().nextElementSibling().select("span.bold").first().html());
 
 			// day high day low
 			quote.setHigh(doc.select("ul.UL1.W2 li.LI1:containsOwn(High)").get(0).parent().nextElementSibling().child(0).html());

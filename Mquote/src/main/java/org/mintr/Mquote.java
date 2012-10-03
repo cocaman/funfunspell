@@ -7,6 +7,7 @@ import java.util.concurrent.*;
 import javax.annotation.Resource;
 
 import org.htmlparser.Parser;
+import org.mintr.html.parser.IndexConstituentPerformanceParser;
 import org.mintr.model.RTStockQuote;
 import org.mintr.web.quote.ETNETIndexHandler;
 import org.mintr.web.quote.ETNETQuoteHandler;
@@ -39,20 +40,18 @@ public class Mquote {
 		}
 
 		List<RTStockQuote> quotes = new ArrayList<RTStockQuote>();
-		List<Future<ETNETQuoteHandler>> futures = new ArrayList<Future<ETNETQuoteHandler>>();
+		List<Future<RTStockQuote>> futures = new ArrayList<Future<RTStockQuote>>();
 		String[] codes = codeList.split(CODE_SEPARATOR);
 		log.debug("getRTStockQuoteList: codes length [" + codes.length + "]");
 		threadPool = Executors.newFixedThreadPool(codes.length);
 
 		for (String code : codes) {
-			futures.add(getRTStockQuoteMT(code));
+			futures.add(threadPool.submit(new GetDetailStockQuoteRunner(code)));
 		}
-		for (Future<ETNETQuoteHandler> f : futures) {
+		for (Future<RTStockQuote> f : futures) {
 			RTStockQuote q;
 			try {
-				q = f.get().getQuote();
-				log.debug("getRTStockQuoteList: returned quote " + q);
-				quotes.add(q);
+				quotes.add(f.get());
 			} catch (Exception e) {
 				log.warn("Error when getting future.get", e);
 			}
@@ -86,6 +85,14 @@ public class Mquote {
 		}
 		ETNETQuoteHandler quoteHandler = new ETNETQuoteHandler(new RTStockQuote(code.trim()));
 		return threadPool.submit(quoteHandler, quoteHandler);
+	}
+
+	class GetDetailStockQuoteRunner implements Callable<RTStockQuote> {
+		String code;
+		GetDetailStockQuoteRunner(String code) {this.code = code;}
+		@Override public RTStockQuote call() {
+			return IndexConstituentPerformanceParser.getDetailStockQuote(code);
+		}
 	}
 
 	private static void setParserConnection() {

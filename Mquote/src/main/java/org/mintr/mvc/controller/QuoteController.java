@@ -8,6 +8,7 @@ import javax.servlet.http.*;
 
 import org.mintr.Mquote;
 import org.mintr.html.parser.IndexConstituentPerformanceParser;
+import org.mintr.html.service.IndexConstituentPerformanceService;
 import org.mintr.model.RTStockQuote;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -26,10 +27,12 @@ public class QuoteController {
 	private static Logger log = org.slf4j.LoggerFactory.getLogger(QuoteController.class);
 
 	@Resource private Mquote quoteService;
-	
+	@Resource private IndexConstituentPerformanceService performaceService;
+
 	@RequestMapping(value="/indexstockperformance")
 	public String indexConstituentPerformance(ModelMap model) {
-		model.put("2828", IndexConstituentPerformanceParser.getDetailStockQuote("2828"));
+		model.put("hcei", IndexConstituentPerformanceParser.getDetailStockQuote("2828"));
+		model.put("quotes", performaceService.getOrderedIndexContituents());
 		return "constituentperformance";
 	}
 
