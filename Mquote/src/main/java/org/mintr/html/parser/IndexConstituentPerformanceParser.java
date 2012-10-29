@@ -37,12 +37,14 @@ public class IndexConstituentPerformanceParser {
 			HttpURLConnection connection = new HttpURLConnectionBuilder().setURL(url).createConnection();
 			Document doc = Jsoup.parse(connection.getInputStream(), "UTF-8", connection.getURL().getPath());
 
-			Elements divs = doc.select("a[href^=realtime/quote.php?code=].Number");				// each thread row have that id
+			Elements divs = doc.select("a[href^=realtime/quote.php?code=]");				// each thread row have that id
 			Iterator<Element> divsIterator = divs.iterator();
 
 			while (divsIterator.hasNext()) {
 				Element e = divsIterator.next();
-				results.add(e.html());
+				if (StringUtils.isNumeric(e.html())) {
+					results.add(e.html());
+				}
 			}
 
 		} catch (Exception e) {
