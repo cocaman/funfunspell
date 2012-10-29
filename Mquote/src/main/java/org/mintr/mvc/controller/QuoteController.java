@@ -7,9 +7,11 @@ import javax.annotation.Resource;
 import javax.servlet.http.*;
 
 import org.mintr.Mquote;
+import org.mintr.entity.StockQuery;
 import org.mintr.html.parser.IndexConstituentPerformanceParser;
 import org.mintr.html.service.IndexConstituentPerformanceService;
 import org.mintr.model.RTStockQuote;
+import org.mintr.repository.StockQueryRepository;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -27,6 +29,7 @@ public class QuoteController {
 	private static Logger log = org.slf4j.LoggerFactory.getLogger(QuoteController.class);
 
 	@Resource private Mquote quoteService;
+	@Resource private StockQueryRepository stockQueryRepo;
 	@Resource private IndexConstituentPerformanceService performaceService;
 
 	@RequestMapping(value="/indexstockperformance")
@@ -53,20 +56,14 @@ public class QuoteController {
 
 		try {
 			if (ACTION_LOAD.equals(action.toLowerCase())) {
-				File f = new File(request.getRealPath(FILE_PATH));
-				FileInputStream fis = new FileInputStream(f);
-				DataInputStream dis = new DataInputStream(fis);
-				reqCodeList = dis.readLine();
+				StockQuery q = stockQueryRepo.findByPropertyValue("id", 1);
+				reqCodeList = q.getStockList();
 			}
 
 			if (ACTION_SAVE.equals(action.toLowerCase())) {
-				//				File f = new File(request.getRealPath(FILE_PATH));
-				//				f.createNewFile();
-				//				FileWriter fw = new FileWriter(f);
-				//				fw.write(reqCodeList);
-				//				fw.flush();
-				//				fw.close();
-				//				f.exists();
+				StockQuery q = new StockQuery(reqCodeList);
+				q.setId(1);
+				stockQueryRepo.save(q);				
 			}
 		} catch (Exception e) {}
 

@@ -1,21 +1,12 @@
 package org.mintr.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.springframework.data.neo4j.annotation.GraphId;
+import org.springframework.data.neo4j.annotation.NodeEntity;
 
-@Entity
-@Table(name="STOCK_QUERY")
+@NodeEntity
 public class StockQuery {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "ID", nullable = false)
-	int id;
-	
-	@Column(name = "STOCK_LIST", nullable = false, length=255)
+	@GraphId int id;
+		
 	String stockList;
 	
 	public StockQuery() {}
