@@ -32,8 +32,9 @@ public class TestStockQueryRepo {
 	
 	@Before
 	public void before() {	
-		list1.setId(1);
-		stockQueryRepo.save(list1);
+		//list1.setId(new Long(1));
+		stockQueryRepo.save(list1);	
+		log.info(list1.toString());
 	}
 	
 	@After
@@ -41,11 +42,11 @@ public class TestStockQueryRepo {
 		stockQueryRepo.deleteAll();
 	}
 	
-	@Test @Transactional 
+	@Test 
 	public void testGetOne() {
-		StockQuery q = stockQueryRepo.findByPropertyValue("id", 1);
+		StockQuery q = stockQueryRepo.findByPropertyValue("id", new Long(1));
 			
-		assertTrue(list1.getStockList().equals(q.getStockList()));
+		assertTrue(list1.getStockList().equals(stockQueryRepo.findOne(1l).getStockList()));
 	}
 	
 	

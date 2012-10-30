@@ -56,13 +56,12 @@ public class QuoteController {
 
 		try {
 			if (ACTION_LOAD.equals(action.toLowerCase())) {
-				StockQuery q = stockQueryRepo.findByPropertyValue("id", 1);
+				StockQuery q = stockQueryRepo.findOne(new Long(1));
 				reqCodeList = q.getStockList();
 			}
 
 			if (ACTION_SAVE.equals(action.toLowerCase())) {
-				StockQuery q = new StockQuery(reqCodeList);
-				q.setId(1);
+				StockQuery q = new StockQuery(reqCodeList);				
 				stockQueryRepo.save(q);				
 			}
 		} catch (Exception e) {}

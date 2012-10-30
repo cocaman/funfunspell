@@ -9,8 +9,8 @@ import org.mintr.entity.StockQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-@Repository
-@Transactional
+//@Repository
+//@Transactional
 public class StockQueryDaoImpl implements StockQueryDao {
 
 	@PersistenceContext

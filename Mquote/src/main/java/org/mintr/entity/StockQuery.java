@@ -5,7 +5,7 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 
 @NodeEntity
 public class StockQuery {
-	@GraphId int id;
+	@GraphId Long id;
 		
 	String stockList;
 	
@@ -15,9 +15,6 @@ public class StockQuery {
 		this.stockList = list;
 	}
 
-	public int getId() {return id;}
-	public void setId(int id) {this.id = id;}
-
 	public String getStockList() {return stockList;}
 	public void setStockList(String stockList) {this.stockList = stockList;}
 
@@ -25,7 +22,7 @@ public class StockQuery {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = (int) (prime * result + id.longValue());
 		result = prime * result
 				+ ((stockList == null) ? 0 : stockList.hashCode());
 		return result;
