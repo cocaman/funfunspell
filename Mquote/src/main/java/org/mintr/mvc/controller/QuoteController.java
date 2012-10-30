@@ -57,11 +57,13 @@ public class QuoteController {
 		try {
 			if (ACTION_LOAD.equals(action.toLowerCase())) {
 				StockQuery q = stockQueryRepo.findOne(new Long(1));
-				reqCodeList = q.getStockList();
+				if (q != null) reqCodeList = q.getStockList();
 			}
 
 			if (ACTION_SAVE.equals(action.toLowerCase())) {
-				StockQuery q = new StockQuery(reqCodeList);				
+				StockQuery q = stockQueryRepo.findOne(new Long(1));
+				if (q == null) q = new StockQuery(reqCodeList);
+				q.setStockList(reqCodeList);
 				stockQueryRepo.save(q);				
 			}
 		} catch (Exception e) {}

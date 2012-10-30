@@ -15,7 +15,7 @@
 	<aop:aspectj-autoproxy/>
 	<context:annotation-config/>
 	<context:component-scan base-package="org.mintr" />
-	<neo4j:config storeDirectory="h:/data/graph.db"/>	
+	<neo4j:config storeDirectory="data/graph.db"/>	
 	<neo4j:repositories base-package="org.mintr.repository"/>
 	
 	
@@ -37,6 +37,7 @@
 			</util:properties>
 		</property>
 	</bean>
+	
 	<tx:annotation-driven mode="proxy"/>
 	
 </beans>
