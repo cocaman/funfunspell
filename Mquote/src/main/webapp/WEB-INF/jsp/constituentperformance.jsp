@@ -14,7 +14,9 @@
 		<td>Code</td>
 		<td>Price</td>
 		<td>Change</td>
-		<td>%</td>
+		<td>1 year %</td>
+		<td>2 year %</td>
+		<td>3 year %</td>
 		<td>Year Low - High</td>
 		<td>PE</td>
 		<td>Yield</td>
@@ -32,7 +34,9 @@
 			<td><c:out value="${q.stockCode}" /></td>
 			<td><c:out value="${q.price}" /></td>
 			<td><c:out value="${q.change}" /></td>
-			<td><c:out value="${q.yearHighPercentage - hcei.yearHighPercentage}" /></td>
+			<td><c:out value="${q.lastYearPercentage - hcei.lastYearPercentage}" /></td>
+			<td><c:out value="${q.last2YearPercentage - hcei.last2YearPercentage}" /></td>
+			<td><c:out value="${q.last3YearPercentage - hcei.last3YearPercentage}" /></td>
 			<td><c:out value="${q.yearLow}" /> - <c:out value="${q.yearHigh}" /></td>
 			<td><c:out value="${q.pe}" /></td>
 			<td><c:out value="${q.yield}" /></td>
