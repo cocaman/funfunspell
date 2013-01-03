@@ -1,5 +1,7 @@
 package org.mintr.model;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +25,7 @@ public class RTStockQuote {
 	private Double lastYearPercentage = null;
 	private Double last2YearPercentage = null;
 	private Double last3YearPercentage = null;
-	
+
 	private Map<Integer, Double> previousPriceMap = new HashMap<Integer, Double>();
 
 	public RTStockQuote() {}
@@ -139,31 +141,41 @@ public class RTStockQuote {
 		this.changeAmount = changeAmount;
 	}
 	public double getYearHighPercentage() {
-		if (yearHighPercentage == null) {
-			double yearHighValue = Double.valueOf(yearHigh);
-			double realPrice = Double.valueOf(price);
-			yearHighPercentage = ((realPrice - yearHighValue) / yearHighValue) * 100;
+		try {
+			if (yearHighPercentage == null) {
+				double yearHighValue = Double.valueOf(yearHigh);
+				double realPrice = Double.valueOf(price);
+				yearHighPercentage = new BigDecimal(((realPrice - yearHighValue) / yearHighValue) * 100).setScale(2,RoundingMode.HALF_UP).doubleValue();
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			yearHighPercentage = 0.0;
 		}
 		return yearHighPercentage;
 	}
-	
+
 	public void setPreviousPrice(int previousYear, double price) {
 		previousPriceMap.put(previousYear, price);
 	}
-	
+
 	public Double getPreviousPrice(int previousYear) {
 		return previousPriceMap.get(previousYear);
 	}
-	
+
 	public double getPreviouYearPercentage(int previousYear) {
 		double percentage = 0;
-		Double previousPrice = getPreviousPrice(previousYear);
-		if (previousPrice != null) {
-			percentage = (Double.valueOf(price) - previousPrice) / Double.valueOf(price) * 100; 
+		try {
+			double previousPrice = getPreviousPrice(previousYear);
+			double realPrice = Double.valueOf(price);
+			percentage = new BigDecimal(((realPrice - previousPrice) / previousPrice) * 100).setScale(2,RoundingMode.HALF_UP).doubleValue();
+		} catch (Exception e) {
+			e.printStackTrace();
+			percentage = 0.0;
 		}
 		return percentage;
 	}
-	
+
 	public Double getLastYearPercentage() {
 		if (lastYearPercentage == null) {
 			lastYearPercentage = getPreviouYearPercentage(1);
@@ -173,16 +185,16 @@ public class RTStockQuote {
 
 
 	public Double getLast2YearPercentage() {
-		if (lastYearPercentage == null) {
-			lastYearPercentage = getPreviouYearPercentage(2);
+		if (last2YearPercentage == null) {
+			last2YearPercentage = getPreviouYearPercentage(2);
 		}
 		return last2YearPercentage;
 	}
 
 
 	public Double getLast3YearPercentage() {
-		if (lastYearPercentage == null) {
-			lastYearPercentage = getPreviouYearPercentage(3);
+		if (last3YearPercentage == null) {
+			last3YearPercentage = getPreviouYearPercentage(3);
 		}
 		return last3YearPercentage;
 	}

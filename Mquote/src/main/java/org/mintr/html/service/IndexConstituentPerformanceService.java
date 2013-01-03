@@ -1,14 +1,7 @@
 package org.mintr.html.service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.*;
+import java.util.concurrent.*;
 
 import org.mintr.BeanUtil;
 import org.mintr.html.parser.HistoryQuoteParser;
@@ -20,17 +13,17 @@ import org.springframework.stereotype.Service;
 @Service("indexConstituentPerformanceService")
 public class IndexConstituentPerformanceService {
 	private static Logger log = org.slf4j.LoggerFactory.getLogger(IndexConstituentPerformanceService.class);
-	
+
 	public RTStockQuote getHceiETF() {
 		return IndexConstituentPerformanceService.getDetailStockQuoteWith3PreviousYearPrice("2828");
 	}
-	
+
 	public List<RTStockQuote> getIndexContituents() {
 		Set<String> stockCodes = new HashSet<String>();
 		stockCodes.addAll(IndexConstituentPerformanceParser.getHSIConstituents());
 		stockCodes.addAll(IndexConstituentPerformanceParser.getHCCIConstituents());
 		stockCodes.addAll(IndexConstituentPerformanceParser.getHCEIConstituents());
-		
+
 		List<RTStockQuote> quotes = new ArrayList<RTStockQuote>();
 		ExecutorService executor = Executors.newFixedThreadPool(10);
 		List<Future<RTStockQuote>> futures = new ArrayList<Future<RTStockQuote>>();
@@ -47,23 +40,23 @@ public class IndexConstituentPerformanceService {
 		}
 		return quotes;
 	}
-	
+
 	public List<RTStockQuote> getOrderedIndexContituents() {
 		List<RTStockQuote> quotes = getIndexContituents();
 		Collections.sort(quotes, BeanUtil.getCompare("getLastYearPercentage"));
 		return quotes;
 	}
-	
+
 	public static RTStockQuote getDetailStockQuoteWith3PreviousYearPrice(String code) {
-		RTStockQuote quote = IndexConstituentPerformanceParser.getDetailStockQuote("2828");
+		RTStockQuote quote = IndexConstituentPerformanceParser.getDetailStockQuote(code);
 		for (int i = 1; i < 4; i++) {
 			Double price = HistoryQuoteParser.getPreviousYearQuote(code, i);
 			if (price != null) quote.setPreviousPrice(i, price);
 		}
 		return quote;
 	}
-	
-	class GetDetailStockQuoteRunner implements Callable<RTStockQuote> {		
+
+	class GetDetailStockQuoteRunner implements Callable<RTStockQuote> {
 		String code;
 		GetDetailStockQuoteRunner(String code) {this.code = code;}
 		@Override public RTStockQuote call() {

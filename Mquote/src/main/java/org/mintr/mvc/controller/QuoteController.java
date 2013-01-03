@@ -1,6 +1,5 @@
 package org.mintr.mvc.controller;
 
-import java.io.*;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -8,7 +7,6 @@ import javax.servlet.http.*;
 
 import org.mintr.Mquote;
 import org.mintr.entity.StockQuery;
-import org.mintr.html.parser.IndexConstituentPerformanceParser;
 import org.mintr.html.service.IndexConstituentPerformanceService;
 import org.mintr.model.RTStockQuote;
 import org.mintr.repository.StockQueryRepository;
@@ -34,7 +32,7 @@ public class QuoteController {
 
 	@RequestMapping(value="/indexstockperformance")
 	public String indexConstituentPerformance(ModelMap model) {
-		model.put("hcei", IndexConstituentPerformanceParser.getDetailStockQuote("2828"));
+		model.put("hcei", performaceService.getHceiETF());
 		model.put("quotes", performaceService.getOrderedIndexContituents());
 		return "constituentperformance";
 	}
@@ -64,7 +62,7 @@ public class QuoteController {
 				StockQuery q = stockQueryRepo.findOne(new Long(1));
 				if (q == null) q = new StockQuery(reqCodeList);
 				q.setStockList(reqCodeList);
-				stockQueryRepo.save(q);				
+				stockQueryRepo.save(q);
 			}
 		} catch (Exception e) {}
 
