@@ -38,6 +38,15 @@ public class TestIndexConstituentPerformanceParser {
 	}
 
 	@Test
+	public void testGetMSCIChinaConstituents() {
+		List<String> constituents = new IndexConstituentPerformanceParser().getMSCIChinaConstituents();
+
+		assertTrue(constituents.contains("148"));
+		assertTrue(constituents.contains("3800"));
+		assertTrue(constituents.contains("552"));
+	}
+
+	@Test
 	public void testGet883DetailQuote() {
 		RTStockQuote quote = new IndexConstituentPerformanceParser().getDetailStockQuote("883");
 

@@ -15,7 +15,7 @@
 	<aop:aspectj-autoproxy />
 	<context:annotation-config />
 	<context:component-scan base-package="org.mintr" />
-	<neo4j:config storeDirectory="h:/mintr_data/graph.db"/>
+	<neo4j:config storeDirectory="e:/mintr_data/graph.db"/>
 	<neo4j:repositories base-package="org.mintr.repository"/>
 
 	<!-- Setup system properties for HTML parser timeout -->
