@@ -1,11 +1,18 @@
 package org.mintr.html.service;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.mintr.BeanUtil;
-import org.mintr.entity.ForumThread;
-import org.mintr.html.parser.*;
+import org.mintr.html.parser.HistoryQuoteParser;
+import org.mintr.html.parser.IndexConstituentPerformanceParser;
 import org.mintr.model.RTStockQuote;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
@@ -15,7 +22,7 @@ public class IndexConstituentPerformanceService {
 	private static Logger log = org.slf4j.LoggerFactory.getLogger(IndexConstituentPerformanceService.class);
 	
 	public RTStockQuote getHceiETF() {
-		return IndexConstituentPerformanceParser.getDetailStockQuote("2828");
+		return IndexConstituentPerformanceService.getDetailStockQuoteWith3PreviousYearPrice("2828");
 	}
 	
 	public List<RTStockQuote> getIndexContituents() {
@@ -43,15 +50,24 @@ public class IndexConstituentPerformanceService {
 	
 	public List<RTStockQuote> getOrderedIndexContituents() {
 		List<RTStockQuote> quotes = getIndexContituents();
-		Collections.sort(quotes, BeanUtil.getCompare("getYearHighPercentage"));
+		Collections.sort(quotes, BeanUtil.getCompare("getLastYearPercentage"));
 		return quotes;
+	}
+	
+	public static RTStockQuote getDetailStockQuoteWith3PreviousYearPrice(String code) {
+		RTStockQuote quote = IndexConstituentPerformanceParser.getDetailStockQuote("2828");
+		for (int i = 1; i < 4; i++) {
+			Double price = HistoryQuoteParser.getPreviousYearQuote(code, i);
+			if (price != null) quote.setPreviousPrice(i, price);
+		}
+		return quote;
 	}
 	
 	class GetDetailStockQuoteRunner implements Callable<RTStockQuote> {		
 		String code;
 		GetDetailStockQuoteRunner(String code) {this.code = code;}
 		@Override public RTStockQuote call() {
-			return IndexConstituentPerformanceParser.getDetailStockQuote(code);
+			return IndexConstituentPerformanceService.getDetailStockQuoteWith3PreviousYearPrice(code);
 		}
 	}
 

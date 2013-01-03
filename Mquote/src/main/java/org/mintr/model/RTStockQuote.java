@@ -1,5 +1,8 @@
 package org.mintr.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
@@ -17,6 +20,11 @@ public class RTStockQuote {
 	private String yearLow = "NA";
 	private String yearHigh = "NA";
 	private Double yearHighPercentage = null;
+	private Double lastYearPercentage = null;
+	private Double last2YearPercentage = null;
+	private Double last3YearPercentage = null;
+	
+	private Map<Integer, Double> previousPriceMap = new HashMap<Integer, Double>();
 
 	public RTStockQuote() {}
 
@@ -138,5 +146,46 @@ public class RTStockQuote {
 		}
 		return yearHighPercentage;
 	}
+	
+	public void setPreviousPrice(int previousYear, double price) {
+		previousPriceMap.put(previousYear, price);
+	}
+	
+	public Double getPreviousPrice(int previousYear) {
+		return previousPriceMap.get(previousYear);
+	}
+	
+	public double getPreviouYearPercentage(int previousYear) {
+		double percentage = 0;
+		Double previousPrice = getPreviousPrice(previousYear);
+		if (previousPrice != null) {
+			percentage = (Double.valueOf(price) - previousPrice) / Double.valueOf(price) * 100; 
+		}
+		return percentage;
+	}
+	
+	public Double getLastYearPercentage() {
+		if (lastYearPercentage == null) {
+			lastYearPercentage = getPreviouYearPercentage(1);
+		}
+		return lastYearPercentage;
+	}
+
+
+	public Double getLast2YearPercentage() {
+		if (lastYearPercentage == null) {
+			lastYearPercentage = getPreviouYearPercentage(2);
+		}
+		return last2YearPercentage;
+	}
+
+
+	public Double getLast3YearPercentage() {
+		if (lastYearPercentage == null) {
+			lastYearPercentage = getPreviouYearPercentage(3);
+		}
+		return last3YearPercentage;
+	}
+
 
 }
